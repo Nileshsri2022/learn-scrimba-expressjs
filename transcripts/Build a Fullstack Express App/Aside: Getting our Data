@@ -1,0 +1,80 @@
+
+Transcript
+0:00
+We're back with my alien abductions database, and we want to look at how we can get at our data.
+0:05
+So firstly, let's get all of the data.
+0:08
+I've got a try catch block set up, and right here, we're connecting to the database, so we don't need to worry about that.
+0:15
+Let's just do some work right here in the try block.
+0:18
+So I will say const abductions and that can equals an await call on the database.
+0:26
+And here I'm going to use the all method and that allows us to get data from multiple rows which is what we want.
+0:33
+Then our SQL is pretty simple.
+0:36
+We're gonna select asterisk for all from and then we just need the name of the table and rather than serve anything let's just work in the console so we'll console dot log abductions.
+0:48
+Okay let's hit save.
+0:49
+We'll open up the terminal and I'm going to run get data dot j s which is the name of this file and there we are we have got all of our data.
+0:59
+Okay that is pretty good but what would happen if we want to see data just from a specific location?
+1:05
+Well we could do this we could say select all from abductions where location equals and we can say Exeter.
+1:14
+Okay.
+1:15
+Let's run that code again.
+1:16
+So it's node get data dot j s and there we are.
+1:19
+We have got one piece of data from Exeter.
+1:22
+So that works, but this approach is really not ideal because when the value is dynamic, I.
+1:28
+E.
+1:29
+It's coming from user input, we're putting ourselves at risk of a SQL injection.
+1:34
+Remember, the front end is going to be making the request, so a malicious user could easily manipulate the query to access, alter, or destroy our data.
+1:43
+What we're gonna do instead is build our SQL query using placeholders and bind values.
+1:48
+This is both safer and it saves us from needing to manually escape quotes or special characters in inputs.
+1:54
+So let's break this down.
+1:56
+I'm gonna say const query and I'm just gonna borrow everything that we've got right here.
+2:02
+Let's take away Exeter and we'll just put the question mark as the placeholder.
+2:06
+Now let's have const params.
+2:09
+That is gonna be an array and let's just put one item in this array and I'm gonna go for Roswell because I know one piece of data has Roswell as its location.
+2:19
+So we've got our query as a string and our params as an array and you'll remember if we go back to something like ctable dot js, well that's pretty much what we've got right here.
+2:29
+We have got the query and then we have got the parameters in an array.
+2:33
+So we're doing something very similar.
+2:35
+We're just coming at it from a different angle.
+2:38
+What we need to do now is just pass in both of those.
+2:41
+So it's query and params.
+2:43
+Okay.
+2:43
+Let's hit save.
+2:44
+We will open up the terminal and once again node get data dot j s and there we are we get our Roswell item from the data.
+2:53
+So this method works and it's safe and secure we just need to get the user inputted value that we want right here.
+2:59
+Okay in the next few scrims we're going to head into a series of challenges where we get the rest of our main site's functionality working.
+3:06
+But before we do that, I just want you to take a good look at what we've done here because you are going to need it.

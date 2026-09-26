@@ -1,0 +1,56 @@
+
+Transcript
+0:00
+We need to talk about the request response cycle.
+0:02
+It's got a posh name, but actually, it's not really a complex thing to understand.
+0:07
+The request response cycle is basically this.
+0:10
+We start off with the client making an HTTP request to the server.
+0:14
+The server does some processing and sends an HTTP response back to the client.
+0:20
+So taking the example of an API, let's look at this process in a bit more detail.
+0:25
+So it starts with the client and the client makes a request over HTTP and that request is full of really useful information.
+0:33
+It's going to tell us what method the client is using and in our case that will be a GET request.
+0:37
+It's a GET request that you use when you are asking an API to give you some data.
+0:42
+It's going to tell us the path or the URL the request is being made to.
+0:46
+So that could be something like slash API or slash products.
+0:50
+And there will also be some other incoming information, some data that tells us specifically what the client is trying to do, and that might come in the form of path params or query strings.
+0:59
+And if you don't know what they are, don't worry at all.
+1:02
+We're going to be seeing examples a little bit later.
+1:04
+So this request finds its way to our server and then the server has got a little bit of work to do to handle the request.
+1:11
+So handling the request in terms of our API is going to involve things like filtering data because they may well have told us exactly what data they're looking for.
+1:20
+It might be that they want the entire dataset in which case that simplifies things.
+1:24
+The server might need to throw an error.
+1:26
+Perhaps there's a mistake in their request, a typo in the path they're using for example.
+1:30
+But at any rate, the server is definitely going to generate a response And then that response is going to be passed over HTTP back towards the client.
+1:38
+Let's just check out what we've got inside the response.
+1:41
+So first and foremost, hopefully, if the request has been successful, the response is going to contain the data the client wanted.
+1:48
+It's also going to include a content type.
+1:51
+In the case of our API, we're sending JSON data and the content type will be application slash JSON.
+1:56
+It will send a status code two hundred if things have gone well, four zero four if something's not found, and a status message which will hopefully be okay.
+2:05
+All of that makes its way back to the clients, and there the front end code will process it in whatever way it wants.
+2:11
+So that's what we need to do to get an API working, and in the next grim, we're going to get stuck into it.

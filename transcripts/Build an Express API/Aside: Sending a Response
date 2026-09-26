@@ -1,0 +1,168 @@
+
+Transcript
+0:00
+So far, we've been starting our server by typing n p m start in the terminal.
+0:04
+Now that you know how to do that, I've switched on Scrimba's runner, and that means from here on in, whenever we save, Scrimba will restart our server under the hood.
+0:13
+It just saves us a little bit of time.
+0:15
+We don't have to keep typing out NPM start.
+0:18
+Okay.
+0:18
+Let's talk about sending a response.
+0:21
+Users of our API will be making get requests.
+0:24
+So over here in the network tab, we've got our address localhost on the port of eight thousand, and we've got the slash because we're at the root of our domain.
+0:33
+If I hit send, a GET request will come in, and we need to respond to it.
+0:37
+Now right here, I've got a really basic express setup.
+0:41
+I need some data to serve and I'm just going to go for a simple JavaScript object.
+0:45
+So we've got a celebrity.
+0:47
+The type is action hero and the name of this action hero, Jason Statham.
+0:53
+Jason.
+0:54
+Get it?
+0:55
+You see what I did there?
+0:56
+Okay.
+0:57
+Right.
+0:57
+How are we going to serve this data?
+1:00
+Well, let's log out app, and then we'll just be able to see what methods it makes available to us.
+1:06
+And now when I hit save, the server is gonna restart.
+1:09
+So when I click on the runner here, we're now logging out app, and we can see that there's a ton going on.
+1:16
+And if I scroll around a bit, we start to see that we've got some methods here with familiar names.
+1:21
+Check out this one, post.
+1:23
+Let's scroll a little bit more.
+1:24
+Here we've got delete and here we've got get.
+1:27
+So Express gives us a method for each type of request amongst many many other things.
+1:33
+So let's close that.
+1:35
+We're gonna take this get method and I'll say app dot get.
+1:39
+Now if we were expecting a post request, we could say app dot post or indeed app dot delete.
+1:47
+You get the idea.
+1:48
+We are going for app dot get.
+1:50
+Now we need to provide this get method with two parameters.
+1:53
+First, we need to tell it a path we're defining a route for.
+1:56
+And in this case, we'll just use a slash.
+1:58
+So that is the root of the domain.
+2:00
+But of course, in the real world, we might have something much more complicated.
+2:03
+It might be API slash products for example, but we're gonna keep it simple and we'll just leave the slash.
+2:10
+The second thing we need to pass in is a callback function and this callback function takes in two parameters, the request object and the response object and we shorten them to rec and res.
+2:22
+Although you can call them request and response if you want, but it's really common just to call them rec and res.
+2:26
+So what's gonna happen is that this callback function will execute when a request matches this path, just the slash, and this method get.
+2:35
+If the method is anything else, if the method is post, then the code we write inside this callback function is not going to execute.
+2:42
+If the path is not just the slash, the root of the domain, again, this code is not going to execute.
+2:48
+Now these request and response objects we've got as parameters here, they give us access to the request and response cycle, and that's why they're really important and we'll be working with them a lot.
+2:59
+So when the client hits the slash endpoint, I want to serve all of my data, which is just this object celebrity.
+3:05
+Now if we had more complicated data and the request was more specific, we could do some filtering in here as well.
+3:11
+We're not doing that in this basic example.
+3:12
+We're just going to send the data.
+3:14
+So let's talk about how we actually send data.
+3:17
+When REST APIs send data, they commonly use the JSON format for reasons of standardization and compatibility.
+3:23
+After all, JSON is human readable, and many programming languages have built in support for it.
+3:28
+But we can't just send raw JSON data.
+3:31
+This is for reasons of HTTP compliance.
+3:34
+Because HTTP is a text based protocol.
+3:37
+All data transferred between the client and the server must be in the form of strings.
+3:42
+So what we want to send is a JSON string.
+3:44
+And if this were Node.
+3:45
+Js without Express, we would have to convert our data ourselves, but Express is going to do pretty much all of the work for us.
+3:53
+So let's go ahead and send a response, and we do that using the response object, which is coming in right here.
+3:59
+Amongst many other things, the response object exposes some methods for sending data, and we are going to use just one of them, and it is called the JSON method.
+4:07
+And so it is just JSON and parentheses.
+4:09
+All we need do is pass in our object and the JSON method will automatically convert it to a JSON string and it would actually convert other data types to a JSON string as well not just objects.
+4:19
+We could use an array for example.
+4:21
+Let's hit save.
+4:22
+That should have restarted the server.
+4:24
+Now let's hit send, and there we are.
+4:27
+We're getting our response.
+4:29
+This is an API in action.
+4:31
+We've sent a request to an endpoint, which is just slash.
+4:34
+We've picked that up here.
+4:36
+We've done all of the processing we need, which is basically just to send this object using the JSON method on the response object.
+4:43
+That has done all of the work for us.
+4:45
+And then back in the network tool, we've got the response.
+4:48
+Now if we have a look at the headers, and let's just drag this out, we'll see it a little bit better.
+4:53
+We can see that we've got the method here get.
+4:55
+We've also got the status code.
+4:57
+So Express has done that for us.
+4:59
+And then down here, we've got application slash JSON.
+5:02
+Express has also specified the correct content type.
+5:05
+So Express is handling a lot of this work for us under the hood and of course we can override it if we need to because Express provides methods for us to do that and we will see an example or two of that later in the course.
+5:18
+But for now, this is pretty cool.
+5:20
+We've seen a working API.
+5:22
+You just need to have a look at this code because in the next Grim, we'll go back to our project, and we'll serve up some data in our main app.

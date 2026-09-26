@@ -1,0 +1,119 @@
+Transcript
+0:00
+We need to deal with the scenario where a client uses query parameters in their request.
+0:04
+So just to recap, query parameters could be something like this.
+0:08
+We've got the slash API endpoint, then we use a question mark to introduce the query parameters.
+0:14
+The first one is course equals express and then the second one is introduced by an ampersand bad jokes equals true and this could go on.
+0:23
+We could have another ampersand and more query parameters on the end.
+0:27
+And so you can imagine that these are basically key value pairs.
+0:31
+And what would be really great is if we could get this into a format that we can work with.
+0:36
+And as JavaScript developers, the format that we prefer for key value pairs is the JavaScript object.
+0:42
+And luckily, Express makes it really easy to grab these parameters and store them in an object.
+0:48
+Okay.
+0:48
+Let's look at the code.
+0:50
+In data dot j s, I've just got a few people.
+0:53
+And for each one, we've got a name, a job, and an is rich boolean.
+0:56
+In server dot j s, at the moment, we're just serving that as soon as anyone hits the slash API endpoint.
+1:02
+But what I want to do now is just focus in on the request object.
+1:06
+The request object represents the HTTP request, and it contains loads of relevant data that's sent by the client.
+1:14
+And it's in that data that we're going to find these parameters.
+1:17
+Now I'm gonna show you a few of the things it holds.
+1:20
+We're not going to use most of them in this course.
+1:22
+I just want to give you a flavor of the kind of things you can find there just to show you actually how much information is available.
+1:29
+And this is just a brief selection.
+1:30
+So you've got rec dot body and that holds data from the request body rec dot params.
+1:36
+We'll be looking at that very soon.
+1:38
+It's very, very useful in this project Rec dot method.
+1:41
+So that will tell you if they're using get or post or delete.
+1:45
+Rec dot IP.
+1:46
+Perhaps you need the client's IP address for something.
+1:48
+Could be useful in the future.
+1:50
+And rec dot query, the query params, and it's that one that we'll be using today.
+1:56
+So let's just log that out.
+1:57
+We'll take rec dot query.
+1:59
+I'm going to save that.
+2:01
+And then over in the network tab, if we just check out this data, I'm imagining that this might be some kind of dating app or something.
+2:08
+So let's make a request that reflects that.
+2:11
+So I'm going to write my query string with a question mark and let's go for job equals movie underscore star and is rich most definitely equals true.
+2:23
+Okay.
+2:24
+Obviously, we're not doing any filtering with our data.
+2:26
+So we're just gonna see the entire dataset here.
+2:29
+That's what we're serving right now.
+2:30
+But what's important is what we're going to see in the log.
+2:33
+Let's hit send.
+2:35
+And look at that.
+2:36
+We have got an object with job, movie star, and is rich true.
+2:40
+So it's that easy to get the query params straight from this URL into an object.
+2:46
+And to be honest, this is a real pain to do in vanilla Node.
+2:50
+Js.
+2:50
+But in Express, it's just one really short piece of code.
+2:54
+So another win.
+2:55
+But I just want to bring something to your attention.
+2:58
+The second query param here is rich equals true.
+3:01
+Well, obviously, is a boolean.
+3:03
+And what we've got here is true but in a string.
+3:07
+That's not the end of the world.
+3:08
+It's just something that we need to be aware of, and we are gonna have that problem come up.
+3:12
+So we will look at how we can deal with it in a later scrim.
+3:15
+Okay.
+3:15
+The next task is to take this little bit of knowledge that we've gained right here back to our main project and use it to filter our data.
+3:23
+That's quite a big challenge.
+3:24
+So when you're ready, let's go.

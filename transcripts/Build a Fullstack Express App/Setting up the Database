@@ -1,0 +1,131 @@
+Transcript
+0:00
+This is a big moment because we're going to add a database to our project.
+0:05
+I've set up this file called create table and that is going to hold a script which will add a database and a table to our project.
+0:13
+I've done all of the importing we need right here and then this is the function that's going to do all of the heavy lifting and this is where you have got a nice big challenge.
+0:22
+I want you to create a database and store its connection in a const DB.
+0:27
+The database will live in a file called database dot DB which can be in root so that will just appear over here next to server dot j s, log table dot j s, etcetera.
+0:37
+It's not going to go in its own folder.
+0:39
+The database driver will be SQLite three dot database which is exactly the same as the driver we used in the previous scrim.
+0:45
+And in fact, lot of this is recreating what we did in the previous scrim, but with different SQL.
+0:51
+And that brings us to the second part of the challenge.
+0:53
+Use the exec method to write SQL to create a table called products.
+0:57
+And then these are the columns that it needs to have and all of the information you need.
+1:02
+At the end of this function you can close the database connection and just log a message to say table created.
+1:07
+When you're done you can run create table dot j s and then log table dot j s to verify that it's working and you can do both of those things down here in the terminal and log table dot j s should give us just that little table that just says index and that will confirm that the database was created and a table was created inside the database.
+1:27
+And in log table dot j s, we've got that code all ready to go and I've updated this with the products table.
+1:33
+Now I've given you a pretty generous hint dot m d file and I've done that because there is a lot of new syntax here.
+1:39
+I don't expect you to remember all of this by heart.
+1:41
+So there's hints and some code in hint dot m d.
+1:45
+Okay.
+1:45
+Take all of the time you need to get this right, and I will see you back here when you're done.
+1:51
+Okay.
+1:52
+I really hope you persevered and got this working.
+1:55
+And congrats if you did because this is such an important topic.
+1:58
+Right.
+1:59
+We are going to start right here with the first part of the challenge.
+2:02
+So I will say const DB.
+2:04
+And here, we are going to await the open method that we're bringing in from the SQLite dependency.
+2:10
+We need to pass open an object and this object is gonna have two keys, file name and driver.
+2:17
+And for the file name, we'll use path dot join And I'm just gonna pass in database dot d b.
+2:23
+And as it's going in route, we don't need to do any more than that.
+2:27
+The driver is going to be SQLite three dot database.
+2:31
+And we're done with part one of the challenge.
+2:33
+Let's move on to part two.
+2:35
+We are going to use the exec method.
+2:37
+So let's say await db dot exec.
+2:41
+And here we can write some SQL.
+2:43
+So let's say create table if not exists and the table name we want is products.
+2:51
+And I just want to double check what I put in log table.
+2:53
+Yep.
+2:53
+I did put products so that's fine.
+2:55
+And then we need some rows.
+2:57
+So let's take all of this and the first one ID.
+3:01
+Well, that wants to be a unique key and we can do that with integer primary key auto increment.
+3:09
+Next up we have title and that is required and it's going to be text.
+3:13
+So we want the type of text and we need to specify not null because that one is required.
+3:20
+We're going to use that in other places as well.
+3:22
+So we've got required text right here.
+3:24
+The artist will also be text not null and so will image because that is going to hold a URL not an actual image file in some encoded format.
+3:32
+So that will also be text not null.
+3:35
+Now the price is required but it will be a floating point number and the type for that is real and because it's required it will be not null and then the final three are not required so we can just put their type.
+3:48
+The year will be an integer, the genre will be text, and stock will be integer.
+3:54
+We just need to make sure we have the commas else we'll get an error.
+3:58
+And it looks like we're pretty much done.
+4:00
+Okay.
+4:00
+That is the second part of the challenge complete.
+4:02
+Let's move on to the third part.
+4:04
+Close the database connection and log a message to say table completed.
+4:08
+So we can say again await DB dot close and we'll just have a console dot log table created.
+4:16
+Okay.
+4:16
+Let's hit save.
+4:18
+We are already calling the function right here so let's open up the terminal and see if it's worked and we'll do that with node create table dot js.
+4:27
+When we hit enter it says table created.
+4:30
+A database file has appeared.
+4:32
+We know if we look at it, we're just gonna get this cannot edit binary data, but we have got log table dot js.
+4:37
+Let's just open up the terminal a little bit more and we'll run that node log table dot js and there we are we're getting index which is confirmation that the database exists and we've got a table in it.
+4:51
+Okay great job now we've got a database and a table we need to figure out how we can put some data into it let's come on to that in the next scrim

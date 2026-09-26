@@ -1,0 +1,182 @@
+
+Transcript
+0:00
+In our project, we've got static files to serve and we haven't looked at doing that yet with Express.
+0:05
+So let me show you how it's done.
+0:07
+Right here, I've got a website I want to use to trick my friend.
+0:10
+It's fake news about a man whose parrot ordered two hundred and forty garden gnomes via his smart speaker.
+0:17
+And actually, I think that can happen in real life.
+0:20
+Now serving this in pure Node.
+0:22
+Js requires a lot of code, but Express makes it super simple.
+0:26
+We're actually going to do it in one line.
+0:28
+However, to understand how and why that works, we need to talk about middleware.
+0:33
+So let's quickly dive into that.
+0:36
+By now, you're familiar with the request response cycle.
+0:39
+And what you need to know about middleware is that it fits in right here.
+0:43
+So it comes in the middle of the request response cycle definitely before the response is sent.
+0:49
+And middleware refers to functions that can modify the request or response objects or end the response early if necessary.
+0:57
+Common functions carried out by middleware are enabling calls, passing requests, logging requests and errors, and there are many many more examples because actually a lot of what we do in Express is middleware and you have already seen it in action.
+1:13
+You might recognize for example enabling cause.
+1:15
+Well that's something we've already done.
+1:17
+We did it using middleware.
+1:19
+We just didn't know about it at the time.
+1:21
+Now we can broadly divide up middleware into three groups.
+1:25
+We have got custom middleware.
+1:27
+So that's middleware which is built by us, the developer, which is specific to our use case.
+1:32
+We've got built in middleware that will be provided by Express and we can use it whenever we want without having to import it.
+1:38
+And we've got third party which need to be imported from NPM for example.
+1:43
+Now it is a good idea to read up on middleware.
+1:46
+So this slide links you through to the docs where they get into the nitty gritty of how middleware is used and there's a lot of info going on down here and some terms that you'll likely come across like application level middleware and error handling middleware.
+1:59
+A little bit deeper than we need to go into for this project, but good knowledge to have.
+2:04
+So do check that out when you get the chance because middleware is not just some extra add on with Express.
+2:09
+It's the frameworks architecture.
+2:11
+Pretty much everything we do in Express is built around the middleware pattern.
+2:15
+Okay.
+2:16
+Let's see some middleware in action and we're gonna start with some custom middleware.
+2:20
+Right here, I've got a really basic Express setup.
+2:24
+I'm just sending this HTML string down to the browser.
+2:27
+And if we open up the mini browser, it's working.
+2:29
+We're rendering Hello Express.
+2:31
+Let's add some middleware.
+2:33
+So right here above app dot get, I'm gonna say app dot use.
+2:38
+And app dot use is used to add middleware.
+2:40
+It's not actually the only way we've had middleware.
+2:42
+I will bring your attention later in the project to another way of adding middleware.
+2:47
+But when you see app dot use, you know that middleware is involved.
+2:50
+Okay.
+2:51
+We need to pass app dot use a callback and that callback is gonna take in the request, the response, and also next.
+2:59
+And next is a really important component of middleware.
+3:02
+It's the function which should be called when the middleware function we're creating has completed.
+3:08
+So just as the name suggests, it's what happens next.
+3:11
+And generally middleware needs a next function but do remember that sometimes middleware actually ends the response and in that case the next function would not be used.
+3:20
+Okay.
+3:21
+We are gonna call it right here and then here this is where we can add some logic and in this case we're gonna pretend this middleware is gonna add some custom headers and I'm just gonna log custom headers added.
+3:33
+Now where does this next function lead?
+3:36
+Well, this code is read top to bottom.
+3:39
+So actually when this console dot log has executed, next we'll pass control on to this code right here because at the moment that is all we've got but let's add one more piece of middleware.
+3:50
+So again it's app dot use and we'll take in the request, the response, and next and let's say this middleware is just going to log the request and when it's logged the request, it calls next.
+4:02
+And now we can see a middleware stack in action.
+4:05
+So firstly we use app dot use to log that custom headers have been added then next passes control down to this middleware.
+4:13
+Here we're logging the request with a timestamp and then calling next which is passing control down right here to this code where we're ending the response.
+4:22
+Let's hit save and see that in action and down in the console you can see that we've got custom headers added.
+4:28
+Here we have got our timestamp and indeed our method and URL and then control is passed down to this code which is rendering what we see in the browser.
+4:37
+So hopefully you can see there how middleware helps keep our code really simple to read and maintain and really modular And of course, we could have as much middleware in this stack as we need.
+4:47
+Each one would call next and pass control down, which clearly in these two cases we have done manually.
+4:53
+We've explicitly called the next function and that's because these are examples of custom middleware.
+4:59
+And when we're not using custom middleware, when we're using built in middleware or third party middleware, NEXT is actually called under the hood.
+5:07
+We don't actually see it and we can see some examples of that now if I bring up some familiar code.
+5:12
+So this is actually from our previous project and we've got three great middleware examples right here.
+5:19
+We have got some third party middleware so this is the CORS middleware which we imported.
+5:24
+It is an NPM package that sat right at the top and it added the CORS policy to every incoming request.
+5:31
+Once it added CORS, under the hood it called next and passed control down right here and these are built in middleware.
+5:39
+We mounted the API router route and if you recall this route sent data down to the client if the route matched it would then end the response but if the route did not match the next function would be called and it will pass control down to this catchall middleware and that will send the four zero four and the endpoint not found message for any request that was not picked up previously.
+6:03
+Now there's no need to have a next function right here because this ends the response.
+6:07
+Now all of this talk about middleware leads us to one very simple piece of middleware and I'm just gonna delete everything that we've created.
+6:14
+Okay.
+6:14
+I'm gonna start again with app dot use and now we're gonna use some built in express middleware.
+6:21
+I'm gonna say express dot static and what I want to do with the static method is pass in the directory for all of our public files.
+6:30
+Just one line of code.
+6:31
+Let's open up the mini browser and look that is all we need to run all of our front end code.
+6:36
+Here is Gary Blackbeard, his parrot and his two hundred and forty gnomes.
+6:41
+So never let a talking pet near your smart speaker.
+6:45
+Now let's just figure out how this code is actually working.
+6:48
+So what it does is it watches for incoming requests that match a file name in the public folder and that can be any file.
+6:55
+If it finds a match, for example a client requests index.
+6:59
+Html and that file exists in public, it serves that file immediately setting the correct content type and status code of course and then it ends the response.
+7:09
+If it doesn't find a match it will call next and so the request can continue down to any other middleware or root handlers.
+7:17
+And we can actually see that in action if I just add an s on the end of here and hit save.
+7:23
+Well it doesn't find any matches because Publix does not exist and so control gets passed on to this code right here which is sending Hello Express down to the browser.
+7:33
+So a pretty amazing useful piece of middleware that you are going to use all of the time.
+7:38
+I could have just given you that one line of code at the beginning.
+7:41
+That was just the right time to jump into middleware.
+7:44
+Okay.
+7:44
+Remember this one line because you're gonna need that in a challenge in just a moment.

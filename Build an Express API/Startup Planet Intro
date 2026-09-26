@@ -1,0 +1,72 @@
+
+Transcript
+0:00
+Everybody wants to find a unicorn.
+0:01
+Right?
+0:02
+I mean, not the mythical horse, although that would still be pretty cool, but a company that is going to grow to be huge and make everybody involved richer than their wildest dreams.
+0:13
+But sometimes, the best way to make a quick buck is to position yourself between a dreamer and their dreams.
+0:19
+And that's why the API that we're building in this course is called Startup Planet.
+0:25
+As the name suggests, it holds data on startups, what they do, when they were founded, all of that stuff.
+0:31
+If this data were real world and it was well maintained and curated, it would be a pretty cool service, and investors and job seekers would be paying you tons of cash every month to subscribe to it.
+0:42
+Let's have a quick look at the type of data we're gonna be serving.
+0:45
+So each of our startups is held in one massive object, and we've got everything you would expect, the name, the industry, when they were founded, their location, their address, the important people, the number of employees, their website mission statement description, and a couple of booleans, if they're seeking funding, and if they have an MVP, a minimum viable product.
+1:08
+We could really go to town on this and exploit a lot of potential API functionality.
+1:12
+We could allow a text search on this description, for example, or on the mission statement, or we could filter by number of employees.
+1:20
+But the more functionality we offer, the more we get dragged into writing vanilla JavaScript logic to handle all of that filtering.
+1:27
+And I really want to focus on express and specifically routing in this project.
+1:31
+So we're going to allow users to access the API in the following ways.
+1:36
+They can hit slash API and just get all of the data.
+1:40
+They can request ATAP using path params.
+1:42
+In this example, they're selecting data from a specific industry, but it wouldn't be limited just to industry.
+1:48
+They could also use path parameters, for example, to search by continent or country and would also accept query parameters.
+1:55
+This allows for more complex filtering.
+1:57
+So in this example, the user is asking for data where the two booleans are set to true.
+2:01
+So we've got has MVP set to true and is seeking funding set to true.
+2:06
+And in the example we've got right here, well, actually both of those booleans are set to false.
+2:10
+So that is one object that the user would have filtered out.
+2:13
+And likewise, the query params won't be limited purely to these booleans.
+2:17
+They will be able to include other things in the query params as well.
+2:21
+So for example, selecting all of the startups in Australia which are seeking funding.
+2:26
+Now as we build this API, we have got some work to do.
+2:29
+We will be using Express to create a server.
+2:32
+We'll be sending status codes like two hundred and four hundred and four zero four.
+2:36
+We'll be setting headers, handling requests and responses, filtering data, of course, extracting path and query params, and there'll be loads more and plenty of challenges.
+2:47
+And if you don't understand any of this right now, don't worry at all.
+2:51
+We will be taking it step by step.
+2:53
+Okay.
+2:53
+That's the plan.
+2:55
+Let's go.

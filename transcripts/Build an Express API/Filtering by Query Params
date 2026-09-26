@@ -1,0 +1,214 @@
+
+Transcript
+0:00
+I want our users to be able to use query params to control the data we serve them.
+0:05
+So our app needs the functionality to extract the query parameters and filter on these five data points.
+0:12
+So we've got industry, country, continent is seeking funding and has MVP.
+0:17
+If they add any other query param, whether it's something which exists in our data or just something which they've plucked from their imagination, we are going to ignore it.
+0:27
+It is only these five data points that they can filter on.
+0:31
+I'm going to get us started.
+0:33
+I'm going to set up a let right here, and this is going to be called filtered data.
+0:39
+And I'm going to set that to hold all of the data that we're importing via startups.
+0:44
+Down at the bottom, we are going to serve filtered data.
+0:48
+Now if we do no filtering in between, we will serve all of our data.
+0:52
+So, for example, if there are no query params, then the entirety of our data, which is stored in startups, will be served by this line of code right here.
+1:01
+But if in between we detect query params, then as we filter, we can update filtered data.
+1:07
+And so eventually, the client will only be served the data they want.
+1:11
+To implement this takes a mixture of your existing JavaScript knowledge and what we studied in the previous scrim.
+1:17
+So let's go straight into a challenge.
+1:19
+You know what it is.
+1:20
+When a user hits the slash API endpoint with query params, filter the data so we only serve objects that meet their requirements.
+1:28
+And I've put some test cases down here for you and just explained underneath what you should get from each one.
+1:33
+And where necessary, I've included the URL encoded space with percentage sign twenty, even though our network tool is forgiving if we forget that.
+1:42
+Now there are lots of ways that you could tackle this challenge, and I think there's a real danger you could overthink it and end up writing a load of really complicated JavaScript.
+1:50
+I want to urge you before you start to favor simplicity, readability, and maintainability, and just think about how the code will appear to somebody else who has to look at it in the future.
+1:59
+I've said a bit more about how I'm going to tackle this challenge.
+2:02
+You're really welcome to follow my hints, but, of course, you're also welcome to go your own way.
+2:06
+Okay.
+2:06
+Get to work on that.
+2:07
+Quite a big challenge, so take all of the time you need.
+2:13
+Okay.
+2:14
+Congratulations on getting that working.
+2:16
+Quite a bit of work to be done there, and hopefully, you managed to do it, but you also managed to do it cleanly in a way which is easy for others to interpret and understand.
+2:25
+Now our first task is to find out what query params have been used, if any, and we know we can access them at rec dot query.
+2:33
+And so I am actually going to destructure them from rec dot query and we can just take this list that I've got right here.
+2:40
+Now I'm actually going to move this challenge text out of the way.
+2:43
+We will be coming back to it later because I want to use those tests.
+2:46
+Okay.
+2:47
+Time to do some filtering.
+2:48
+Let's take this first one, industry, and I want to take some conditional logic to check if industry is a truthy value.
+2:55
+If industry is not a truthy value, then industry has not been used in a query parameter and the code inside this block right here will not execute.
+3:04
+But if industry is truthy, what we need to do is take filtered data and we'll set it equals to filtered data and call the filter method.
+3:12
+We need to pass filter a callback and that is gonna take in one parameter to represent each element in the array.
+3:18
+I'm going to call each one startup and I'm just going to bring this down onto a new line and now we need to do a comparison.
+3:24
+So let's take startup dot industry and to make sure we get a direct comparison, I'm going to call the to lowercase method and we want to check if that is triple equals to industry and again we'll call to lowercase.
+3:38
+So we're taking industry as it exists in our data.
+3:42
+For example, right here, renewable energy, and comparing it to industry, which has come in as a query param.
+3:49
+Both of those will be lowercase, so we should get a direct comparison.
+3:53
+And I think before we do anything else, we should save and let's run a test right here.
+3:58
+So we've got slash API at the moment.
+4:01
+Let's add industry as a query param, so question mark industry.
+4:05
+And I'm just going to test this on health care.
+4:07
+Let's hit send and it's looking good.
+4:09
+We're getting industry health care.
+4:10
+Let's scroll down.
+4:11
+Industry health care.
+4:13
+And that is it.
+4:14
+We only have two healthcare industry objects in our data.
+4:18
+You're welcome to check that if you don't trust me.
+4:20
+So actually this is working.
+4:22
+Okay.
+4:23
+Let's continue.
+4:24
+We need to copy this for the next four and country and continent are basically the same.
+4:30
+So let me just speed type those.
+4:33
+Now for these last two which deal with booleans, we have a bit of an issue.
+4:38
+Let's start with is seeking funding.
+4:40
+So I can paste that in everywhere we have industry and the situation we've got is that is seeking funding should contain a string but that string should contain either the word true or the word false.
+4:51
+Now right here where we've got is seeking funding in our data, well that one is going to be a boolean true or false.
+4:58
+That is not a string.
+4:59
+So the situation we've got is that we're trying to compare a boolean to a string.
+5:04
+That is not going to work so we need to make some changes.
+5:07
+Firstly, this one being a boolean, we can delete the to lowercase method.
+5:12
+But here I'm going to keep it because we want to keep this string lowercase and I'll show you why.
+5:16
+There's a couple of ways we can convert a string with the word true or false to a boolean and the easiest one which is gonna work fine in our project is to use JSON dot pass.
+5:26
+So we just call JSON dot pass and then we pass in the string and I'm gonna keep the to lowercase method because if we passed in say the string true with an uppercase t or false with an uppercase f, JSON pass would fail.
+5:40
+Okay.
+5:40
+Now we've got two booleans to compare.
+5:43
+So that one should work absolutely fine.
+5:45
+Let's just do the same thing for has MVP.
+5:48
+As I said, using JSON dot pass is gonna work fine in this app, but I just want you to be aware that that's gonna work because we're dealing with the specific strings with the word true or the word false as lowercase.
+6:00
+If you need a looser interpretation like passing a zero as false or a yes as true, then there are better ways of doing this.
+6:08
+But when we can be sure that the string will hold the word true or false, JSON dot pass is gonna work for us just fine.
+6:15
+Okay.
+6:15
+So hopefully, can see how this works.
+6:17
+As the code runs down, each query param which has a truthy value is going to be used in filtering.
+6:24
+Each one updates filtered data, and then we serve filtered data.
+6:28
+Let's test it.
+6:29
+We've got some test cases down here.
+6:31
+So this first one should get us just the GreenGrid energy project.
+6:35
+The GreenGrid energy object.
+6:36
+We can drag out this network tool a bit and let's just paste that in right here.
+6:41
+When I hit send, there we are.
+6:43
+We have got green grid energy and that is all we've got and that is all we should expect according to this test case.
+6:49
+Okay.
+6:50
+Let's try the next one.
+6:51
+This should get absolutely no objects returned and it doesn't.
+6:54
+There we are.
+6:55
+We've got an empty array And the last one should get us an array with four objects, IDs of three, twenty two, twenty six, and twenty nine.
+7:02
+Let's see what we get.
+7:03
+And it's looking good.
+7:04
+We've got the ID of three, twenty two, twenty six, and twenty nine.
+7:09
+Okay.
+7:09
+So it works.
+7:10
+And so hopefully, you can see how my way favored simplicity.
+7:15
+Yes.
+7:16
+The code looks pretty basic, but it is really, really easy to read and maintain.
+7:20
+You could very easily delete one of these, delete it from here, add a new one.
+7:26
+I don't think anyone is gonna have too many problems reading this code.
+7:29
+Your way might have been different but also valid.
+7:32
+But do remember, if you wrote something super complex, it would be harder to read and harder to maintain.

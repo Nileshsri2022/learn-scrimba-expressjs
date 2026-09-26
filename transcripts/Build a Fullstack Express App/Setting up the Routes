@@ -1,0 +1,166 @@
+
+Transcript
+0:00
+We need to deal with our roots.
+0:02
+See what I did there?
+0:03
+Roots, hair roots.
+0:06
+Okay.
+0:06
+Let's check-in again with this app's functionality.
+0:09
+By default, it is going to display all of our products.
+0:13
+We've also got the option here to use this genres drop down.
+0:17
+I've selected indie and now we just see products with the indie genre.
+0:20
+And let's just zoom in a second on this drop down because it is important for this scrim because populating this drop down with unique distinct genres from our database is going to be done via one specific route and we'll talk more about the routes in just a moment.
+0:36
+Now up at the top of the site we've also got this search box I've put some letters in there SE and that has narrowed down the products we display to products that contain the letters SE.
+0:46
+We've got Selling Dogma and Seaside Reflections.
+0:50
+The names do not have to start with SE though.
+0:52
+Our search functionality will be based on partial matches so SE just needs to be contained anywhere within the genre, title or artist.
+1:02
+Okay.
+1:02
+Let's just check out the routes we've got because we only actually need two routes for this entire app.
+1:08
+So we've got slash API slash products, and that route will be used when we display all products, all of the products of a given genre, and all of the products that match a search term.
+1:18
+Our second route will be slash API slash products slash genres, and that will be used only when we populate the genres list for the drop down.
+1:27
+If we just have a very quick look at the front end code in public dot index dot j s, we have got the fetch requests already.
+1:34
+So this one right here is for the products, and it can handle some query parameters.
+1:39
+And if we scroll down to line fifty six, we have got the second fetch request right here.
+1:44
+This one is for populating the drop down menu with the genres.
+1:49
+Now later, we'll be writing the back end logic to deal with all of the various possibilities these routes can handle.
+1:55
+But obviously, we can't wire up that logic until we've set up our database.
+1:59
+So what we're gonna do in this scrim is just focus on the routes.
+2:03
+And that means we're going to focus in on three specific places.
+2:06
+And I've actually created two new files for you.
+2:10
+Let me introduce you to them.
+2:12
+So in roots, we have got products dot j s.
+2:15
+There's a challenge in here we'll be coming back to in a moment.
+2:18
+And in controllers, we've got products controllers dot JS.
+2:22
+And here, we're going to write a little bit of code together.
+2:25
+What I want to do here is set up two functions, and they're both going to be async functions.
+2:30
+So I'm going to say export async function and the first one is going to be called get genres and all that need do right now is log the word genres.
+2:42
+The second one and we can just copy most of this is going to be called get products and it's just going to log products.
+2:50
+Later these functions will contain the logic that actually retrieves data from our database but for now we've got these console dot logs just so we can test that our routes are working.
+3:00
+That brings us to the challenges.
+3:02
+So if we head over to products dot j s, this is your first challenge and it's a bit of revision from the last project that you're welcome to look back at if you need to.
+3:11
+I want you to use express dot router to export a router called products router.
+3:15
+It should mount the slash API slash products route and slash API slash products slash genres route.
+3:22
+And the two mounted routes should use the two functions that we've just created in products controllers dot JS, get products and get genres.
+3:30
+I've put a little bit of a warning here.
+3:32
+Be careful.
+3:33
+What is the common pitfall?
+3:35
+I won't say more, but hint dot m d is there for you if you need it.
+3:39
+Once you've completed that challenge, we've got a mini challenge to wire it up in server dot j s.
+3:44
+I want you to handle any requests to slash API slash products and pass them to products router.
+3:51
+Once you've done that, can save.
+3:53
+You might need to reload the mini browser, open up the console, and you should see the output from the console dot logs we've got in these two functions.
+4:00
+Okay I'm going to leave you to get to work on these challenges and then we're going have a look together in just a moment.
+4:08
+Okay let's get to work.
+4:09
+We need to start off by importing Express from Express.
+4:14
+Next, we need to import the two functions that we're going to use.
+4:19
+And these are coming from products controllers.
+4:22
+So we need to get out of the roots folder with dot dot and then it slash controllers products controllers.
+4:30
+Now we need to set up an instance of express dot router called products router, and we will need to export this.
+4:38
+And finally, we can do some mounting so we can take products router, call the get method, and pass in the URL and the function to call.
+4:47
+And this is where we need to be a little bit careful because it'd be tempting just to take, say, API slash products slash genres and then pass in the get genres function.
+4:57
+And then we could copy that one down, takeaway slash genres and pass in the get products function.
+5:04
+Will that work?
+5:05
+Well, let's revisit this after we've completed the challenge in server dot j s.
+5:10
+So here we need to handle any request to the slash API slash products root and pass it to products router.
+5:16
+So we need to import products router.
+5:19
+That's coming from roots slash products dot j s.
+5:23
+Now let's take products router and we'll say app dot use.
+5:27
+We'll pass in products router and we need the URL.
+5:31
+And if we hit save here, I think down in the console, we're going to see an error.
+5:36
+Let's open up the mini browser.
+5:38
+Oh, and my mistake.
+5:39
+We're not gonna get an error.
+5:40
+We're just not gonna get anything at all from our console dot logs because what we've done is made the typical mistake of overlapping these URLs.
+5:50
+So we've got slash API slash products, passing that to products router.
+5:54
+Well, products router is then picking up the same again.
+5:58
+So actually, what we want to do is just delete the overlap.
+6:01
+So we've got slash API slash products.
+6:04
+Let's get rid of that right here.
+6:06
+So we're gonna have slash genres and for this one we're just gonna have slash.
+6:11
+Okay.
+6:11
+Now let's hit save and we're logging genres and products.
+6:15
+So that shows us that our routes are working.
+6:18
+Okay.
+6:18
+Great work.
+6:19
+We've got everything ready now for the database so let's move on to databases in the next scrim.

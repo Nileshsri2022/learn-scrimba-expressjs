@@ -1,0 +1,164 @@
+
+Transcript
+0:00
+In order to keep our code maintainable, we need to organize it better than we've been doing, and Express gives us a great way to do that.
+0:07
+It's called Express dot router.
+0:10
+Right here, I have got a super basic API.
+0:13
+It's serving two routes slash API slash products and slash API slash services.
+0:19
+Before we do anything else, I want to do some labeling because there are two words we're going to use quite a lot in this scrim, and they are root and controller.
+0:27
+Now the root fairly self explanatory, I think, is this part, and the controller is what we'll call the business logic right here.
+0:36
+So a controller is a function or a set of functions that handles the logic for a specific route.
+0:41
+In this case, we're just sending a response, but it could also be doing filtering or speaking to a database, for example.
+0:48
+It's basically the business logic that the route needs.
+0:51
+Okay.
+0:51
+Now before we break this code up into routes and controllers, we need to set up a new instance of Express dot router.
+0:58
+So we'll take a const to store it in, and I'm going to call this const API router.
+1:03
+And that will hold an instance of Express dot router.
+1:07
+And you can think of API router now as being a kind of mini Express app.
+1:12
+But unlike a normal express app, it's only going to be responsible for handling a specific group of routes.
+1:18
+In this case, it's going to be all of the routes starting slash API.
+1:22
+Okay.
+1:22
+Let's start separating out our controllers from our routes.
+1:26
+So I'll take a const product controller and that just needs to hold all of this business logic.
+1:31
+So this entire function, I'm just going to cut and paste.
+1:35
+And we're going to do the same thing for services controller.
+1:38
+Oh, and I should have put an s right here.
+1:40
+It is products.
+1:41
+So const services controller and that will hold this business logic right here.
+1:48
+Okay.
+1:48
+The routes are gonna work like this.
+1:50
+We're gonna take our instance of ExpressRouter and we're going to use it with the get method in each case.
+1:57
+And just like before, the get method needs to be passed two things.
+2:00
+The path which we've got right here and then the controller.
+2:03
+And finally, need to connect these routes up with our app.
+2:06
+So we'll say app and we're going to use the use method and we'll pass the use method the base of the routes that we want our new router to handle.
+2:15
+So that will be slash API because both of these routes start with slash API and then we also need to tell it to work with API router.
+2:24
+Now a quick word about the use method because we haven't seen it before.
+2:27
+The use method is really big in Express and we're going to see a lot more of it in a future project.
+2:32
+But just understand that this line of code means that for any request starting slash API, use API router.
+2:40
+Okay.
+2:40
+Let's test this.
+2:41
+Is this going to work?
+2:42
+Well, we'll have to wait and see.
+2:45
+Okay.
+2:45
+The moment of truth.
+2:46
+Hit send.
+2:47
+And look.
+2:47
+We're getting a four zero four, so something is going wrong here.
+2:51
+Can you see what it is?
+2:52
+Basically we're saying use API but then we're starting again here with API and it's actually these two which are causing the clash.
+3:01
+Now we've specified to use API router after API we do not need to have API again So let's just delete it from there and there.
+3:10
+We'll hit save and try once more and we get a two hundred and indeed we get the product's data.
+3:16
+Okay.
+3:17
+This is no good if we've got all of the code in one file still, so we need to modularize this.
+3:22
+And I'm going to create two new folders, controllers and roots.
+3:27
+Inside controllers, I'm going to have a file for each of our controllers.
+3:31
+And then we're just going to copy over the code.
+3:34
+So this is the products controller.
+3:36
+And we need to remember to export it and we can save that and then the same for these services controller.
+3:43
+Okay.
+3:44
+In roots, we need a file called API roots and there's a little bit more work to do in here.
+3:49
+For a start, we're going to need access to Express so let's import it again and we're also going to need access to our products controller and our services controller.
+4:00
+And now we can do some cutting and pasting from server dot j s So we need to take basically all of this.
+4:07
+We're bringing in our instance of Express dot router and our routes and we must remember to export this because we're gonna need it back in server dot js.
+4:16
+So let's do that quickly.
+4:18
+We will import PI router from and that is roots api roots dot j s.
+4:26
+Okay.
+4:26
+Let's hit save and we'll give it a test and it's looking good.
+4:30
+We'll change this to services and it's working.
+4:33
+So we've neatly modularized this so it's now really easy to add new routes and new controllers and if we wanted to expand perhaps have a non API side to the site well we could do that right here.
+4:45
+Let's just add in another route slash news for example.
+4:49
+Okay.
+4:50
+There's one more useful thing I can show you here.
+4:52
+What should we do if somebody comes to our site but they use completely the wrong URL so they haven't even got the slash API?
+5:01
+When I hit send, we of course get a four zero four, a dubious HTML response, and I think that is all we need to know.
+5:08
+What's quite cool here is that we can bring in another app dot use and let's just serve a proper four zero four.
+5:14
+So we'll take the request and the response like we're used to and in the body here we can say res dot status four zero four chain on JSON and we'll just say endpoint not found.
+5:27
+Let's save that and we'll try this again.
+5:29
+We're still getting a four zero four like we were getting before, but now the response is much more sensible.
+5:34
+So what's happening here is that this code is being read from top to bottom.
+5:38
+First, it's trying to find slash API.
+5:41
+If that doesn't match, it will just keep on going down.
+5:44
+Okay.
+5:44
+Quite a lot going on in this scrim.
+5:46
+Let's go back to our project and organize our API.

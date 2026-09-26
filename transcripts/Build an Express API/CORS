@@ -1,0 +1,81 @@
+Transcript
+0:00
+If you deploy this API right now and invite people to use it, they're going to be blocked.
+0:05
+Why?
+0:06
+Because browsers enforce a same origin policy, and this means requests can only be made to the same protocol, domain, and port as the one serving the web page.
+0:17
+Okay.
+0:17
+There's quite a few words going on there.
+0:19
+I'm gonna show you some diagrams to illustrate what I mean.
+0:22
+But firstly, let's just recap protocol, domain, and port.
+0:26
+So the protocol is HTTP or HTTPS.
+0:30
+The domain, for example, scrimba dot com, Mozilla dot org, and the port eight thousand or three thousand just to give a couple of examples.
+0:39
+Okay.
+0:39
+So this is the default situation.
+0:42
+We've got a server right here.
+0:44
+The protocol is HTTP.
+0:46
+The domain is scrimba dot com, and the port is three thousand.
+0:49
+The front end has got exactly the same.
+0:52
+Protocol, domain, and port, all identical.
+0:56
+And so that means the front end can access resources shared by the server.
+1:00
+The browser allows this by default.
+1:02
+But this front end down here is from a different domain.
+1:06
+And because the protocol domain and port all have to be identical, this will actually be blocked by the same origin policy because the browser will be treating this as a cross origin request.
+1:18
+And the only way to override this is if the server responds with a specific type of headers, which say it's cool.
+1:25
+I'm okay with this request from another origin.
+1:28
+And the mechanism that controls this is called cross origin resource sharing or CORS.
+1:34
+So with our API, we want to be open to everybody.
+1:38
+Any front end code should be able to consume our data regardless of protocol, domain, or port.
+1:44
+And so what we need to do then is send these special course headers that say, we're cool.
+1:50
+We're open to all.
+1:52
+We don't care if it's coming cross origin from a different domain or from a different port.
+1:56
+It's all good.
+1:57
+Okay.
+1:57
+How do we do that with code?
+1:59
+Well, Express makes it pretty easy.
+2:02
+We do need to install a third party package, though.
+2:04
+So in a new terminal, I'm going to say npm install, and the package we want is called CORS.
+2:11
+Once we've got that installed, let's import it and we can use it right here.
+2:16
+So before any other routes we've got defined, let's say app dot use and I'm just going to pass in CORS and give it parentheses and what that is going to do is it's going to apply an open CORS policy which allows all access and because we've put it at the top it's going to apply to any other route below this.
+2:36
+Now I'll save that but it makes absolutely no difference to us working here in Scrimba but it is necessary if you deploy.
+2:43
+And with that, we are done.
+2:45
+This is a pretty decent API.
+2:46
+Let's just take one more scrim to wrap things up.

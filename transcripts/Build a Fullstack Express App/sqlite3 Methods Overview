@@ -1,0 +1,70 @@
+
+Transcript
+0:00
+At this point, I want to give you a quick run through of all of the SQLite three helper methods we'll be using throughout this course.
+0:07
+There are actually four of them in total, and when to use each one is not necessarily that intuitive.
+0:13
+So this is a quick cheat sheet scrim, and don't worry if there's any syntax in it that you don't understand yet.
+0:19
+Just watch it through now and refer back to it later in the course whenever you find it necessary.
+0:24
+And just to be clear, I'm gonna give you some generic examples here.
+0:28
+Some of them are similar to code that you're gonna see in this course, but they're not absolutely identical.
+0:33
+Okay.
+0:33
+First up, we have got the exec method, and we use this when we want to run multiple statements at once.
+0:40
+And a typical use case is schema setup.
+0:43
+I've got a big example of that right here.
+0:45
+So we're using the exec method to create a table with these columns.
+0:51
+And when we use the exec method, we are not asking for any data to be returned to us.
+0:56
+Next up, we have got the run method, and we use that when we want to run a single statement.
+1:02
+Typical use cases are inserting, updating, or deleting data.
+1:07
+And I've got an example right here.
+1:09
+We're using the run method to insert a new user into a users table.
+1:13
+And again, when we use run, we're not asking for any data to be returned to us.
+1:19
+So run and exec are quite similar.
+1:21
+You might well ask yourself, what's the difference?
+1:24
+Well, the difference is exec can execute multiple statements and run is used for just one statement.
+1:32
+But the important thing is to remember that neither of them return any data and they don't need to.
+1:38
+Let's move on to the get method.
+1:40
+We use this when we expect one row back or if we only care about getting the first row.
+1:46
+A typical use of this might be to look up one row by its ID.
+1:51
+So in this example, we're using the get method to select everything from our users table where the ID equals the ID we've provided.
+1:59
+And we can imagine that a user's ID is unique, so we're only expecting one row to be returned with this SQL.
+2:06
+Finally, we have got the all method and we use this when we want to get all matching rows from a table as an array.
+2:14
+There are millions of things you could do with this, but just one typical example would be to select all in stock products.
+2:20
+So here, we're using the all method to select everything from products where the status is in stock, and the all method will return an array with all of that data.
+2:30
+Okay.
+2:30
+That's a really quick run through of all of these SQLite three methods that you're going to see throughout this course.
+2:36
+Refer back to it whenever you need to.
+2:39
+Okay.
+2:39
+Let's move on.

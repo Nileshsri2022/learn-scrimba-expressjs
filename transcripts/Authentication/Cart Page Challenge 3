@@ -1,0 +1,54 @@
+
+Transcript
+0:00
+This is a nice easy challenge, and I don't think I need to give you any help, so I've deleted hint dot m d.
+0:06
+What we're going to do is make sure that this checkout button, when clicked, deletes all of the items for a user from the cart items table.
+0:13
+The front end is then gonna display your order has been sent for processing.
+0:17
+The endpoint we're working with is this one slash API slash cart slash all.
+0:22
+It's for the delete method, and it deletes all a user's cart items.
+0:26
+The function is delete all, and we've got it set up right here.
+0:30
+I'm gonna leave you to get this sorted, and we'll have a look together in just a moment.
+0:38
+Okay.
+0:38
+Just a few lines of code needed here.
+0:40
+So let's await, and then we'll say DB dot run and the SQL is pretty easy.
+0:47
+We're gonna delete from cart items where the user ID is equals to question mark and then we just need to bind the user ID from rec dot session dot user ID.
+0:59
+And then we can end the response just like we did right here.
+1:02
+So let's hit save and we're gonna open up the mini browser.
+1:05
+Let's log in.
+1:07
+We need to add a few items to our cart.
+1:10
+Let's really go to town and buy loads of stuff.
+1:13
+Okay.
+1:14
+In the cart page, we have got several products, comes to three hundred and thirty dollars.
+1:19
+I'm gonna click checkout, and it says your order has been sent for processing.
+1:23
+So our cart functionality is all working.
+1:27
+Okay.
+1:27
+That's pretty cool.
+1:28
+We've just got one tiny thing to deal with.
+1:30
+When I say tiny, it's actually pretty important.
+1:33
+If you remember right here, I put in this code just to make sure we have a session for a user before we display anything on the cart page.
+1:39
+And I did that because we've got a bit of a security loose end to tie up, and we're gonna come to that in the next scrim.

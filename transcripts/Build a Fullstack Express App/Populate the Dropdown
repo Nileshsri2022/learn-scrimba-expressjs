@@ -1,0 +1,153 @@
+Transcript
+0:00
+Our next task is this.
+0:01
+Right in the middle of our finished product, we have got this genre drop down.
+0:05
+Let's just zoom in.
+0:07
+And if we click the down arrow, we get a list of unique genres.
+0:11
+Now eventually, when a user selects one of these genres, only products with that genre will be displayed.
+0:17
+But for now, we're gonna focus on populating this drop down list.
+0:20
+Now we could just get all of the products on the front end and extract the genres and then remove the duplicates.
+0:26
+But that seems a little bit inefficient and hacky.
+0:29
+Instead, we've actually set up a route especially to get the genres.
+0:33
+And if you'll remember rightly, we have got a function to handle that route right here in products controller dot j s.
+0:39
+It's called get genres.
+0:41
+What we're gonna do here is use SQL to ask our database to give us just the unique or distinct genres from our products table.
+0:49
+So your challenge is gonna be writing logic to do that.
+0:52
+But just before we start, let me just explain some of the donkey work that I've done.
+0:56
+I've created this folder DB and this file DB dot JS.
+1:01
+And this is just the code to connect to a database.
+1:04
+What we're gonna do is have that code in one place in our app and then we'll call this function get DB connection anytime we need to connect to the database.
+1:12
+And we're doing it this way because now this code is integral to the app.
+1:16
+These other files create table, log table and seed table that we've been working with recently are not integral to the app.
+1:24
+They can now be deleted.
+1:25
+I've actually just left them in place in case you want to refer to them.
+1:28
+But typically, at this point, we would get rid of them.
+1:31
+We don't need them anymore.
+1:33
+I guess log table might come in handy as time goes on.
+1:36
+Now the only difference to the other code we've seen where we have been connecting to the database is that right here I'm just returning this connection rather than storing it in a const.
+1:46
+And also I've just taken the database path out to a const and we're including it here.
+1:51
+But effectively that is the same to what we were using in the other files.
+1:56
+Okay.
+1:56
+Let's import it to product controllers dot j s.
+2:00
+And also, I'm going to bring in the rec and the res to this function, and I'm going to set up a try catch.
+2:08
+We're gonna take this challenge and place it inside the try block but before you tackle that I am just gonna catch the error for you.
+2:15
+So if it all goes wrong we're gonna say res dot status and we'll set that to five hundred.
+2:21
+We'll call Jason and let's serve an error object.
+2:24
+So we'll say error and the details can be the error message.
+2:29
+Okay.
+2:29
+Let's come on to the challenge.
+2:31
+So I want you to put your SQL hat on and get all of the distinct genres with no repeats from the products table.
+2:38
+We haven't looked specifically at how you can only get the distinct genres, so that might be something you need to search online for.
+2:45
+We have a second bit of complexity here.
+2:48
+Our front end code is expecting an array of genres as strings, but you'll likely get an array of objects from the database so I've just put you'll need to find a solution to that.
+2:57
+Now if we have a quick look in public and go to index.
+3:00
+Js, if we scroll down this is where we've got the problem.
+3:04
+This line here is expecting an array that looks something like that.
+3:08
+It's just an array of strings but what you'll likely get back from the SQL you write is actually an array of objects.
+3:14
+So just find some way to solve that problem.
+3:17
+When you're done, serve the array of genres and open up the mini browser to check the drop down is populated.
+3:22
+I have given you some help in hint.
+3:24
+Md, feel free to use it if you need to.
+3:27
+Go ahead and get to work on this challenge.
+3:32
+Okay.
+3:32
+Let's make a start.
+3:33
+So right here inside the try block, I'm gonna say const DB and that can hold what gets returned by get DB connection.
+3:42
+GetDB Connection is an async process of course so let's await it.
+3:47
+Now we can get all of our genre rows so let's say const genre rows and we will await DB.
+3:54
+We'll use the all method because we want to get data from multiple rows and then our SQL can be as follows.
+4:02
+SELECT and then this is the keyword DISTINCT and then we'll have GENRE FROM our table which is PRODUCTS.
+4:10
+That should do the trick.
+4:11
+Let's just log that.
+4:13
+And if we open up the terminal and open up the mini browser, there we are.
+4:17
+We are logging our array of objects.
+4:20
+Okay.
+4:21
+Let's just see if we can get that into an array of strings.
+4:25
+So I'm gonna say const genres and let's take genre rows and we'll call the map method and for each row let's return row dot genre to this new array and we'll log that one.
+4:39
+I'll hit save, open up the terminal and there we are.
+4:42
+Look we've got an array of strings.
+4:44
+So that is exactly what we want.
+4:46
+We just need to serve it and we're gonna do that by saying res dot JSON and passing in genres.
+4:53
+Now we'll give it a try in the real world.
+4:55
+We'll open up the mini browser and let's check the drop down and there we are.
+4:59
+We have got all of our unique genres.
+5:02
+Now Scrimba might not record that drop down particularly well.
+5:05
+You might not be able to see it at all.
+5:06
+So just pause and run that code for yourself if you don't believe me.
+5:11
+Okay.
+5:11
+We've just got a couple more challenges to add the rest of the functionality so we can actually display some products.
+5:16
+Let's start working on that in the next screen.

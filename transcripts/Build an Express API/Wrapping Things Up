@@ -1,0 +1,56 @@
+
+Transcript
+0:00
+Massive congratulations for finishing this project.
+0:03
+You should be very, very proud of yourself.
+0:05
+You've got stuck into the express framework, one of the most important frameworks in web development at the moment.
+0:11
+Let's just recap what we studied.
+0:13
+So we created a server.
+0:15
+We sent status codes like two hundred and four hundred.
+0:18
+We set headers.
+0:20
+We handled requests and responses.
+0:22
+We filtered data, extracted path and query params, and looked at cross origin resource sharing.
+0:28
+All of that really useful stuff and a really solid foundation for you to build on.
+0:33
+Always good to have some stretch goals.
+0:35
+You could handle post requests.
+0:36
+You could allow users to upload data to this API.
+0:40
+If you do that, I recommend you ignore authentication for now.
+0:43
+It's a huge topic, and we'll come to it later, but it's totally up to you.
+0:47
+You could add better filtering.
+0:49
+There's more that we could do.
+0:50
+You could allow some search terms to search within the details that we've got down here, the description, the mission statement, all of that stuff could be searchable.
+1:00
+You could also allow for partial matches.
+1:02
+For example, names which contain the words AI.
+1:06
+You could also go ahead and make this real.
+1:08
+Do your research, create a really good resource, and then charge people to use it.
+1:13
+If you do that and you make it work, I want five percent.
+1:16
+Come and find me on LinkedIn.
+1:18
+But for now, remember to relax and take it easy and consolidate what you've learned before moving on to the next project.
+1:24
+And if you're an early adopter of this course, you might have to wait a little bit for the next part of this course to be released.
+1:31
+I am working away as fast as I possibly can, so hopefully, the next part of this course will be released really soon.

@@ -1,0 +1,78 @@
+
+Transcript
+0:00
+Our genre drop down is working, but at the moment, our products are not showing.
+0:05
+And showing the products is probably the hardest part of this project.
+0:08
+So let's just check out exactly what we need to do.
+0:12
+So we have this get products function, and we've already set that up right here in products controllers dot j s.
+0:18
+This is it.
+0:18
+Just waiting for some logic.
+0:20
+What this function needs to be able to do is serve all products, serve the products in a provided genre using our drop down, and serve products whose title artist or genre contain a provided search query.
+0:33
+Now remember the front end is all done so on page load the front end will just serve all of the products and any drop down activity or search activity will use the same endpoint but with a query string.
+0:45
+In this scrim, let's aim to display all products so it will look like this.
+0:49
+And that means writing code inside this function right here get products.
+0:54
+And we're going to write a bit of code together.
+0:56
+I'm actually gonna take all of the logic that we've got from get genres because some of it is the same.
+1:02
+We will take in the rec and the res, and we're gonna keep this const holding a database connection.
+1:08
+All of this, I'm gonna delete, but we will keep the error, but I'm going to update this failed to fetch products.
+1:15
+Now bear with me while I bring you in a challenge.
+1:18
+This is what I want you to do.
+1:20
+Write logic here in get products so all products display on page load.
+1:24
+And here's a bit of future proofing as we will need to modify it in the next challenge, store the SQL query in a let and pass it into the all method.
+1:33
+That is exactly what we did in the screen before last so you know how to do that.
+1:38
+Now if you check out hint dot m d, you're gonna find it's absolutely empty.
+1:42
+I haven't given you any help with this one.
+1:44
+I think you know how to do it.
+1:46
+So go ahead and get this sorted.
+1:51
+Okay.
+1:51
+Let's go ahead and do this one.
+1:53
+So we're gonna say let query and here we're gonna build our SQL query.
+1:58
+So we'll say select and then we will use the asterisk for all from our products table.
+2:05
+Now let's take some products.
+2:06
+So we'll say const products and there we will await a DB.
+2:10
+We'll call the all method and pass in our query.
+2:14
+Then we can serve it with res dot JSON.
+2:17
+Let's hit save and we'll open up the mini browser and we're getting some products.
+2:23
+Let's stretch it out and see the full width.
+2:25
+There we are.
+2:26
+We've got all of our products displaying nicely and we have also got our drop down menu working.
+2:32
+So that is big progress.
+2:33
+We have got two more things to do.
+2:35
+Next we're going to handle a user selecting a genre from this drop down so we'll do that in the next scrim.

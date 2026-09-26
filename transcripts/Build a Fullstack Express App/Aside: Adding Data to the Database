@@ -1,0 +1,104 @@
+
+Transcript
+0:00
+Okay.
+0:00
+Let's actually add some abductions to our alien abductions database.
+0:04
+I've got an array of abductions right here.
+0:07
+It's just standard JavaScript.
+0:09
+Some of these are pretty ridiculous.
+0:11
+No offense if you've been a victim of alien abduction.
+0:14
+Now I've imported this data to seed table dot j s and I've also imported the dependencies we need and the path module so we're all ready to go.
+0:26
+So this is going to be an async function seed table and inside we need to set up a connection.
+0:32
+That's something that you've seen several times now so let me speed type it.
+0:37
+And by the way if this were integral to the app we would obviously reuse this code not write it out in every script And in fact you would likely use one file to create and seed your database.
+0:48
+But we're using separate self contained scripts here just to lessen the cognitive load a bit.
+0:53
+Okay, we've got the connection to our database.
+0:56
+Now we actually want to set about writing data to the database.
+1:00
+We're gonna do that inside a try catch.
+1:03
+Firstly, in the try block, we are going to iterate over this data and I'm actually just going to loop over it with a for of.
+1:10
+I am going to destructure it as we go.
+1:13
+So in abductionsdata dot j s we've got location and details and now we can take our database and we are going to await calling the run method.
+1:24
+And the run method is going to allow us to write some SQL.
+1:27
+It's used with commands that change the database but don't actually return any data.
+1:32
+And one good example of that is the insert method.
+1:35
+So let's say insert into and then we want the table name which is obstructions and then here we list the columns we want to insert values into and they are location and details.
+1:49
+Now we have values and here we will just use placeholders and in SQLite we use the question mark as placeholders.
+1:57
+Next we need to pass in an array and this array contains the actual values in the same order as the placeholders.
+2:05
+So that is gonna be location and details.
+2:08
+And so now these values are safely bound to the placeholders which helps prevent SQL injections and makes the query cleaner and more secure.
+2:17
+And this pattern is called prepared statements and it's common when writing clean and secure SQL although the syntax for the placeholders is not the same with every database and with every database driver.
+2:28
+Okay.
+2:29
+Let's think about performance because at the moment each insert is its own transaction.
+2:34
+It opens the database file, it writes the row, and it closes the file.
+2:38
+And it's going to do that for each object in our data.
+2:42
+And that is slow although of course in an app this size you'd never notice it.
+2:46
+But for improved performance at scale, we can actually do all of this in one transaction and we're gonna do that using the exec method.
+2:54
+So before we start right at the top of the try block, let's say await db dot exec and we're just gonna pass in the string in uppercase begin transaction and then at the end again we will await and we'll say db dot exec and here we'll pass in the string commit and that will end the transaction and we might quickly console dot log something here and we're done with the try block.
+3:21
+Let's move on to the catch.
+3:23
+If there's an error let's do a rollback and what that means is if something goes wrong, we'll roll back everything we've done so we haven't confusingly inserted some of our records but not others.
+3:34
+Rollback will make sure that nothing is inserted unless everything is inserted and we do that with the exec method again.
+3:42
+Really simple to do we just pass in the string uppercase rollback and we should log the error.
+3:48
+Before we run this we should have a finally and in here all we're gonna do is close the database connection.
+3:55
+Okay let's call this function and hit save and then we can open up a terminal and it's node seed table and it says all records inserted connection closed.
+4:05
+That is looking pretty good.
+4:07
+We can check by running log table dot j s and we can see down in the console we're getting our table.
+4:14
+Now obviously the formatting of this is not great and that's because we've got not that many columns but a lot of text in the details column.
+4:22
+So I might just update the JavaScript really quickly.
+4:25
+Let's just go to log table dot j s and I'm just gonna take a new const.
+4:30
+I'll call this items to display and and we're just gonna take abductions and we will map over it and let's just destructure location and details and we need to wrap that in parentheses then we'll have the arrow and let's just return location as is but then for details we'll say details dot substring and then let's just keep that one short so we'll stop it at fifty characters.
+4:57
+Now when I hit save let's open up the terminal, run this one again.
+5:01
+Oh and in fact then we want to console.
+5:03
+Table items to display.
+5:06
+Let's run that and that is looking like a much neater table.
+5:10
+So we can see we've got all of our data in our database.
+5:13
+Okay take a good look at the code that we have got right here in seed table dot j s because in a moment I'm gonna set you a challenge where you need to basically recreate quite a bit of this.

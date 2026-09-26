@@ -1,0 +1,138 @@
+
+Transcript
+0:00
+So a user has signed up.
+0:02
+We've got all of their user data on the server, and now we need to add it to the users table in our database.
+0:08
+But there's one thing we need to be really careful about, and that is avoiding duplicates.
+0:13
+Remember when we wrote the SQL to set up our users table, we specified that the email and the username should be unique.
+0:21
+And that means if we try to add an email or a username which already exists, we are going to get an error.
+0:27
+So we could just go ahead and add our new user data to the database, let the database reject it if it's a duplicate, and then just handle that error.
+0:36
+But in practice, I found that to be rather unelegant and messy with actually quite awkward error handling.
+0:41
+So it's much easier to do a quick manual check for a duplicate before adding the user.
+0:46
+And what I mean by that is that we'll literally query the database and we'll say find me a user with this username or this email address.
+0:54
+If the database manages to do that, then we'll know that that username or email address already exists and at that point we can end the response and send a message down to the front end saying that registration has failed because this is a duplicate.
+1:08
+So let's get to work on doing that.
+1:10
+I've done some of the donkey work for you.
+1:12
+I've bought in the database connection and then down here we've got a try catch.
+1:16
+I've stored the database connection in this const and then down here in the catch I've got a general error So that is sending this five hundred and this error object.
+1:28
+All of the code you're going to write is going to be right here in the try block, and this is your challenge.
+1:34
+I want you to check if the username or email address has already been used.
+1:38
+If it has, end the response with a suitable status code and send this object.
+1:43
+If the incoming username and email address are unique in the database, you can add the user to the table and send this JSON.
+1:51
+I've put a little question here which status code should you use?
+1:54
+I'll leave you to think about that.
+1:56
+Now when you've been successful, you can test by adding a new user and the mini browser will redirect to the home page.
+2:03
+Then you can run logtable.
+2:05
+Js that you've got right here and that will show you down in the console that you have created a new user.
+2:10
+When you view that table in the console you will be able to see the password in the database.
+2:15
+That is obviously a big problem and we will be fixing that later.
+2:19
+Now just a quick word, when I do this part I am going to save the result of my database query to a const.
+2:26
+We don't need to do that for the code to work in this scrim but we will be using that const later so it doesn't matter if you do it for the purposes of this challenge but just so you're aware when I do this challenge I will save the result of this call to the database to a const.
+2:41
+Go ahead and get to work on that.
+2:45
+Okay I really hope you got that working so let's start off by seeing if we can detect if a user with that username or password already exists in our table.
+2:56
+I'm going to say const existing and here I will await the database connection and we're going to use get because we're just going to see if we've got some data already in the database.
+3:08
+So let's say select ID from the users table where email is equals to question mark or username is equals to question mark.
+3:19
+Then we'll have a comma and we can pass in our array with of course email and username.
+3:25
+So what this code does is it checks if a user exists with the email or username that we've got from the incoming user.
+3:32
+If it does, then existing will be a truthy value.
+3:35
+If it doesn't, existing will be a falsy value.
+3:38
+So let's have some conditional logic and we're just gonna check for the truthiness of existing.
+3:43
+So if existing exists, we can return because this is where we want to end the response.
+3:50
+We've detected a duplicate.
+3:51
+We just need to let the front end know.
+3:53
+So we'll say res dot status.
+3:56
+I'm gonna pass in a four hundred status code and then we've got some JSON to send and it is this object right here and we're done checking for duplicates.
+4:06
+Now let's deal with this being a full c value.
+4:09
+That means we can go ahead and add the new user.
+4:12
+We don't have a duplicate and this is where I'm going to save the result of my query to the database to a const.
+4:17
+So I'll say const results and we will again await the database connection.
+4:23
+Now we're gonna do some inserting so I will use run and let's have some SQL.
+4:28
+We'll say insert into the users table and we want all four name, email, username and password.
+4:37
+The values will be the question marks and then our array with the variables.
+4:43
+That should work.
+4:44
+Let's send a response.
+4:45
+So here the status will be two zero one to show that something has been added and the JSON can be this success object which is saying that the user has been registered.
+4:59
+Okay.
+4:59
+That should work.
+5:00
+Let's just hit save and open up the terminal and check for errors.
+5:04
+It's looking good.
+5:06
+So let's open up the mini browser and give this a go.
+5:10
+I'll hit create account and we have redirected to the home page.
+5:14
+That is looking pretty good.
+5:15
+Let's just open up a terminal and we'll say node log table dot j s and there we are we have got our users table in the console and we can see me and my rubbishy password right there.
+5:29
+And so we've got this working let's just check for duplicates.
+5:33
+So we'll once more go to sign up and I'm going to use exactly the same details although of course it's only the email address and the username which matter.
+5:44
+Let's hit create account and if we scroll down email or username already in use.
+5:49
+So that is working perfectly.
+5:51
+We haven't got any errors.
+5:53
+Good job.
+5:54
+In the next scrim, we need to deal with what we're doing here with password security because this is awful and evil.
+6:01
+But it's quite a big topic, so we're gonna learn about it in the next few scrims.
+6:05
+Hi.

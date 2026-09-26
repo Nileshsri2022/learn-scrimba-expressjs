@@ -1,0 +1,148 @@
+
+Transcript
+0:00
+We've created a session for our signed in user, but we don't see any evidence of it in our app.
+0:05
+When a user is logged in or has just signed up, their name should appear in the header with a welcome message.
+0:11
+And if a user is not logged in, it should say welcome guest.
+0:16
+Now we've got the front end code to do that already if we just look in public and JavaScript and come to index dot j s.
+0:24
+We've got this function render greeting which takes in a name.
+0:27
+The name is coming from this function check auth.
+0:30
+Let's just uncomment both of those.
+0:33
+Now when I hit save, we will see the welcome guest message.
+0:38
+Let's just check what these two functions check auth and render greeting are doing.
+0:42
+We're importing them from auth u I dot j s which we've got right here.
+0:47
+So check auth is hitting this endpoint slash API slash auth slash me and then it does one of two things either it returns the user's name or it returns false if the user is not logged in or if there is some kind of error or problem.
+1:03
+Render greeting is taking in a name, it's checking if that name exists, if it does it will render welcome name, if not it will render welcome guest.
+1:12
+Now I just want to flag really quickly that I made a few changes to the front end JavaScript before recording this scrim so if you took this code offline earlier you might want to update it.
+1:22
+There were no big problems, nothing breaking but there was actually a bit of overlap between these two functions so I just sorted that out.
+1:30
+Okay.
+1:30
+What we need to do now is deal with this endpoint and just before we start I want to draw your attention to the word me because that might seem a little bit strange But actually using the word me when we're getting details specific to a logged in user is quite common.
+1:45
+So we're going to be doing that in this app with this endpoint with the controller for it and with the router for it.
+1:52
+Okay.
+1:52
+So what do we need to do to wire up this endpoint?
+1:55
+Well, I've done some of the donkey work for us already.
+1:58
+In controllers, I've set up me controller dot j s.
+2:01
+We've got the skeletons of a function here and a try catch going on and a challenge we're coming back to in a moment.
+2:08
+And then down in roots we have got this file me dot j s and here we have got a root already set up handling requests with get current user which is the name of the function we've got right here in me controller dot j s.
+2:23
+So all we need to do is take this and wire it up to server dot js.
+2:29
+So we should import it right here and then we need to add it to our stack and here we need to be a little bit careful about where we place it.
+2:37
+If we put it right here so we say app dot use and the endpoint is api auth me and then we pass in me router, is that going to work?
+2:50
+Well the answer is maybe.
+2:52
+It depends what happens right here because remember these are read from the top down and that means any request to anything with slash API slash auth is going to be picked up by this line of code and if something in that route ends the response then this code down here is not going to get read.
+3:09
+So to be safe we need to move this one above API auth.
+3:14
+So now that is going to catch anything which needs the me endpoint and anything else will just move on down and be picked up right here.
+3:23
+Okay.
+3:23
+When I save this, a few things are going to break on the front end.
+3:27
+So we've lost all of our products and we've lost the welcome message.
+3:30
+Don't worry.
+3:31
+They are gonna come back when you complete this challenge.
+3:34
+Let's just hide the mini browser.
+3:36
+So if no user ID is attached to the session, I want you to end the response with this piece of JSON right here and if the session has a user ID, I want you to connect to the database.
+3:46
+I've given you the line of code you need to do that already and I want you to get the user's name.
+3:51
+Then you can end the response with this JSON right here.
+3:55
+Once you've done that, open up the mini browser, sign in a new user and hopefully you will see their name up here with their welcome message.
+4:04
+Then you know the challenge has been solved successfully.
+4:07
+Okay go ahead and get to work on that.
+4:12
+Okay hopefully you persevered and you got that working.
+4:15
+We need to check if a user ID is attached to the session So let's take some conditional logic and we'll say if rec dot session dot user ID and really we want to check that a user ID has not been attached because if that's the case we're going to end the response so we'll say res dot json and we'll pass in this object right here.
+4:39
+Now you might have been tempted to add a status code here to flag that this was some kind of problem or error but it's not.
+4:46
+It's a perfectly legitimate response so we're going to send a two hundred code as per the express default so we don't need to add anything else to that line.
+4:55
+We're just letting the front end know that the user is not logged in.
+4:59
+Okay if this code doesn't execute we need to connect to the database and get the user's name.
+5:05
+So let's say const user and we will await db dot get and here we will have some SQL.
+5:13
+So we're saying select the name from users where the ID is equals to question mark and then in our array we will bind rec dot session dot user ID.
+5:28
+And finally we're gonna end the response with this JSON so res.
+5:32
+Json and we'll pass in is logged in true and then the name will be the user's name we can take that from user.
+5:40
+Name.
+5:41
+Okay let's hit save and we're going to open up the mini browser Oh, and we have got a problem because I didn't finish off that object properly.
+5:48
+Let's try again.
+5:49
+Oh, and I've forgotten to return this line and we do need to do that else we can run into errors.
+5:55
+Let's hit save.
+5:56
+Now I'll open up the mini browser.
+5:58
+Okay.
+5:59
+It's looking good.
+6:00
+We've got our products back.
+6:01
+We've got welcome guest.
+6:02
+Let's see if we can sign up a new user.
+6:06
+Okay.
+6:07
+We'll hit create account and it looks like it has worked.
+6:11
+We've got welcome Henry Hoover.
+6:13
+Okay.
+6:13
+That's some pretty good progress.
+6:14
+Now we can see that we have got a logged in user, but there are still various things we need to do.
+6:20
+We need to deal with actually allowing a signed up user to log in at a later date.
+6:24
+We need to allow them to log out And also, at the moment, we've got unprotected routes.
+6:30
+So a couple more things to do.
+6:31
+When you're ready, let's move on.

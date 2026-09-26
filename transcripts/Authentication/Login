@@ -1,0 +1,178 @@
+
+Transcript
+0:00
+We need to deal with login and we've got a login page right here.
+0:04
+Let's check out the front end code quickly.
+0:06
+So in public JS and the script is login dot JS.
+0:10
+Right here, this is the endpoint we need to hit on the back end.
+0:14
+So it's slash API slash auth slash login.
+0:17
+Let's just follow its route.
+0:18
+So slash API slash auth is going to be picked up in server dot j s right here by this line of code.
+0:26
+It's going to pass that on to auth router.
+0:28
+Let's check that one out.
+0:30
+Here's auth router and I've set up this route to handle the slash login endpoint and that is going to lead us to login user which is coming from auth controller.
+0:41
+If we look in controllers, here's auth controller.
+0:43
+We wrote all of this code before and then down here I've set up this new function login user and this is where your challenge lives.
+0:52
+Let's check out what it is I want you to do.
+0:55
+So if the user's login details are incomplete, end the response with this JSON and a suitable code.
+1:01
+So that's the object you need right there.
+1:03
+If the user's login details are invalid, end the response with this JSON and a suitable code.
+1:09
+And again, I've given you an object.
+1:11
+Now just to be clear, this could be because the user does not exist in the database, so their username is simply not there, or because the password does not match their username.
+1:21
+If the user's login details are valid, you can create a session for the user and end the response with this JSON just message logged in.
+1:29
+Now I've put the challenge text right here at the top of this function but some of it you're going to want to write here and some of it will come down here inside the try block and also you can look at register user above for inspiration because quite a lot of what you're going to write here is actually the same as you've written up here, but certainly not everything.
+1:48
+And the three main pointers I've given you here are not absolutely everything you need to do.
+1:53
+I do want you to check out the function above and just see if there's anything which is missing.
+1:58
+So I'm gonna leave the challenge a little bit open so you need to do some thinking.
+2:02
+Now an important point I want to make, last ID is not available to us here.
+2:07
+So how can we get the user's ID to attach it to the session?
+2:11
+I'll leave you to think about that, but I have given you help in hint dot m d so check that out if you need to.
+2:17
+Now when you're done I've given you an account you can test with.
+2:20
+It's the username test and the password of test and if in the terminal we run log table you'll see that account right here.
+2:29
+So just try logging in with those credentials and the page should then redirect to the home page and you should see the user's name displayed in the header just like we saw after sign in.
+2:39
+Okay.
+2:40
+Plenty for you to get your teeth into there.
+2:42
+So take your time over this one, and I'll see you back here when you're ready, and we'll have a look together.
+2:50
+Okay.
+2:50
+I really hope you persevered with that and you got it working, and congratulations if you did.
+2:55
+Quite a lot of code to do here but a lot of similarity to what we did before so hopefully you got through it.
+3:01
+Let's start off by destructuring what we need from the body.
+3:05
+So I'm gonna say let and we just want the username and the password and we're taking them from rec dot body.
+3:13
+Next we should just check that the details are complete so we want to have both a username and a password else we're gonna quit right now.
+3:21
+So we'll say if there's no username if that's a false value or there's no password, let's end the response so we will return res dot status.
+3:32
+That one will be a four hundred and the JSON can be all fields are required.
+3:39
+Now the next thing I want to do is kind of covered by this because there's something we did in the previous function which I didn't list here.
+3:46
+Let's just check it out.
+3:47
+You can see it right here we did a bit of trimming.
+3:51
+Now we don't need to do so much trimming down here but let's see what we need to do.
+3:56
+So I'm just gonna paste in all of those.
+3:58
+Well we haven't got the name here we're just dealing with the username actually because we're not going to trim the password.
+4:03
+So let's just take that one put that one right there and now the username is trimmed.
+4:08
+Okay now we need to move down to validation.
+4:12
+So let's move into the try block.
+4:14
+We've got the database connection set up.
+4:16
+We know the username exists so let's get all of the information we've got on that user.
+4:22
+I'll say const user and we will await db dot get and the SQL can be select everything from the users table where username is equals to question mark and in the array we will have username.
+4:38
+Now in the challenge I did specify that the login details could be invalid for two potential reasons.
+4:44
+The user does not exist or the password does not match the username.
+4:48
+Firstly, let's just check that we actually have a user with this username.
+4:52
+So we're gonna say if that user does not exist, let's return res dot status that will be a four zero one and the JSON we pass in will just be invalid credentials.
+5:05
+We don't want to specify whether it was the username or the password that was invalid.
+5:10
+We don't want to give clues away.
+5:12
+We're just gonna say invalid credentials.
+5:14
+Okay now it's time to check if the password the user has inputted matches the password we've got on the database.
+5:21
+Let's take a const and I'm gonna call it valid and we are going to await bcrypt and this time we're going to use the compare method and we'll pass in the password which the user has just submitted and we'll also pass in the password we've got on the user object so that will be the one we've just taken from the database.
+5:41
+So what bcrypt dot compare is going to do for us here is it's going to compare this plain text password which has just come in with the sorted and hashed password we've got from the database.
+5:52
+Bcrypt is going to do all of the donkey work for us and this will be a boolean.
+5:56
+So in fact let's call it is valid because I think that's a little bit of a better name.
+6:01
+We're checking if it is valid yes or no.
+6:04
+Now we have some more conditional logic.
+6:07
+So if the boolean is false, so the passwords do not match, we want to end the response so it will be return res.
+6:16
+Status and in fact it's going to be exactly the same as what we've got here.
+6:21
+Okay if this boolean is true we can create a session for the user so let's say rec dot session we'll find the user ID property and now we need to set that to the ID of the user we are logging in and before we found that using last ID because we just inserted a user.
+6:39
+That is not available to us here but we can of course just take it manually from the database and we've got it already.
+6:46
+This is our user so we'll take it from user dot ID.
+6:50
+Now let's end the response.
+6:53
+So it's res dot JSON and we have got our JSON right here.
+6:57
+This is the object that will of course send a two hundred code by default.
+7:02
+Let's hit save and check to see if it's worked.
+7:05
+We'll open up the terminal.
+7:07
+At the moment, we haven't got any errors.
+7:09
+Let's open up the mini browser and we have got the test account right here.
+7:13
+So I'll say username test, password test, login.
+7:17
+We get redirected and it says welcome test account.
+7:21
+That is looking pretty good.
+7:23
+And what you'll also notice is we've got some front end JavaScript which is only now rendering the logout button.
+7:29
+We're not seeing sign up or log in because a user is logged in.
+7:33
+At the moment, this logout button doesn't do anything.
+7:35
+It just redirects us to the home page, but we're still logged in.
+7:39
+Let's figure out how we can deal with that in the next scrim.
+7:42
+I'm not gonna do too much of the work for you on this one.
+7:44
+It's gonna be a big challenge just for you.

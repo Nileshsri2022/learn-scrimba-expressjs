@@ -1,0 +1,147 @@
+Transcript
+0:00
+This server dot JS file is huge, and it's time to tidy it up.
+0:03
+We are going to refactor it using express dot router.
+0:07
+I've already set up two new folders.
+0:09
+We've got controllers and roots.
+0:11
+And roots is empty, but controllers has got the bare bones of a couple of functions which I've created for you.
+0:18
+And I just wanna say a quick word about the names I've chosen.
+0:21
+I've called this one get all data because although we might filter by query params, the endpoint that serves this is actually slash API.
+0:29
+So it does potentially get all of the data.
+0:33
+And get data by path params, well, that is a long name, perhaps too long, but it is really descriptive as to what it does.
+0:40
+And in both cases, I've named these functions using the verb convention with get.
+0:46
+I think it's more descriptive.
+0:47
+It just makes it clear what each controller does.
+0:50
+Okay.
+0:50
+Let's deal with the challenge.
+0:52
+I want you to refactor the code to use express dot router.
+0:56
+And it's great if you can do this from memory and with a bit of trial and error.
+1:00
+But to save you from getting really stuck, I pasted the code from the previous scrim in example dot j s.
+1:06
+It's all of the express router syntax in one file.
+1:10
+And there's no shame at all in using that.
+1:12
+There's too much to remember here for most mere mortals.
+1:15
+So take all of the time you need to do this.
+1:17
+Check example dot j s whenever you need to, and refactor this code to use Express dot router.
+1:25
+Okay.
+1:25
+Hopefully, you got that done.
+1:27
+And as I said, no problem if you used example dot j s.
+1:31
+That is what it was there for.
+1:32
+Quite a lot to do here.
+1:34
+So let's make a start on these controllers.
+1:38
+We've got get all data.
+1:39
+And actually solving this challenge, although there is a lot of code, it involves a lot of cutting and pasting.
+1:46
+Well, we have got the logic that we need right here.
+1:49
+I'll cut it from there and paste it in right there.
+1:52
+And we do need to remember to export this.
+1:55
+And the other thing we're going to need access to in here is startups.
+1:58
+So let's import that.
+2:00
+And in fact, again, we can pretty much borrow this import statement, but we will need an extra dot here just to get us out of the controllers folder.
+2:09
+Okay.
+2:10
+Let's save that and get data by path params.
+2:14
+We can do pretty much the same thing.
+2:17
+So back in server dot j s, let's lift all of this logic.
+2:21
+We need to export this and we can borrow the import statement to get startups.
+2:27
+Okay.
+2:27
+Not bad.
+2:28
+Let's go to server dot j s then and we need to do something with these roots.
+2:33
+So I'm gonna cut them from here and I'm gonna create a new file and I'm gonna call it API roots.
+2:39
+And there's quite a lot of work that we need to do in here actually.
+2:43
+So we need to import our controllers and I'll paste in the roots.
+2:49
+We need to import Express from Express and that's because we need to set up a new instance of Express dot router and it is something we're gonna have to export back to server dot j s.
+2:59
+So I'm gonna call this instance API router and then it's this instance of express dot router that we need to call the get method on and then we can just pass in our controllers.
+3:11
+So slash API goes to get all data and then this one will go right here.
+3:17
+Let's save that.
+3:19
+Back in server dot JS then we've just got a little bit more work to do.
+3:23
+We no longer need to import startups but we do need to import API router and that is coming from roots slash API routes.
+3:32
+And now we need to take our app and we're gonna use the use method and we're going to say on the slash API route use API router and just writing that reminds me that I we forgot in here or rather I forgot to take away API.
+3:49
+We did.
+3:50
+We just need slash so let's take away that one and that one.
+3:53
+Okay.
+3:54
+Now it is the moment of truth.
+3:56
+Let's test this and see if it's working.
+3:58
+First, I'll have a quick look in the console.
+4:00
+It's looking good.
+4:01
+I'll hit send and we're getting our response.
+4:03
+It looks like it's working.
+4:04
+Let's just test a path param and I'll try Europe as well.
+4:10
+And excellent.
+4:11
+That is working properly.
+4:13
+So our app is looking much, much neater.
+4:15
+Server dot JS is much more manageable.
+4:18
+We've got everything modularized, and our routes are neatly defined.
+4:22
+This is a pretty good job.
+4:24
+We have got one last step.
+4:26
+We need to handle a situation where a user doesn't use a known route.
+4:29
+Let's deal with that in the next scrim.

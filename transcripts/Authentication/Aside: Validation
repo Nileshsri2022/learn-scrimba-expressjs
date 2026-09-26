@@ -1,0 +1,135 @@
+Transcript
+0:00
+We have input coming in from the front end, and we need to think about validation.
+0:04
+So this is a quick primer and a reminder of some of the tools that we can use to do that.
+0:09
+A key point you probably already know is this.
+0:12
+Front end validation is for UX only.
+0:15
+It can be easily overridden by a malicious actor.
+0:19
+So we can't rely on it.
+0:20
+We have to take care of validation on the back end.
+0:23
+Okay.
+0:23
+Let's list what types of validation we're going to be using.
+0:27
+Firstly, we want to check all fields exist.
+0:30
+That is pretty easy to do with JavaScript.
+0:33
+Secondly, we're going to trim the white space from the start and the end, and we're going to do this with the name and the username.
+0:38
+JavaScript makes that easy to do with the trim method, but why is it important?
+0:43
+Let's take a look.
+0:45
+The Roman emperor and stoic philosopher Marcus Aurelius wants to buy our vinyl.
+0:50
+He's a big vinyl fan.
+0:51
+And why not?
+0:52
+He's a man of impeccable taste.
+0:54
+And so what I've got here on this very basic Express server which has got no roots and is not actually serving anything to the front end is a couple of users which we're gonna imagine have just come in from the front end via the POST method.
+1:08
+Now these two are kind of similar.
+1:10
+They're both called Marcus.
+1:11
+We've got Marcus Aurelius of the Holy Roman Empire and we've got Marcus Smith of the average empire.
+1:17
+They've got the same username, Marcus one and different passwords.
+1:22
+But take a look again at the usernames.
+1:24
+Things are not quite identical because Marcus Smith has added a space to the end of his username, and he probably did that by accident when he signed up.
+1:33
+But if we add both of these to our database, we are going to run into problems because we're effectively going to have two identical usernames and that is something that we don't want.
+1:42
+Because let's say Marcus Smith, this new user two, tries to log in but doesn't add the white space after his username, which is quite reasonable because he only put it there by accident, then his login is going to fail because the app would be expecting the password gladiators, not the password moggie.
+2:00
+And everything would get very confusing.
+2:02
+If as soon as the data comes in, we trim the white space, then when there's a check for duplicates before adding a new user to the database, that check is going to catch this and prompt whoever signed up last to choose a new username.
+2:15
+Now we won't be trimming the white space from passwords as leading or trailing space might be part of that password but that is a policy decision.
+2:24
+You could disallow white space and passwords if you wanted to.
+2:27
+Now at this point it would also make sense to convert the username to lowercase but we won't do that with the other fields like full name and email that is not necessary and of course with password you want people to be able to mix lowercase and uppercase.
+2:42
+Okay.
+2:42
+What's next on our list?
+2:44
+Well, we have got regex.
+2:46
+And we're going to use regex on the username because we only want to allow certain characters in the username.
+2:52
+And don't worry.
+2:53
+I will give you the regex when you do this as a challenge.
+2:56
+I don't expect you to know regex off by heart.
+2:58
+I certainly don't.
+3:00
+Now we're not going to use regex on the name, which in this object right here, we've got as full name.
+3:06
+And the reason for that is that names can be quite complex.
+3:09
+Some names have hyphens, some names have inverted commas for example.
+3:14
+I think even some famous people have given their kids names with numbers in.
+3:17
+So I think we're going to be pretty relaxed about what people can put in their name.
+3:22
+The final thing on our list is validating the email address.
+3:26
+And we want to do that because it's tempting for some people just to come here and instead of having a real email address, to put in some rubbish so we don't send them spam.
+3:36
+We don't want our users to do that.
+3:38
+We want to have their proper email address.
+3:41
+Now, of course, we don't know if it's their real email address until we try and email them, but we can check it's a valid format.
+3:48
+And we're going to do that with an NPM package called validator.
+3:52
+Now validator is pretty cool.
+3:54
+You can click on this screenshot and that will take you through to the docs.
+3:58
+Validator actually validates lots of things, not just email.
+4:01
+But if we scroll down, we can see we've got this is email method and that's the one we're going to be using.
+4:07
+It's really simple we just call the method and pass in the string we want to validate which in this case will be an email address that is what this method is for and it's going to tell us if that is a valid email format or not But if you check out the docs, you will see all sorts of other options with the validator package.
+4:24
+So let's just install it.
+4:26
+I'm going to open up a new terminal and it's npm install validator.
+4:32
+Now let's import it and I'll take a console dot log and we'll say validator dot is email and we just pass in the email.
+4:41
+So let's check new user dot email.
+4:45
+I'll hit save and open up the terminal and go back to the runner and it says true.
+4:50
+So that is telling us that marcus at holy roman empire dot org is an email address with a valid format.
+4:57
+Let's take away the dot and replace it with a comma and I'll save and that is now false.
+5:03
+This email address is not a valid format.
+5:05
+So it's that simple to use and it gives us a really reliable way of validating email addresses.
+5:11
+Okay.
+5:11
+Let's head back to the project where you are going to do some validation.

@@ -1,0 +1,173 @@
+Transcript
+0:00
+Okay.
+0:00
+In the last scrim, we use this line of code and we need to rewind and deal with it because there is quite a lot going on here.
+0:07
+What this line does is it gives us access to a variable which is not in our code base but in our environment.
+0:14
+And if that variable does not exist in our environment then it defaults to this hard coded option right here.
+0:21
+But wait there.
+0:22
+What exactly do I mean by environment?
+0:25
+Well, the environment is wherever your code is being executed.
+0:29
+It could be your laptop or desktop or indeed a server.
+0:33
+And the variables we store here are called environment variables and that is often shortened to MVARS.
+0:40
+Variables in the environment can be accessed by the code we run locally.
+0:44
+But what's really cool is that instead of these variables being accessible just in one specific file where they're declared, they're actually accessible everywhere in your environment.
+0:55
+So you can have multiple projects in the same environment which all use the same environment variables.
+1:01
+So you can store for example your OpenAI API key once and then use it in multiple projects.
+1:07
+And one huge benefit of this is that it's much much safer than hard coding your variables and we're gonna talk more about why at the end of this scrim.
+1:16
+Right now we have not set any environment variables so let's do so retroactively.
+1:22
+Firstly, we need to install a package so I'll say npm install dot env.
+1:29
+Okay.
+1:29
+We've got that installed.
+1:31
+Let's import it right here and to use it we need to take dot env and call its config method.
+1:37
+Okay.
+1:38
+Let's save that and now in our root we want to create a dot env file and that literally starts with a dot or a period and this is where we store our environment variables.
+1:49
+So the very strong convention here is to use uppercase and that is what we've already done.
+1:55
+So let's just copy that one and then we can have equals and we can set it equals to this string.
+2:01
+Now depending on what is consuming this environment variable, you may or may not need to wrap this string in quotation marks.
+2:07
+We actually don't need them here so I'm gonna leave it just like that.
+2:11
+Let's give that a save and back in our code we're actually consuming this right here because we can access our environment variables using process dot env and then the name of the environment variable.
+2:23
+Let's just prove that with a console dot log.
+2:26
+I'll hit save.
+2:27
+Let's open up the terminal and we'll go over to the runner and there we are we have got our environment variable.
+2:32
+Let's update it to something else.
+2:34
+I'll just put some exclamation marks on the end and there we are.
+2:38
+So we're accessing it with process dot env dot spiral underscore session underscore secret.
+2:43
+So let's delete this unnecessary code And also just to show it's working, let's delete this bit of code right here so we don't have a default option.
+2:52
+Now I'm gonna hit save.
+2:54
+I will log in.
+2:56
+I've set up a user with the username Brian.
+2:58
+The password is also Brian.
+3:01
+Let's hit log in and it's working just fine.
+3:04
+So we're successfully storing this secret in an environment variable.
+3:09
+And in fact, let's delete all of these exclamation marks.
+3:12
+And of course, as soon as I save, we get logged out.
+3:15
+But the important thing here is that we've now deleted our hard coded key and that is much more secure.
+3:22
+But you might be thinking, why does this help when I share my code?
+3:25
+Anyone can just look at this dot m file and they'll see all of my secrets.
+3:30
+Well, brings us to the clever part because this dot m file is not to be shared.
+3:35
+Cast your mind back to when you studied git.
+3:38
+If you'll remember we have got something called dot git ignore and in fact let's create a git ignore file right now.
+3:44
+So again it's gonna go in root.
+3:46
+It's just dot git ignore and all we need to do here is list all of the files that we want to be ignored when we push our project to GitHub.
+3:55
+So it would be completely normal of course to include node modules.
+3:59
+We don't need that clogging up our GitHub repo But let's add to the list dot env.
+4:04
+And now when we push this to GitHub, this file will not be included so all of our secrets stay safe.
+4:10
+And if you're thinking ahead, here's a question that might have crossed your mind.
+4:14
+When you look at a repo, how can you quickly tell what you'll need to have in your environment to make the app work?
+4:20
+Do you actually have to go through the app file by file and find every instance of process dot env?
+4:26
+Well, the answer to that is, of course, no.
+4:29
+Somebody has thought of that.
+4:31
+One way to solve this problem is to have a dot env dot example file.
+4:36
+And this is a template file, it's safe to commit.
+4:39
+It just shows what variables are needed without exposing the values.
+4:43
+So from dot env, we can just copy this part.
+4:46
+We leave it empty, and that makes it really clear to your colleague or to whoever has got their hands on your repo that they need to add a session secret right here.
+4:55
+And if this was a more complex app, there would, of course, be plenty to fill in here.
+4:59
+You might need keys for AI APIs.
+5:01
+You might need database URLs, ports.
+5:04
+There are all sorts of possibilities that you might want to have in an environment variable rather than hard coded into your app.
+5:11
+So all of them would be listed in here and then in dot m dot example, you might just have the names of those variables so other developers know which ones they need.
+5:21
+And of course, on top of that, you also have the option of adding detailed instructions to the README so other developers can utilize your code.
+5:30
+Okay.
+5:30
+We need to say a quick word about best practice here on Scrimba because scrims are a shareable format.
+5:36
+You can just grab the URL of the scrim and send it to whoever you like.
+5:41
+Now that's great, but if you've saved secret keys in your code or in your dotenv then they will be shared with your scrim and that is bad.
+5:49
+So I want to emphasize that what I've just shown you here using this dotenv package is great for the real world but it is not good inside Scrimba.
+5:58
+In Scrimba, we actually have our own environment variables tool which will help keep you safe when you're sharing scrims with friends or with the community.
+6:06
+And you can actually check it out right here just by clicking on this screenshot.
+6:10
+That's going to take you to a scrim which tells you everything you need to know about setting it up.
+6:15
+And so as we go on with this project we will actually not be using this .env package or this .env file.
+6:22
+We're going to be sticking to using a hard coded value right here just like we were before.
+6:27
+Not a big deal when you're developing locally but just be aware that when you develop outside of Scrimba, you're going to be sharing your code.
+6:34
+You really should be using environment variables.
+6:36
+Okay.
+6:37
+That is it for environment variables.
+6:39
+Use them to keep secret keys, database URLs, and anything else which is either security critical or specific to your environment out of your repos.
+6:47
+In your career, you're gonna use them a lot.
+6:50
+Okay.
+6:50
+Let's get back to the project.

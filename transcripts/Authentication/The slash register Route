@@ -1,0 +1,132 @@
+
+Transcript
+0:00
+There are five steps we need to take to get a user signed up and logged in.
+0:04
+We need to create a route for the API slash auth slash register endpoint.
+0:09
+We need to validate and sanitize the incoming user data.
+0:12
+We need to add the new user data to the users table.
+0:15
+We need to think about password security in the database and also create a session for the user.
+0:22
+Okay.
+0:23
+So quite a lot to do.
+0:24
+And in this scrim, we're just going to start off by setting up a route for this endpoint.
+0:28
+Now let's just quickly check out the front end code.
+0:31
+So in public, if we go into the JavaScript folder and we come right down to sign up dot j s, right here on line seventeen, this is where we're hitting the register endpoint.
+0:41
+So it's API slash auth slash register.
+0:44
+We're making a post request and we're going to include the body which is gonna have the name, email, username, and password that the user uses when they sign up using this sign up form.
+0:56
+Now if we go to the other end of this route, so right up here to this controllers folder, I'm going to create a new controller and this is where the logic for the route will live.
+1:06
+So we'll call it auth controller dot j s and here we want to export a function.
+1:12
+It's gonna be an async function and it's going to be called register user and it's going to take in the request and the response and although eventually there will be a ton of logic in here, for now all I want to do is take the request and log the body.
+1:28
+Okay.
+1:29
+I'll save that and we need to set up a route.
+1:32
+So we've already got one route for products.
+1:34
+Let's have another one and we'll call this one auth dot j s.
+1:38
+We need to import the controller we just created and we need to import Express.
+1:45
+Now let's set up a const to hold a new instance of Express dot router.
+1:50
+We're going to call it auth router and this endpoint is going to be for posts and we're dealing here specifically with register.
+1:57
+If we just recheck that slide we had API slash auth slash register.
+2:02
+You can imagine that later we'll be dealing with other things to do with authentication but for now we're sticking to register So that is what we want to have right here and we want to pass in register user.
+2:14
+Oh, and of course we need to export this router.
+2:17
+Okay.
+2:18
+Let's save that and the final part of this happens in server dot j s.
+2:23
+Firstly, we need to import the route and then right here underneath where we're routing products, we can say app dot use.
+2:31
+We'll pass in the rest of the endpoint so it's slash API slash auth and we'll pass in auth router.
+2:39
+Okay.
+2:39
+Let's hit save and what should happen now then if we open up the mini browser is that we should be able to log out everything that we put in this form because it should be in the body of the request.
+2:51
+Let's just open up the terminal and I'm gonna complete this.
+2:55
+Let's hit create account.
+2:56
+Oh, and I'm getting an error in the front end console.
+2:59
+Let's just see what that says.
+3:00
+We've got a syntax error.
+3:02
+Oh, and actually I see what I did right here.
+3:04
+You were probably screaming at me.
+3:06
+Let's just correct that typo.
+3:08
+Okay.
+3:09
+Let's try that one more time.
+3:11
+Now I'll hit create account and we're logging out undefined.
+3:15
+And that is quite interesting.
+3:16
+We're logging out rec dot body colon.
+3:18
+So if we go back to the controller, we're actually successfully logging this part, but rec dot body itself is giving us undefined.
+3:26
+So what exactly is going wrong here?
+3:29
+Well, that brings me to a challenge and I'm going to type it up for you in server dot j s.
+3:35
+And here's your challenge.
+3:36
+I want you to put your detective cap on and see if you can figure this out.
+3:40
+I'm gonna give you one clue.
+3:42
+We're lacking some middleware here to deal with the incoming body, and I have given you some help in hint dot m d if you get stuck.
+3:49
+But this is a bit of a detective challenge, so feel free to search online and see if you can find the answer.
+3:58
+Okay.
+3:58
+Hopefully, found that what we need to do is use the JSON middleware.
+4:03
+So it's app dot use and we'll pass in express dot JSON.
+4:08
+Let's hit save.
+4:09
+We'll open up the mini browser and try it once again.
+4:13
+I'll hit create account and there we are.
+4:16
+This object right here is coming straight from rec dot body.
+4:19
+So what this JSON middleware is doing is passing incoming JSON and putting the results in rec dot body.
+4:27
+Without this middleware, rec dot body will be undefined.
+4:31
+So this is really, really useful and we're gonna leave it right here at the very top of our middleware stack.
+4:37
+Okay.
+4:37
+We know we've got the root working so in the next grim we need to come on to the next topic which is validation and sanitization of this incoming data.
+4:47
+When you're ready for that, let's move on.

@@ -1,0 +1,76 @@
+
+Transcript
+0:00
+Let's get started on our next step with this project, getting authentication working.
+0:05
+Authentication is a key back end skill, and this section aims to give you a solid foundational knowledge.
+0:12
+We are going to use authentication to sign up new users, log users in, log users out, and also show user specific data as they add items to their cart.
+0:23
+This is how the app is going to look.
+0:25
+We've now got welcome guest in the header and login and sign up buttons.
+0:30
+Let's click sign up.
+0:31
+Now we can add our details and click create account.
+0:35
+And that will log us in as reflected by this welcome message right here.
+0:39
+This logout button has appeared and when we click it, the welcome message changes to welcome guest again.
+0:45
+Now let's say we are logged in and we want to do some shopping.
+0:49
+So I'm going to add one copy of selling dogma.
+0:52
+And when I click add to cart, the cart icon appears here with the number one to show that I have one item in my cart.
+0:59
+Let's add one more.
+1:01
+There we are.
+1:01
+It's up to two in the cart.
+1:03
+And now I can click on this cart, and that will take me through to the cart page.
+1:07
+Okay.
+1:08
+At this point, I've decided I don't actually want to buy selling dogma.
+1:11
+It's not very good.
+1:12
+So I'll click this basket.
+1:14
+That one gets deleted.
+1:15
+I'm left just with midnight parallels, and I'll click checkout.
+1:19
+And it says your order has been sent for processing.
+1:22
+So when a user hits checkout, their orders will be cleared.
+1:26
+We are not adding a payment gateway to this app.
+1:29
+Now to handle authentication, we are going to be using Express dot session.
+1:33
+Express dot session is the easiest way to add authentication to our site while getting to know how authentication works under the hood.
+1:42
+There are plenty of other options, but they add unneeded functionality while abstracting away complexity.
+1:49
+For learning all about auth, I think Express dot Session is great.
+1:53
+This is what we're going to study, the Express dot Session middleware, of course, but other highlights include validation, hashing, and bcrypt, and protecting our roots.
+2:03
+And, of course, there will be plenty of challenges.
+2:06
+Now we're gonna have a ton of SQL to write as well, So do check out this primer on the SQLite three methods that we're going to be using if you haven't done so already.
+2:16
+And also, before we start, I should quickly add that there's a ton of new front end code which you're welcome to check out.
+2:23
+You'll find it all in the public folder.
+2:25
+I have commented out some front end JavaScript specifically in index dot j s and cart dot j s, and I've done that so we don't get strange errors or hangs while we're building the app.
+2:35
+We will uncomment that front end code when we've got the back end code to handle it.
+2:40
+When you're ready to tackle authentication, let's go.

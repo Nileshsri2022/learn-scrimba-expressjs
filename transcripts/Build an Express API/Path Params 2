@@ -1,0 +1,112 @@
+
+Transcript
+0:00
+We have a problem.
+0:01
+We have a problem with our new route because if a user tries to do something like this, they use, for example, has slash MVP, I e a field that we're not expecting, then we get an error.
+0:13
+And to help you solve this, I'm gonna give you a freebie.
+0:16
+It is an array right here called allowed fields, and it just contains the fields we're accepting country, continent, and industry.
+0:23
+So if a request contains a field that does not exist in this array, we want to inform the user of their mistake, and we're gonna do that by sending them this object.
+0:33
+And when we send them this object, we should also send them a status code, which is not two hundred.
+0:38
+And we saw earlier that Express abstracts headers and status codes, etcetera, away from us, tucks them under the hood, but we can override that.
+0:46
+Express provides a method on the response object to update the status code, and that method is actually just status, and then you pass in the code as a number.
+0:57
+And you can actually chain that method in right before the JSON method.
+1:01
+Okay.
+1:02
+Here's your challenge.
+1:03
+If the client's field is not supported, serve this object and pass in the status code that you want to send to show the client that the request was a mistake.
+1:11
+And I put here what status code should you send.
+1:14
+I'm gonna leave you to think about that.
+1:16
+Also, when you do this, you might run into an error.
+1:19
+I want you to find a solution to that error, and I have given you some help in hint dot m d.
+1:24
+Okay.
+1:25
+Quite a bit to think about here, so go ahead and get to work.
+1:29
+Okay.
+1:30
+Hopefully, you got that working.
+1:32
+I'm gonna start off with some conditional logic.
+1:34
+I'm gonna say if, and then what I want to do is see if allowed fields includes, so I will use the includes method, the field that has come in from the client.
+1:46
+And we're actually most interested in the situation where that is not the case.
+1:51
+So I want to put the exclamation mark here.
+1:53
+So now we're saying if allowed fields does not include the field that has come in, execute this code.
+1:59
+And what we want to do then is take the response object called JSON, pass in this object right here.
+2:06
+And we also need to think about the status code, and we know we've got this status method, and we can chain it in right before the JSON method.
+2:14
+And then we need to pass in the status code we want to send.
+2:17
+Well, if there's an error in the request, we send a four hundred.
+2:21
+Okay.
+2:22
+That is looking pretty good.
+2:23
+We need to test it.
+2:25
+So we've already got a problematic URL in here.
+2:28
+Let's hit send.
+2:29
+We get our object, but if we open up the terminal, we're getting an error.
+2:33
+Did you find a solution to that problem?
+2:35
+Hopefully, you recognized that what we've done here is we've used the JSON method twice.
+2:40
+Firstly here and then again here.
+2:43
+And you can't do that because each time you use the JSON method, it sets the headers under the hood and you can only do that once.
+2:50
+So what we need to do is make sure that if this code executes right here, it ends the response.
+2:56
+And we can do that just by returning it.
+2:59
+Now when that code runs, that's the end of the response, and this code down here will not execute.
+3:06
+Okay.
+3:07
+Let's put that to the test.
+3:08
+I'll hit save.
+3:09
+I'm going to empty everything from the network tool.
+3:13
+Let's open up the terminal as well.
+3:14
+I'll hit send.
+3:16
+And there we are.
+3:16
+We have got our object.
+3:18
+We're sending the four hundred, but we're not getting an error in the terminal.
+3:22
+So that is working.
+3:23
+And now we have all of the functionality we need, but we have got a super bloated server dot JS file.
+3:29
+Look at all of that code that's going on there.
+3:31
+To round this project off, let's reorganize our code and make it much more manageable.

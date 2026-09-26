@@ -1,0 +1,132 @@
+
+Transcript
+0:00
+Okay.
+0:00
+Let's go back to this code right here, which I told you I had introduced as a temporary measure because I wanted to deal with something to do with security.
+0:08
+Well, let's comment it out and I'm going to save that.
+0:12
+And now in the mini browser, I'm going to try to navigate to cart.
+0:16
+Html.
+0:17
+Now we are not logged in at the moment.
+0:19
+Let's see what happens.
+0:21
+And it looks like we've got some issues there.
+0:23
+Let's just check out what's going on in the runner.
+0:26
+And we have indeed got an error.
+0:28
+It says error unimplemented.
+0:30
+Now that pretty much figures.
+0:31
+Let's just check out what's happening in this code.
+0:34
+So we have got this SQL where we try to access the database and what we're binding to the SQL is rec dot session dot user ID.
+0:43
+Now we're not logged in so there is no user ID attached to the session and that's why we're getting this error and that reminds us that all of these routes that we've set up on the cart are actually unprotected.
+0:56
+That is to say a non logged in user can try to access them.
+1:00
+Now in the app as it stands at the moment, that doesn't matter too much from a security perspective because they're going to hit an error, but it could be dangerous because we could have hundreds of pages, a whole ton of spaghetti code and somewhere we could make a mistake which exposes personal data to a non logged in user.
+1:18
+Now I'm actually going to mock this up in a completely contrived way.
+1:22
+Let's just open up a terminal and I'm going to run log table dot j s to see what we've got in cart items and this is the important bit.
+1:31
+We've got the user IDs right here.
+1:33
+So in cart items, we've got items from user nine and user ten.
+1:38
+So let's do something here instead of saying rec dot session dot user ID we're going to say use rec dot session dot user ID or nine.
+1:47
+Okay now let's hit save and just check that the server is restarting.
+1:52
+That is looking pretty good.
+1:53
+We can open up the mini browser and look we're logged in as guest but cart dot HTML is now displaying the items of somebody's basket and it is the basket of user nine.
+2:04
+Let's just check what happens if we change that to ten.
+2:07
+Well, look, we get different categories in the basket.
+2:10
+So we're accessing data even though we're not logged in.
+2:14
+And hypothetically, this could be all sorts of personal data, so it's obviously a very bad thing.
+2:19
+What we need is something which will stand in the way of some specifically protected routes and end the response if the user is not signed in.
+2:27
+So it's not that we're trying to hide the cart HTML page, but what we're doing is making sure that the routes which get access to user data are only for logged in users.
+2:37
+And we're going to do that with some middleware and this middleware is slightly different or at least the way we use it is going to be slightly different to what we've seen before.
+2:45
+So previously if we had just to server dot j s, we have got this stack right here which is read from top to bottom.
+2:52
+We've got for example the JSON middleware which is sitting right there at the top and once it's done everything it needs to do it passes control on down.
+3:01
+What we're going to do instead is come over here to our roots and we're actually going to stick the middleware onto specific roots.
+3:09
+This allows us to place it just on the roots where it's needed.
+3:12
+Now I'm going to give you a quick example of something not really related to security just so you can see how middleware works in this situation.
+3:21
+And then in the next grim, you are gonna take on a challenge to add some protected routes using middleware.
+3:27
+Okay.
+3:27
+Imagine I want to log every single sign in attempt.
+3:31
+Right here, I've got an empty middleware folder.
+3:33
+Let's just create a new file in here.
+3:35
+I'm gonna call it log sign in dot j s.
+3:39
+This is gonna be really simple middleware.
+3:41
+So I'm gonna export the function.
+3:43
+It's gonna take in oh, we need to give it a name.
+3:45
+Log sign in.
+3:48
+It's gonna take in the request, the response, and next just like the other middleware we've seen.
+3:54
+So actually this function is not gonna contain anything unfamiliar to you.
+3:58
+We're just gonna have two lines of logic in here.
+4:00
+The first is just going to log the sign in attempt and the second is just going to call the next function.
+4:07
+So that is our really basic middleware.
+4:10
+Now let's go to the auth roots and I'm going to import log sign in and then this is where things get a little bit different because I'm going to place the middleware only on the route where I want it and that is this route right here because this is the route that handles login and the middleware is sitting there right before this route.
+4:32
+So if you imagine the route, it has to go through this middleware before it gets here.
+4:36
+Let's see it in action.
+4:38
+So let's open up the terminal and the mini browser and I'll go to login and I'll just log in as test and test and it says sign in attempted and that doesn't mean that they successfully signed in.
+4:51
+We could actually log out and now let's log in with a username and password which don't exist.
+4:57
+That's going to fail, invalid credentials, but we still got sign in attempted.
+5:01
+So that middleware is working.
+5:04
+It's just sitting right there on the root and we did just see that because when we logged out a user and I'll just do it again.
+5:11
+So we go to the menu and we click log out.
+5:14
+We're not logging sign in attempted so you can see that this log sign in function is middleware only on this root.
+5:21
+Now in the next scrim, I'm going to set you a challenge to create middleware to protect our cart routes.
+5:26
+I'm gonna give you all of the info you need, but you are going to be following this middleware pattern.
+5:31
+So take a good look at it now because I'm going to delete it before we start the next scrim.

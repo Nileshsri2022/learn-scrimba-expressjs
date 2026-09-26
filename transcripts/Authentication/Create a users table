@@ -1,0 +1,66 @@
+
+Transcript
+0:00
+Our first task is to create a table to hold our users, and I've just tried to do that, but unfortunately, I've run into some bugs.
+0:08
+So let me just talk you through what I want to do.
+0:11
+I want to create a new table called users, and it's going to have just these basic pieces of information for each user.
+0:19
+It's going to have an ID, which will be the primary key.
+0:22
+It will have a name, an email, which will be unique to the table, a username which will also be unique to the table, a password, and then we'll have this created at column and that will hold a timestamp.
+0:35
+So that's what we need and this is the code to do it, but there is a problem which is that it doesn't work.
+0:41
+Now we're actually inside this SQL folder here.
+0:44
+So if I just open up the terminal and let's say node and then SQL slash create table dot JS.
+0:53
+Look, we get an error.
+0:55
+So your challenge is to debug this code so a new table users is created and you can check you've been successful using log table dot j s that I've given you right here.
+1:05
+I've also given you drop table dot j s If something goes horribly wrong and you need to delete your users table and start again, you can execute this code.
+1:14
+But hopefully, you won't need to do that.
+1:16
+Okay.
+1:17
+Go ahead and get to work on this challenge.
+1:22
+Okay.
+1:22
+Hopefully, you got this working.
+1:24
+So the first problem that we came across if we check out the error is that it says driver is not defined.
+1:31
+Well, this is the driver right here.
+1:34
+It's the database driver from SQLite three.
+1:37
+It needs to have an uppercase first letter.
+1:40
+So hopefully you figured that one out.
+1:42
+Now when we hit save, let's try running that code again and we get another error.
+1:48
+This one it says DB dot insert is not a function and that is true.
+1:53
+This insert method does not exist on our DB class.
+1:58
+Actually, we should have used exec here.
+2:00
+I'm sure you knew that.
+2:02
+Let's hit save and again we can run this code.
+2:05
+It says table created.
+2:07
+Let's run log table dot j s and we get our index so that table exists.
+2:14
+Okay.
+2:14
+We've got a table for our users and now we need to put some users in it.
+2:18
+So let's work on getting people logged in in the next screen.

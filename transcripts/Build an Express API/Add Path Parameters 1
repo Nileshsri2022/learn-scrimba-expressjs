@@ -1,0 +1,132 @@
+
+Transcript
+0:00
+Users should be able to get data from our API using path parameters.
+0:03
+And in this grim, we're going to add a brand new route to allow them to do that.
+0:08
+And we could add a ton of filtering functionality here, but to keep things reasonably brief, we're going to offer them three choices.
+0:14
+They can get all startups in a given country.
+0:17
+So the route for that will be API slash country and then the name of the country.
+0:21
+All startups in a given continent, API slash continent, continent name, and the same for industry API slash industry slash industry name.
+0:31
+And I'm setting this up so that the URL that we use is going to be API slash field slash term, and I've given those actually quite generic names.
+0:41
+Now there's quite a lot to do here, and we're going to do it over two challenges.
+0:45
+Let me explain why.
+0:46
+The function I'm going to ask you to write is only designed to handle strings, and country, continent, and industry, all of these are strings.
+0:55
+So at the end of this challenge, all of these should work.
+0:59
+But there is gonna be a bit of a problem.
+1:01
+If a user tries something like this, API slash has MVP slash true, that is going to throw an error.
+1:07
+And that, of course, is because right here, is a boolean, not a string.
+1:12
+What I want you to do in this first challenge is ignore it.
+1:15
+It's absolutely fine for the purposes of this challenge.
+1:19
+In the next challenge, we're gonna handle that error gracefully so the users know that it's only country, continent, and industry that they're allowed to use with path parameters.
+1:28
+But as I say, your function for now just needs to concentrate on country, continent, industry and ignore everything else.
+1:34
+We will sort out that error in the next scrim.
+1:37
+Okay.
+1:38
+So here is your challenge.
+1:39
+Add a new route which accepts GET requests to API slash field slash term.
+1:44
+Filter the data based on the path parameters.
+1:47
+And I'm thinking you don't need a bunch of different filter methods here.
+1:50
+You can do all of the filtering in one go.
+1:53
+And then of course serve the filtered data.
+1:56
+Okay.
+1:56
+The first route we created is right up here, all of this code starting with app dot get.
+2:01
+So this second route, you can start right underneath right here.
+2:06
+Quite a lot to do, so get to work on that and take all of the time you need.
+2:10
+Okay.
+2:11
+Hopefully, you got that sorted.
+2:12
+Was quite a bit to do.
+2:14
+Let's make a start.
+2:15
+So it's app dot get to set up the new route.
+2:18
+We need to pass in our path.
+2:19
+So we've got slash API slash and then we have our first colon for field slash the second colon for term.
+2:27
+Next comes our callback, which takes in the rec and the res, of course.
+2:32
+And we should start off by getting our hands on the field and term, and we can do that using destructuring.
+2:39
+And we're destructuring from rec dot params.
+2:43
+Now comes the filtering.
+2:45
+Let's say const filtered data, and that can take our startups and we'll call the filter method and for each individual startup in that array we'll take the startups field I e country continent industry.
+3:01
+We'll make sure it's to lowercase and we'll compare it to the term which is coming in and we'll also just make sure that that is lowercase.
+3:10
+All we need to do now is actually serve the data so it's res dot json and let's pass in filtered data.
+3:18
+I'll hit save.
+3:20
+In the console, no errors.
+3:21
+Let's give it some testing.
+3:23
+So our test case is right here, API slash country slash India.
+3:27
+When I send okay.
+3:28
+That is looking pretty good.
+3:30
+I see some India right here.
+3:32
+Yep.
+3:33
+That is working.
+3:35
+And let's just try industry AI.
+3:38
+And again, I'm seeing AI everywhere.
+3:40
+That is pretty good.
+3:41
+That's working fine.
+3:43
+We could try has MVP and we'll pass in true.
+3:47
+What happens then?
+3:49
+We get a five hundred.
+3:50
+We get some random HTML in the response.
+3:53
+Let's just see let's just see what's happening in the terminal, and we have indeed got an error.
+3:58
+Okay.
+3:59
+That's to be expected in the next scrim.
+4:01
+We're gonna sort that out.

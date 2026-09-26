@@ -1,0 +1,134 @@
+
+Transcript
+0:00
+You've probably heard the customer is always right.
+0:03
+Rubbish.
+0:03
+Customers, and in our case, users, are very often wrong, and they do stupid things which cause us problems.
+0:10
+And I guess we should do our best to make their miserable lives easier by helping them out when they try to access our API in a silly way because they didn't read the docs.
+0:20
+And that reminds me, we haven't dealt with a situation where the client makes a request to a route we don't support.
+0:26
+So here's your challenge.
+0:27
+If a client uses an unknown route, serve this JSON.
+0:31
+Endpoint not found.
+0:32
+Please check the API documentation.
+0:34
+I think that's pleasingly passive aggressive.
+0:36
+I've put a little test for you right here.
+0:38
+So this is what we're dealing with is when they get the root completely wrong.
+0:43
+So they're not using slash API.
+0:45
+If they make another mistake, things are not so bad.
+0:47
+Let's just test this.
+0:49
+So that's working fine.
+0:51
+If we put something here which does not exist, they're getting the empty array.
+0:55
+That's okay.
+0:56
+If we change this to a path param we don't support, and, yeah, I know the moon isn't a planet, we get this error search field not allowed.
+1:04
+That's absolutely fine.
+1:06
+But what happens then if we just use AI instead of API?
+1:10
+Well, we get this dodgy HTML in the response and this four zero four.
+1:14
+So we just wanna take control of that.
+1:17
+Okay.
+1:17
+And in fact, I'm going to copy and paste that already for you right in there.
+1:22
+That should get the same response and it does.
+1:25
+Okay.
+1:26
+I did show you how to do this in the screen before last, and I have given you some help up here in hint dot m d.
+1:31
+The challenge text is right here, and that is actually not necessarily where you need to write the code.
+1:37
+I want you to think about where this code should go.
+1:39
+That is part of the challenge.
+1:41
+So get to work on that.
+1:44
+Okay.
+1:44
+Hopefully, you got that sorted.
+1:46
+So what we need to do is make another use of app dot use.
+1:51
+Let's go for it right here.
+1:53
+We'll say app dot use and we're not gonna pass in a route this time.
+1:56
+We're just going to pass in the callback and let's say res dot status because I did say to serve or rather server, that's a silly typo, an error code and we know the error code.
+2:10
+We've got it right here so let's pass in four zero four.
+2:14
+We'll chain on JSON and we'll serve this object.
+2:18
+Okay.
+2:18
+Let's hit save and now I'm gonna test it and that's pretty good.
+2:22
+Endpoint not found.
+2:23
+Please check the API documentation.
+2:25
+Okay.
+2:26
+Let's just go back to something which should work.
+2:29
+CountryUK.
+2:31
+Ah, but we get the same problem because we have put our code in the wrong place.
+2:35
+These are read from top to bottom and app is gonna use the first working path it comes to.
+2:41
+Let's move this one up.
+2:43
+So now if this works, it will get used.
+2:45
+If it doesn't work, I.
+2:46
+E.
+2:47
+If no response is sent, then control will pass on down and this code here will execute.
+2:53
+So you can think of this as being like a fallback.
+2:55
+If this fails, this should work.
+2:57
+And so you could end up having lots and lots of routes and then perhaps this one at the end.
+3:02
+Okay.
+3:02
+Let's save that and test.
+3:04
+There we are.
+3:05
+That's working.
+3:05
+Let's break the URL right here.
+3:08
+And there we are.
+3:09
+So that is working exactly as we want.
+3:11
+We've only got one thing left to do, and that's to deal with a situation where you take this code out of Scrimba and you want to deploy it to the Internet.
+3:18
+Let's deal with that very quickly in the next scrim.

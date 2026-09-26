@@ -1,0 +1,193 @@
+Transcript
+0:00
+Let's make a start.
+0:01
+I'm going to create a file called server dot j s.
+0:05
+And in server dot j s, let's just console dot log hello express.
+0:10
+I can save that, and then we run this by opening up the terminal and typing node and the file name, which is server dot j s.
+0:19
+When I hit enter, we log Hello Express right here in the terminal.
+0:24
+So we're just writing regular vanilla JavaScript here.
+0:27
+We don't need to go deep into the differences between a node environment and a browser environment right now, but just be aware that all of that DOM manipulation stuff you're used to with, for example, document dot get element by ID is no longer available to you.
+0:41
+There will be some other goodies that you find in this environment, and we'll be discovering them as we go along.
+0:46
+Now at the heart of every Node.
+0:48
+Js project whether you're using Express or not is a package dot JSON file and the package dot JSON file is essential because it acts as the project's kind of blueprints.
+1:00
+It contains metadata like the name, version, author, description, etcetera, and it also simplifies collaboration.
+1:07
+And it does that by managing the dependencies.
+1:09
+And we're gonna talk more about dependencies later in the course.
+1:12
+And it also defines the start script and this automates the task of running the app and we're gonna see that in action very very soon.
+1:21
+So having all of that in one place in this package dot JSON simplifies collaboration because then others can install and run the project with just a couple of terminal commands.
+1:31
+Now package dot JSON is just a JSON file, so we could open up a new file here and create one manually, but Node actually gives us a tool, a utility, which is going to create the package dot JSON file for us and using that utility is going to be your first challenge.
+1:48
+In the terminal, you'll notice that we're already in the project folder.
+1:51
+Scrimba does that for us under the hood And the first terminal command you're going to use is npm init.
+1:58
+Init is short for initialize and you run that to initialize the project and that will launch the utility to build the package dot JSON file for us.
+2:06
+Now the utility will ask you for some information.
+2:09
+All of the data that you need is right here in project details dot m d and a lot of these I've just put default and as you use the utility you can hit enter to accept the default option and that can be a blank space.
+2:22
+Not all of the answers are compulsory.
+2:24
+Okay.
+2:25
+I'm just going to type in your challenge.
+2:27
+There we are.
+2:28
+Create a package dot JSON file by typing npm init in the terminal.
+2:32
+Answer the questions using the info in project details dot m d.
+2:36
+Go ahead and do that now.
+2:39
+Okay.
+2:40
+I'm sure you managed to do that without too much trouble.
+2:43
+Let's just keep the project details open, and we'll open up the terminal and it's npm init.
+2:50
+Let's hit enter, and we enter the utility.
+2:53
+The package name we want to change, we're going to take startup planet.
+2:57
+Hit enter.
+2:58
+The version will accept the default.
+3:00
+Here comes the description.
+3:02
+The entry point is server dot j s.
+3:05
+It's already got that for us.
+3:07
+Test command.
+3:08
+Test command, we're leaving blank.
+3:09
+So the default hit enter.
+3:11
+Git repository default.
+3:12
+Keywords default.
+3:14
+Author, hopefully, you put your name.
+3:16
+I will put mine right here.
+3:18
+And the license will accept the default.
+3:20
+Is that okay?
+3:21
+Yes.
+3:22
+It is.
+3:22
+Just keep an eye on the left hand sidebar and package dot JSON has appeared.
+3:27
+Let's open it and we've got all of our details right there.
+3:31
+If we go back to server dot JS, why don't we just quickly change what we're logging?
+3:36
+I'll save that.
+3:37
+And now when I open up the terminal, instead of doing node server dot j s, which is what we were doing before, let's see if we can use the start script.
+3:47
+So back in package dot JSON, we've got these scripts and start here has got exactly what we were going to type in the terminal node server dot j s.
+3:57
+So if in the terminal instead of that we actually type something different, we actually type n p m start, that will fire up this start script, which should run our code.
+4:07
+When I hit enter, we have a package dot JSON.
+4:10
+So we're running the code in server dot j s using the start script.
+4:14
+And our command, which we can see again by hitting the up arrow by the way, was n p m start.
+4:20
+And hitting the up arrow will actually cycle through previous commands.
+4:24
+So if I press up again, we see n p m in it.
+4:26
+Press the down arrow, we're back to n p m start.
+4:29
+Pretty useful time saver.
+4:31
+So this start script is pretty useful because if we share our code, we don't want collaborators to have to search around to find what file it is that they need to run-in order to get entry into our app.
+4:43
+That's what this start script is for.
+4:45
+So now there's a generic way to start this app, and that is great for collaboration.
+4:49
+While we're here, this test script is something we won't be using in this project, so I'm going to delete it.
+4:54
+And I'll just hit save.
+4:55
+And that brings us to the next challenge.
+4:57
+We are building an Express app, so we need to install Express.
+5:01
+The terminal command we need for that is npm install express.
+5:05
+Let me just paste you in a new challenge right here.
+5:08
+Install the Express dependency, and I've put check the dependencies list in package dot JSON.
+5:13
+There's nothing that you have to do to package dot JSON.
+5:16
+Just have a look at it and see that Express is now listed as a dependency.
+5:20
+Okay.
+5:21
+Your terminal command is npm install express.
+5:24
+Get to work on this.
+5:28
+Okay.
+5:29
+So all we need to do is open up the terminal and it's npm install express.
+5:35
+It will take a short while to install and it's done.
+5:38
+Let's check out package dot json and look we've got here dependencies express and here we've got the version.
+5:45
+Now you might have noticed a couple of things change on the left hand side.
+5:48
+We've got this package dash lock dot JSON.
+5:51
+This is automatically generated when you run NPM install, and its main role is to record the exact versions of every package and dependency that are installed in your project.
+6:00
+Because when you install something like Express, Express will come with its own dependency needs.
+6:05
+And all of that will be listed in there.
+6:07
+You're welcome to have a look, but as a rule, we don't edit package lock dot JSON ourselves.
+6:13
+We just leave it be and let NPM handle it.
+6:16
+You might also have noticed that we've got a node modules folder, and that appeared when we installed Express.
+6:22
+Now Scrimba doesn't actually record node modules in the editor because it can get really, really big and heavy and slow things down.
+6:28
+But all you need to know is that node modules is the folder where your installed dependencies live.
+6:34
+Again, you can safely leave it alone.
+6:36
+We won't be touching it in this project.
+6:38
+Okay.
+6:38
+We have got one more problem to iron out before we can start building with Express, and we'll come to that in the next scrim.

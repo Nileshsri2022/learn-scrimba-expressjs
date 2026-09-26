@@ -1,0 +1,95 @@
+Transcript
+0:00
+These wastepaper basket buttons remove an item from the cart items table.
+0:05
+And just to be clear, they do not decrement the quantity of that item.
+0:09
+They just remove the whole lot.
+0:11
+So if I decide I don't want to buy selling dogma, I click here, and it's gone.
+0:16
+We'll be using this endpoint API slash cart and then taking an item ID as a parameter.
+0:23
+This will delete that specific item.
+0:25
+And the function we're working with is delete item.
+0:28
+I've got it right here already in cart controller and, of course, in roots and cart JS, I've already wired it up.
+0:35
+So here is your challenge.
+0:37
+A little bit tricky, so I have given you some help in hint dot m d.
+0:40
+The second part you will need to do some research for.
+0:43
+Basically, when we delete something, we don't need to send some data back to the front end like we might normally send some kind of object in JSON format.
+0:51
+So you need to think what status code you need to use and what method, and I'm gonna leave you to do a bit of research on that.
+0:58
+I think as soon as you Google it, you're gonna find the answer pretty quickly.
+1:01
+And like before, I'm leaving you to figure out when you need to end the response prematurely if, for example, the item ID that's come from the front end is invalid.
+1:09
+I'll leave you to think about all of that.
+1:11
+Now go ahead and get to work.
+1:17
+Okay.
+1:17
+Hopefully, you got this working.
+1:19
+Let's start off by getting hold of the item ID that's coming in as a parameter, And that will come from rec dot params dot item ID.
+1:29
+Now, again, it's a good idea to make sure this is a number.
+1:33
+So let's use pass int, and let's just check we've got a number.
+1:36
+And if not, we're gonna end the response.
+1:39
+We'll send a four hundred code and the JSON can just be error invalid item ID.
+1:46
+Okay.
+1:47
+Now let's take the item ID and check we have got something in cart items with that item ID for our logged in user.
+1:55
+So I'll say const item and we'll connect to the database and we're going to select quantity from cart items where the ID is question mark and user ID is question mark.
+2:11
+For the bindings here, we want ID to match item ID and the user ID will of course be rec dot session dot user ID.
+2:20
+Now let's just check that the item exists and if it doesn't again we want to end the response.
+2:26
+So if item is a full c value let's return res dot status again a four hundred and the JSON can be error item not found.
+2:36
+And then finally all we need to do is delete the item.
+2:40
+So we'll delete from cart items where ID equals question mark and user ID equals question mark and then the bindings will be the same that we've got here.
+2:52
+Now we move on to this research challenge.
+2:55
+So how are we going to end the response?
+2:57
+Well we're gonna say res dot status two zero four is a success status code just like two hundred.
+3:04
+It tells the front end the request was successful but there's no content to return in the response body.
+3:09
+So we won't be sending that with the JSON method because we're not actually sending any JSON so we're just gonna use the send method.
+3:16
+So hopefully you found that pretty easily when you did some research.
+3:19
+Okay.
+3:20
+Let's hit save.
+3:21
+Let's have a quick check for errors.
+3:23
+Everything is looking good.
+3:24
+We'll open up the mini browser.
+3:26
+Now let's log in, make a couple of purchases, head over to the cart, and let's see if this delete button works.
+3:34
+So we'll get rid of selling dogma, and we'll get rid of all three of midnight parallels, and that is working just fine.
+3:42
+One more small challenge with the cart and that is to make this checkout button work.
+3:46
+When you're ready, we'll pick that up in the next scrim.

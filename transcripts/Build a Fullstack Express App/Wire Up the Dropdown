@@ -1,0 +1,76 @@
+
+Transcript
+0:00
+If a user selects a genre using this drop down, the request the browser makes will have a query string attached to it.
+0:05
+So the incoming URL will have something like this on the end.
+0:10
+So I think you know what your challenge is.
+0:12
+I want you to detect if a query string genre is used just like we've got here.
+0:16
+If it is, retrieve only products with that genre from the database and serve them.
+0:21
+And if not, all products should be served as they are doing right now.
+0:25
+I have given you a hint file, so check that out if you need to.
+0:29
+But I think you've got all of the skills you need to do this.
+0:31
+So go ahead and get to work.
+0:36
+Okay.
+0:37
+Congratulations if you got that working.
+0:39
+Let's make a start.
+0:41
+So the first thing that we need to do is find out if a query string was used.
+0:46
+So let's say const and we're gonna destructure this.
+0:49
+We're gonna take genre and we'll set that equals to rec dot query.
+0:54
+Now let's set up some conditional logic.
+0:56
+So we'll say if genre so we'll check if genre is a truthy value.
+1:00
+If it is, we're gonna take the query which we've got here and we are going to add to it.
+1:06
+So we'll say plus equals and then we can start with a space and we'll have where genre equals and we'll use our placeholder which is the question mark.
+1:16
+Now we need to bind to that placeholder so we're gonna need an array of params.
+1:21
+Let's just put that one right here.
+1:23
+So we'll say let params and we'll initialize it to an empty array.
+1:27
+Back in the conditional logic we can say params dot push and we will push our genre.
+1:33
+Then we need to come right down here to where we have got this const products.
+1:36
+Let's just bring this up and we're gonna keep the query that we're passing in but also pass in the params.
+1:42
+Okay.
+1:43
+Let's hit save and see if it's worked.
+1:45
+We'll open up the mini browser a little bit more and let's take the genre indie And there we are.
+1:51
+We're just getting the indie products.
+1:53
+Let's go for folk.
+1:54
+Okay.
+1:54
+We've just got one folk product, punk, one punk, rock, two rocks and we can go back to show all.
+2:02
+Okay.
+2:03
+That is working really well.
+2:04
+I'm really happy with that and that means we've only got one piece of functionality left to add.
+2:09
+That's going to be dealing with the search input that we've got right here in the menu or if we stretch out to full width, we've got right here at the top of the page.
+2:18
+So let's do that in the next scrim.

@@ -1,0 +1,112 @@
+
+Transcript
+0:00
+When a logged in user clicks on this cart icon, they're gonna be taken to the cart page, which by the end of this scrim is gonna look like this.
+0:08
+Now the checkout functionality and the delete buttons, those are not gonna work by the end of this scrim, but we will have this neat list rendered of all of the items in their cart.
+0:18
+In this scrim we'll be working with this endpoint slash API slash cart and that is for get requests to get all cart items for a user and the function we're working with is the get all function and guess what I've wired it up for you already.
+0:33
+So express dot router is ready to go.
+0:35
+We've got the get all function right here imported from cart controller dot j s.
+0:40
+Let's just check it out and here it is with your challenge in it.
+0:44
+Again, this is quite a tricky challenge so I have given you plenty of help in hint dot m d.
+0:49
+Now I'm gonna leave you to read all about it but I will bring your attention just to this code right here.
+0:55
+I actually want you to ignore this code.
+0:58
+All it's doing is checking if a user is logged in, but this is not permanent.
+1:03
+When we're done wiring up the cart, there is a little bit more I want to say about security and at that point, I'm gonna be deleting this code.
+1:10
+But for now, the code that you write down here, I only want to run if you've got a logged in user.
+1:15
+If not, we're going to hit errors which are gonna mess up our challenge.
+1:19
+So just leave this code alone for now.
+1:21
+Understand that we just want to check that the user is logged in.
+1:24
+If not, we're going to end the response and we will come back to this in a couple of scrims time.
+1:30
+Now of course all of the front end code has been done for you that you need.
+1:33
+You only need to write code in this function body.
+1:36
+Also ignore console like before and then you can do some testing.
+1:40
+Click the cart icon once you're logged in.
+1:43
+Go to the cart page and you should see the users items just like we saw in the slide.
+1:48
+Okay, go ahead and get to work on this.
+1:53
+Okay.
+1:54
+As I said, a bit of a difficult challenge in terms of the SQL you had to write because here things do get a bit complicated.
+2:00
+Let's say const items and let's await d b dot all because we're potentially returning many rows and let's say select and now we're gonna use some SQL shorthand so c I dot I d and that is cart item I d and then CI quantity.
+2:21
+And from products, we'll take title and from products, we'll take artist and from products, we'll take price.
+2:29
+That is coming from cart items, which we're abbreviating to c I and we want to join products which we are abbreviating to p on the product ID being equals to c I product underscore ID.
+2:46
+And we're not quite done.
+2:47
+We need a user so we're gonna say where cart items user ID is equals to question mark.
+2:55
+Now let's bind in the user ID from the session.
+2:58
+Okay.
+2:59
+Quite a lot of complex SQL going on there.
+3:01
+A bit of a nightmare But hopefully it wasn't too complicated for you to understand that because we've got car item ID down here that that is what we needed to do with this abbreviation right here.
+3:12
+Hopefully you figured that out and you appreciated that this SQL is now just a little bit more human readable.
+3:18
+Okay.
+3:18
+Let's return some JSON and see if it's worked.
+3:22
+So it's res dot JSON and we know we want to return an object.
+3:26
+It's gonna have the key items and the value will be the items we've got right here.
+3:31
+We could use the shorthand here.
+3:33
+I think it's a little bit easier to read without that.
+3:35
+Let's hit save.
+3:36
+Open up the terminal.
+3:37
+We haven't got any errors, which is not surprising.
+3:40
+Let's go for the mini browser.
+3:43
+Oh, and I'm still on the cart page.
+3:44
+I'm just gonna go to the home page and log in.
+3:47
+We've got access to the test account, six items in the cart.
+3:51
+Let's click through to the cart, and there we are.
+3:53
+We have got them all rendered neatly, and that is exactly what we've got in the database.
+3:59
+And you're welcome to use logtable dot j s to verify that if you don't believe me.
+4:03
+Okay just a little bit more functionality to wire up and both of them involve deleting.
+4:08
+These buttons right here which are these wastepaper baskets they should delete items and then hitting checkout should actually delete everything because that is how we're mocking up our checkout and of course in reality you'd go through a payment gateway trigger some fulfillment process, and then delete all of the items from the cart.
+4:27
+But we're just gonna delete all of the items from the cart.
+4:29
+So two more challenges to go with the cart.
+4:31
+When you're ready, let's move on.

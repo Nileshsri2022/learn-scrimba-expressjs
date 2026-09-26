@@ -1,0 +1,64 @@
+
+Transcript
+0:00
+We need some data to serve.
+0:01
+And as I was designing this course, I got into a bit of a discussion with myself about how best to handle the data we'll be using.
+0:08
+In the real world, you would likely be holding the data for your API either in a database or if it were a small limited API stored as JSON data within the app, but that presented two issues.
+0:19
+Firstly, we're not ready to go down the whole database rabbit hole yet.
+0:23
+And secondly, if we store raw JSON, we have to use Node's file system module to read it.
+0:28
+Now the file system module is really, really important, and it's really cool, and we'll definitely be covering it in a later project.
+0:35
+But in this project, I want to just focus on routing, and that means keeping things simple.
+0:40
+So I've decided this.
+0:42
+In the data folder in data dot j s, we've got a standard JavaScript array of objects.
+0:48
+We're exporting it, and in server dot j s, we're importing it, and we have it available to us as startups.
+0:54
+And even though our data is just a regular JavaScript array, we will still be serving it as a JSON string.
+1:00
+Remember, the HTTP protocol demands we send a string, not an array of objects.
+1:05
+But, anyway, Express deals with all of that for us.
+1:08
+Okay.
+1:08
+You know everything you need to complete the next challenge, so here it is.
+1:12
+When the client makes a get request to slash API, serve all of our data as JSON.
+1:17
+I have added a hint dot m d file if you need something to jog your memory.
+1:23
+Okay.
+1:24
+Hopefully, you got that working without too many problems.
+1:27
+Let's take our app instance, and we'll call the get method.
+1:30
+We'll pass it the root, which is slash API, and a callback function, which takes in the request and the response as parameters.
+1:40
+The response gives us a method which serves JSON, so it's res dot JSON, and we can pass in the data we want to serve.
+1:47
+Let's hit save.
+1:48
+And in the network tool, I've already got slash API in the URL bar.
+1:52
+We'll hit send.
+1:54
+And look, there we are.
+1:55
+We are getting our data.
+1:57
+So we're successfully sending our data to the client in response to a request to slash API.
+2:02
+Now that is pretty cool, but API users are a demanding bunch.
+2:06
+They want their data their way as if they're choosing something from a Burger King.
+2:10
+So let's move on to handling query parameters so we can serve the client just the data it asked for.

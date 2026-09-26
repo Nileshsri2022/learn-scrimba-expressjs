@@ -1,0 +1,100 @@
+
+Transcript
+0:00
+When a user is logged in, in the menu they should see a logout button.
+0:04
+We can't see it at the moment because we're not logged in.
+0:07
+When a user hits that logout button what should happen is that the welcome message should revert to welcome guest and login and sign up should appear and the logout button should disappear.
+0:18
+All of that front end functionality has been done for you.
+0:22
+On the back end, you've got a very important task and that is to destroy the session.
+0:27
+Now I'm not going to give you too much help on this one but here is your challenge.
+0:31
+I want you to create a function which logs out the user.
+0:34
+You can use the destroy method directly on the session.
+0:38
+So that is a special method we get from express session.
+0:41
+You can literally call it on the session and it takes a callback function which you can use just to send a confirmation response with this JSON that will just confirm to the front end that the user has been logged out.
+0:53
+Now to wire this up, you're going to need to write code here in auth controller dot j s and also in one other place.
+0:59
+I'm going to leave you to figure that out.
+1:02
+I haven't given you a hint file here.
+1:04
+You are welcome of course to explore the front end code if you need to and of course you're welcome to search online if you need a bit more information about this destroy method and how it works.
+1:13
+I'm going to leave you to figure this out.
+1:15
+Go ahead and get to work.
+1:20
+Okay.
+1:21
+Hopefully, you solved that challenge, and it wasn't too frustrating if you had to do a little bit of research for yourself on the destroy method.
+1:27
+Let's just have a look at the public JavaScript files on the front end.
+1:32
+So in the JS folder, have got logout dot JS, a nice small file, and it's hitting the API slash auth slash logout endpoint.
+1:41
+Let's go to server dot JS.
+1:43
+That is going to be picked up again by this line of code which is going to pass it to auth router.
+1:48
+Auth router is right here in the roots folder and so we have a little bit of work to do right here.
+1:55
+Let's take auth router.
+1:57
+Which method will we be using here?
+1:59
+Well if we look at the front end it's not specified so it's defaulting to a GET request.
+2:04
+The root is slash logout and the function might as well be called logout user and we will be importing it from auth controller dot j s.
+2:15
+Now if we save this now we're gonna get an error because it doesn't exist yet.
+2:18
+Let's quickly go to auth controller dot j s and create it.
+2:22
+So we will export an async function logout user.
+2:27
+Of course it takes in the request and the response and now I think we can safely save these files and let's finish off this function.
+2:36
+So we can use the destroy method directly on the session.
+2:39
+So let's take rec dot session to access the session.
+2:43
+We'll call destroy and that on its own will work but we should pass some confirmation to the front end and we'll do that with this callback.
+2:50
+So I'll say res dot json and we can just pass in this object.
+2:55
+Okay.
+2:55
+Let's hit save.
+2:56
+Open up the terminal and just check for errors.
+2:58
+Nothing going on there.
+3:00
+We'll open up the mini browser.
+3:02
+I am going to log in with test and test.
+3:06
+So we're logged in with our test account.
+3:09
+Let's see if we can hit the logout button and we go back to welcome guest.
+3:14
+And if we reopen the menu and we do get a page refresh there by the way, it takes us back to the home page.
+3:20
+And if we open the menu, we've got the login and sign up buttons available again.
+3:25
+Okay.
+3:25
+That is pretty good.
+3:26
+The next thing we want to be able to do is add some products to our cart and have some kind of checkout process.
+3:33
+That's quite a big process, so let's come on to that in the next screen.

@@ -1,0 +1,117 @@
+Transcript
+0:00
+Loads of my friends have been abducted by aliens.
+0:03
+So many in fact that I need a database to collate all of the data because I'm starting to get a bit suspicious.
+0:10
+Now the database we're gonna use is a SQL like database which is really cool because we can do all of the database work right here in Scrimba.
+0:18
+Now there are various ways that you can use a SQLite database in a JavaScript project and we are gonna use two dependencies.
+0:25
+Let's just install them.
+0:26
+So I'll open up a new terminal and let's say npm install and the first one I want is called SQLite three and the second I want is called SQLite.
+0:38
+Okay.
+0:39
+Let's just check the package dot JSON.
+0:41
+We've got them right there.
+0:42
+So that is looking good.
+0:43
+So let's talk about what these packages do.
+0:46
+Firstly, SQLite three, this is the database driver.
+0:50
+That means it opens a connection to the database file, it executes SQL queries, and it handles reading and writing results.
+0:58
+The second package SQLite is a wrapper.
+1:01
+It provides asyncawait support for cleaner code.
+1:04
+So it's basically a way of making SQLite three behave in a more modern way.
+1:09
+Now when we installed these, you might have noticed some deprecation warnings.
+1:13
+Don't worry about that at all.
+1:14
+These are still really popular packages.
+1:17
+Okay.
+1:17
+Let's write some code.
+1:19
+I'm gonna create a file called create table.
+1:22
+Now here, we need to import our packages.
+1:24
+So I'm gonna import SQLite three from SQLite three and then from SQLite, we just want to take one method and that is gonna be the open method.
+1:35
+And while we're here, I'm going to import path because we're gonna use that in just a moment.
+1:41
+Okay.
+1:42
+Let's create a function called create table because accessing databases is an async process.
+1:48
+This is gonna be an async function.
+1:50
+In the body of this function, let's have a const to store our database and here we will await and then we'll call the open method and let's pass in an object.
+2:00
+This object needs a file name and this is where we want our database to be created because with SQLite, our database is actually going to be a file that we'll be able to see right here in our file tree.
+2:12
+Now we could hard code it but we've got path right here so let's say path dot join and I'm just gonna say database dot DB.
+2:21
+Now database dot DB does not exist at the moment, but this code we're writing here is gonna create that database in just a moment.
+2:28
+Now let's pass in a driver and we know already the driver is SQLite three, but we do need to be a little bit more specific we have to take the driver from dot database.
+2:39
+Okay.
+2:40
+So now database holds an instance that brings with it some methods that we can use and we're gonna take that database now and we are gonna await it and we're going to call the exec method so we can execute some SQL.
+2:53
+And we're creating a table of alien abductions so my first command is going to be create table if not exists abductions.
+3:04
+In here, we can give each one a unique key.
+3:07
+So I'll say ID and that will be integer primary key auto increment.
+3:13
+And we're gonna keep this database pretty simple.
+3:16
+So I'm gonna have location and that is gonna be text and it is required so I'll put not null.
+3:22
+Next let's have the details of the abduction and likewise that can be text not null.
+3:29
+That's all we need for our table.
+3:31
+Now let's close the connection so I'll say await DB dot close and let's just log something at the end.
+3:39
+Table abductions created.
+3:42
+Okay let's call the function and we're gonna manually run this so I'll open up the terminal and say node create table dot j s and let's hit enter and it says table abductions created and right here our database file has appeared.
+3:58
+Now if we click on that we're just gonna see cannot edit binary data and that's because SQLite stores the database in a non human readable format.
+4:06
+In VS Code we could install an extension for easy viewing but in Scrimba we're going to use a utility function which I've already created right here log table dot j s.
+4:16
+Now the code is pretty familiar because it's the same as what we just wrote.
+4:19
+We're importing the dependencies and path and then we're connecting to the database in exactly the same way.
+4:25
+The important part comes down here.
+4:27
+Basically, we're selecting everything from the abductions table and then we're using console dot table to log the results.
+4:35
+And if you've never used console dot table before, it's just a really cool way of tabulating data in the console.
+4:41
+Now later when we've actually put some data in our table, we are gonna see a really nice table in the console.
+4:47
+But if we run this code now, so log table dot j s what we're gonna get is just this box with index.
+4:54
+That's a good sign that is telling us that the table has been created.
+4:58
+It's right there in database dot DB and it's ready for the next step.
+5:02
+Okay.
+5:03
+Before we actually add any data to our table let's go back to the main project and create a table for our products.

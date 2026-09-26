@@ -1,0 +1,130 @@
+
+Transcript
+0:00
+The beast must be fed.
+0:02
+Our insatiable users want more power from our API, and that means we need to add another way for them to consume our data.
+0:10
+In this scrim, we're going to talk about path parameters, and path parameters look something like this.
+0:17
+Imagine I have an API for some crypto data.
+0:20
+I want users to be able to hit the API to get some data on a specific currency.
+0:25
+So here, the path is telling us to expect the name of a cryptocurrency and then after the slash, we actually have that name.
+0:33
+So this is a specific value.
+0:35
+This will change.
+0:37
+The user can put in the three letter code for any of the hundreds of cryptocurrencies cryptocurrencies out there.
+0:42
+If they don't like Bitcoin, they might go for, say, ETH for Ethereum.
+0:46
+Now what would be really cool is if we could take this information and just like we did with query parameters, get it into an object.
+0:53
+So we end up with something like this, a key of currency and a value of ETH.
+0:59
+And guess what?
+1:00
+Express delivers.
+1:01
+We can get exactly that using rec dot params.
+1:05
+Let's take a look at some code.
+1:07
+I've got a really bare bones server here.
+1:09
+We're not actually sending anything, and we're not going to send anything in this scrim.
+1:14
+We're just going to use the console.
+1:15
+So let's console dot log rec dot params.
+1:19
+And before we use this, we need to do a little bit of work.
+1:22
+So let's say API slash crypto name.
+1:26
+And then here, we want to bring in the type of cryptocurrency that the user is looking for.
+1:31
+So Bitcoin, Ethereum.
+1:33
+And so at this point, we face a problem.
+1:35
+If we hit the API using API slash crypto name slash ETH, what's gonna happen?
+1:43
+Well, we're gonna get a four zero four.
+1:45
+And that figures because we're only picking up this path.
+1:48
+We're not picking up slash e t h.
+1:50
+So what we need is a way of saying to express, no.
+1:53
+This is not hard coded.
+1:55
+This is actually a root parameter.
+1:57
+This will change.
+1:59
+The user could put any number of options in here and we do that with a colon and in fact rather than just have type here let's be more specific.
+2:07
+What we want here is a currency.
+2:09
+Okay.
+2:10
+Now let's hit save and we'll run this one again and look what we get in the console.
+2:14
+We've got currency ETH.
+2:17
+In fact, haven't we've got currently because I misspelled it.
+2:20
+Let's add the c in there and just run that again and there we are currency ETH and that shows you that it is this root parameter and whatever you type here that's going to give you the key for your object.
+2:32
+Okay.
+2:33
+Let's move the goalposts.
+2:34
+Maybe this API is not just for crypto, maybe it also does metals And in this case, somebody might want data on the price of gold.
+2:42
+Bear with me while I type you a challenge.
+2:45
+And And here is your challenge.
+2:48
+Update the code so a get request to API slash metals slash gold logs this object, and a get request to API slash crypto slash ETH gets this object.
+2:59
+I'll leave you to figure that out, but just remember the colon, and there's absolutely no reason why you can't use it more than once.
+3:06
+Okay.
+3:08
+Okay.
+3:08
+Hopefully, you figured that out.
+3:10
+What we need to do here is use a second colon.
+3:13
+So we'll put that one right there.
+3:16
+And now in order to get the keys that we want in our objects, we need to change these.
+3:21
+So crypto name will be category and currency will be the more generic type because it might be a currency or it might be a type of metal.
+3:29
+Let's just hit save.
+3:31
+We've got crypto dash name slash ETH loaded.
+3:35
+I'll hit send and there we are we get category crypto name and type ETH so that is this one sorted.
+3:42
+Let's try it with metals and gold.
+3:45
+I'll hit send and we've got that one too.
+3:48
+The category of metals and the type of gold.
+3:51
+Okay.
+3:52
+That is not too complex at all.
+3:53
+Really easy to work with these colons when you get the basic principle.
+3:57
+So let's go back to our app and add some more functionality.

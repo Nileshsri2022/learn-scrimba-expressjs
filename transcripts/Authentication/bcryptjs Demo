@@ -1,0 +1,111 @@
+Transcript
+0:00
+Let's take a look at how our sign up and login is going to work.
+0:03
+So for sign up, the user of course provides a password.
+0:07
+When we've got that password on the server, Bcrypt will generate a random sort and it will then hash the password and the sort and will get a string like we saw in the previous scrim.
+0:18
+That hashed and sorted password is then stored in the database with the rest of the user data such as their username and name.
+0:25
+Now later when the user logs in the user of course inputs a password.
+0:30
+We will retrieve that user's original hashed password from the database and then Bcrypt has got some jobs to do.
+0:37
+It's going to take the sort from the original password, it's going to add it to the new incoming password and it's going to hash that password.
+0:45
+Then it's going to compare that new hash with the original hash in the database.
+0:50
+If they match, the user is signed in that means that the password was correct.
+0:55
+If not, sign in fails because the password was incorrect.
+0:58
+Now this is actually pretty easy to do because the bcrypt package we're going to use does loads of work for us under the hood.
+1:05
+Let's have a look.
+1:07
+Here I've got a basic Express server and I'm just going to open up a terminal and I'm going to type npm install and we're going for bcrypt js.
+1:18
+That's installed.
+1:19
+Next we just need to import it and now let's imagine a user has signed in.
+1:25
+They've given us a password so we'll say const password and I'm going to use again Skywalker ninety six.
+1:33
+Now let's create a hash of that password using bcrypt.
+1:37
+So I'll say const hashed and now we will await bcrypt.
+1:41
+We'll use the hash method and we're going to pass in two pieces of information.
+1:46
+The first is the password we want to hash and the second is what's called a cost factor and the cost factor tells the algorithm how much work to do.
+1:56
+The higher the number we use here, the more secure the hash will be, but also the longer it will take.
+2:03
+Now taking a long time is not necessarily an issue because we're dealing with milliseconds here and we only need to do it once.
+2:10
+Hackers trying to reverse engineer the hash would need to do that as many times as possible in a second.
+2:17
+So slowness is actually good for us and bad for them.
+2:20
+I'm going to go with what is a pretty standard cost factor of ten.
+2:24
+Let's just log hashed.
+2:26
+I'll open up the terminal and let's hit save and there we are.
+2:30
+We have got our hashed password right there and what Bcrypt has done in that process is include the salt for us.
+2:37
+So if we just paste this into the editor and we bring up the slide from the previous scrim, well we can see we've got the algorithm, the cost factor, the sort and the stored hash and the dollar signs here seem to be acting as some kind of divider so let's just see if we can break this up.
+2:53
+So what we've got there is the algorithm, the cost factor, the sort, the final hash.
+2:59
+And at this point, we would store that in the database.
+3:02
+Now in this mock up, I'm not going to do that.
+3:04
+What I'm going to do instead is just comment out some of the code we've already used, put this string back together and I'm going to create an object which we're going to pretend is a database.
+3:15
+So I'm just gonna say const user in DB and let's just go with name of Luke Skywalker and password.
+3:25
+Well, that is going to be this string.
+3:28
+Okay.
+3:28
+Now let's say a user tries to log in as Luke Skywalker.
+3:32
+I'm going to create a const and we'll call it login attempt.
+3:36
+And that is going to hold an object and it's going to have the name Luke Skywalker and the password is going to be Skywalker96 and by the way the fact that we've got a name in this object is irrelevant we're only focusing on comparing passwords here So what we want to do now is find out if this login attempt is coming with a password which when sorted and hashed is identical to the one we've got right here and bcrypt again is going to come to the rescue.
+4:04
+So let's set up a const User is valid because it's going to hold a boolean and here let's await bcrypt and we're going to use the compare method.
+4:14
+The first thing we want to pass the compare method is the password from the incoming login attempt.
+4:19
+So that is Skywalker ninety six but let's just take login attempt dot password.
+4:25
+The second thing we want to compare, you've guessed it, is this one right here.
+4:29
+So let's take user in DB dot password.
+4:32
+Let's log user is valid And when we hit save, we get true because these, of course, are identical.
+4:40
+Skywalker ninety six has been hashed using salt from this string right here.
+4:45
+And when you take the same password and the same salt and you hash them with the same algorithm you get the same outcome and that's why this comparison is returning true.
+4:56
+Now let's change that just to say ninety five.
+4:58
+We'll hit save and it is false.
+5:01
+The bcrypt hashed passwords will not be the same.
+5:05
+Okay.
+5:05
+So your big take homes from this scrim are that we are going to use the bcrypt dot j s package And from that package, we'll be using bcrypt dot hash and bcrypt dot compare.
+5:19
+So not too much to remember there.
+5:20
+We're gonna have a challenge with it in the next scrim.
+5:22
+next scrim.

@@ -1,0 +1,182 @@
+
+Transcript
+0:00
+It's nearly challenge time, but before we dive in, I want to draw your attention to some front end code.
+0:05
+I'm here in sign up dot HTML, and this is our sign up form.
+0:10
+Now I've just removed the required attribute from each of these inputs, and I've done that so that we can test that validation is working on the back end.
+0:20
+We don't want to have the validation working on the front end and then find we've actually made a mistake when we code up validation on the back end which we don't notice because the front end validation is working so well.
+0:31
+So I've removed that for now and then at the end of the scrim I'm going to replace these required attributes and I'll also add a little bit more front end validation just to keep the code realistic.
+0:41
+Right.
+0:41
+Let's head over to AuthController.
+0:43
+Js where you have got a challenge.
+0:46
+Now this challenge text tells you pretty much everything you need to know so I'm not going to read through it all.
+0:51
+I've given you some regex right here and there is some explanation of that regex in hint dot m d along with some more help if you need it.
+0:59
+So there's nothing else to say.
+1:01
+Go ahead and get to work on this challenge.
+1:03
+Quite a lot of code to write here but it's not too complex so just take it one step at a time and then do some testing with consult.
+1:10
+Logs.
+1:13
+Okay.
+1:14
+I really hope you got that working.
+1:16
+Let's take a look together.
+1:17
+So starting from the top, we're gonna start off by making sure all fields are present and we can do that pretty easily just by checking for truthy values.
+1:26
+Let's take some conditional logic.
+1:27
+So I'm going to say if and then I want name, email, username, and password.
+1:33
+And because we want to check if any single one of them is actually a falsi value, I'm going to use the or operator.
+1:40
+And because it is a falsie value that we want to detect, let's use the exclamation mark.
+1:46
+So what we're saying here is if name or email or username or password is not present, then let's execute this code.
+1:54
+And what we want to do here is actually end the response with a suitable code and send an error object.
+2:00
+And we've got the error object right here.
+2:02
+The example one I used is perfect for this situation.
+2:05
+So we will return because we don't want any more code to run res dot status and the status can be four hundred and then we'll use JSON to send that error object.
+2:18
+Okay.
+2:19
+That is the first one ticked off the list.
+2:21
+Let's remove any white space where appropriate.
+2:24
+Well, we're not gonna remove white space from the password, but we will remove it from the other three.
+2:29
+So we've got name, email, and username.
+2:32
+We could try iterating over them in some clever way, but I don't think that's really necessary here.
+2:36
+It's gonna be easier to read if we just do it line by line.
+2:40
+So let's just say name equals name and we'll use the trim method and that is all we need do.
+2:46
+Let's just copy that down and do it with email and username.
+2:51
+That is the second one ticked off the list.
+2:53
+Now let's head into the regex and again we want some conditional logic here.
+2:58
+So let's take that regex and what we want to find is if anything fails to match that pattern and the pattern we've got there is letters a to z lower and uppercase numbers zero to nine underscore and hyphen and we want it to be one to twenty characters long.
+3:16
+Now we can use the test method and we pass in a string which in this case will be the username and then we want some code in here to run and if this test fails it's going to return false so we want to put the exclamation mark here so we're saying if this test returns false this code in here can execute and we might just grab all of this because it will basically be the same but we do want to update the error object so instead of saying error all fields required let's say something like this.
+3:46
+That will do the trick.
+3:48
+Lastly we're going to come on to the validator package so let's open up the terminal and install it.
+3:54
+That's now installed.
+3:56
+We need to import it and again let's go for some conditional logic.
+4:01
+So we're going to say if validator.
+4:05
+IsEmail and then we pass in the string which will be the email and guess what again we're checking if this is a negative we want to catch problems so we're saying if this test fails if the email is not of a valid format then let's take this code again right here and the error message will be invalid email format.
+4:28
+Okay.
+4:28
+That is looking pretty good.
+4:30
+Let's just log rec dot body at the end.
+4:33
+We'll hit save, open up the mini browser and also open up the terminal.
+4:38
+We'll head to the runner and let's just see what we log out.
+4:42
+Okay.
+4:43
+So everything is working.
+4:44
+Now let's create some problems.
+4:47
+So firstly, I'm gonna leave full name blank.
+4:49
+Let's see what we get.
+4:51
+So nothing gets logged here and if we scroll down it says all fields are required.
+4:56
+Okay that's cool.
+4:57
+So let's put my first name back in but let's add something weird to the username something we're not allowed to use.
+5:04
+Let's go with dollar sign, caret, ampersand.
+5:08
+I'll hit create account.
+5:10
+Username must be one to twenty characters etcetera etcetera.
+5:13
+So that is working.
+5:15
+That is pretty cool.
+5:16
+The last thing to check is perhaps the email.
+5:19
+Let's take away the dot and put a comma instead.
+5:23
+Now we're getting some front side validation actually and so if we scroll down we're not going to get anything different.
+5:29
+Let's just go back to signup dot html I think that's probably happening because we've given that the type of email.
+5:35
+Let's just delete that a second and reload.
+5:38
+And again, I'll say comma, comma, not dot com.
+5:42
+We'll have a username and a password.
+5:44
+Let's see what we get.
+5:46
+And it says invalid email format.
+5:49
+So yes, that was indeed the problem.
+5:51
+Let's just put that back to how it should be.
+5:53
+Alright.
+5:53
+So our validation is working.
+5:55
+That is pretty cool.
+5:56
+I did say we would replace some front end code and we should do that.
+6:01
+So the fields should be required because all of them are necessary.
+6:07
+Now also the username should require a pattern on the front end.
+6:11
+That's exactly the same regex as we've just used and if we put this one right here a title attribute that's going to help our users understand what they are and are not allowed to use.
+6:23
+Now of course it's good practice in GoodUX to make sure it's really really clear to the users what they are and are not allowed to use on sign up And also, would make sense to insist on a password being of a particular length, for example.
+6:37
+We're not gonna do that right here.
+6:38
+And the reason is that often as we test this, we're gonna need to fill in this form, and it actually gets to be a bit of a pain if things have got to be a certain length, etcetera.
+6:47
+So I have kept the validation to a minimum so we can just run through this quickly to check everything is working.
+6:53
+Okay.
+6:54
+We're done here.
+6:55
+We've got a user validated.
+6:57
+The next job will be to get them into the database.

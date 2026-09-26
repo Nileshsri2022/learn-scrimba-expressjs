@@ -1,0 +1,111 @@
+Transcript
+0:00
+Okay.
+0:00
+So we have the foundations.
+0:02
+Let's get to work with Express.
+0:04
+I'm going to import Express from Express.
+0:07
+Let's hit save.
+0:09
+We'll open up the terminal and NPM start.
+0:12
+And we get a warning there, and that is because we need to specify that we're using modular JavaScript.
+0:18
+Modular JavaScript is the modern way of breaking code into reusable self contained pieces or modules to improve organization and maintainability.
+0:27
+It allows us to use the import and export statements like we're doing right here.
+0:32
+But we need to let the app know to expect that and the easiest way to do that is in package dot JSON right here.
+0:39
+I'm going to put type module.
+0:41
+When I hit save, now let's open up the terminal and try that again.
+0:46
+NPM start and there we are.
+0:48
+We are in business.
+0:50
+So now having made that addition to package dot JSON, we can use modular JavaScript throughout the entire app.
+0:57
+Okay.
+0:57
+So let's get to work on the server.
+0:59
+Firstly, it needs a port to listen on.
+1:02
+So I'm going to say const port and we'll set that to eight thousand.
+1:06
+Next, let's take another const to store our app and that is going to hold an instance of Express.
+1:13
+And what that means in practice is the app now stores an instance of the Express application and so now app holds the necessary methods and properties that we're going to be using to configure and handle HTTP requests as the project goes on.
+1:29
+The first method that we're going to use on app is the listen method because it is absolutely essential for a server to listen out for requests.
+1:38
+Now we need to pass listen one thing for sure, and that is the port to listen on.
+1:43
+That is compulsory.
+1:44
+The second is optional.
+1:46
+We're going to pass in a callback.
+1:48
+And this callback is going to execute asynchronously after the server starts listening on the specified port.
+1:54
+So when the callback executes, we know we've been successful.
+1:57
+I'm just going to log a connection message server connected on port and then the port.
+2:04
+Okay.
+2:05
+Let's hit save.
+2:06
+Open up the terminal.
+2:07
+NPM start and we get our connection message server connected on port eight thousand.
+2:13
+So everything is working perfectly.
+2:15
+Now this is the only output we're going to see at the moment and that's because obviously our server isn't actually serving anything at the moment.
+2:23
+But in just these four lines of code, we have got the basics of a server.
+2:27
+And before we do anything else, I want you to get your hands on the keyboard and I'm going to set you a challenge to recreate this code from scratch after I delete it which I'm going to do in just a second.
+2:39
+I have put use hint.
+2:40
+Md for help so I've put some hints and pointers in hint.
+2:44
+Md just in case you forget some of the syntax.
+2:47
+Okay.
+2:47
+Before I do that, in the terminal, I'm going to use control c to disconnect the server and you might find when you've completed the challenge in order to test it, you need to run npm install before you do npm start to get it to work.
+3:01
+Okay.
+3:02
+I am going to delete all of that.
+3:03
+Delete all of this code and leave the rest up to you.
+3:10
+Okay.
+3:10
+I'm sure you managed to do that without too many problems.
+3:13
+So let's import Express from Express.
+3:17
+We'll have a const to hold our port and that was eight thousand, a const to hold our instance of the Express application and then we call the listen method.
+3:28
+We pass it the port and a callback.
+3:31
+Let's hit save down in the terminal then npm start and there we are it's working.
+3:37
+So congratulations if you managed to recreate my code.
+3:41
+Okay.
+3:41
+Let's keep up the momentum and keep moving forwards.
+3:44
+Our task is to serve an API, and so let's take a look at how our API is going to work in the next scrim.

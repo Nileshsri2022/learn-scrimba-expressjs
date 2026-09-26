@@ -1,0 +1,20 @@
+
+Transcript
+0:00
+Congratulations on finishing this section where we looked at routing static files and working with databases using Express JS.
+0:08
+Let's just recap what we studied.
+0:10
+We looked at middleware, and we used serve static, a piece of middleware, to serve our static files.
+0:16
+We looked at creating a database, adding data to a database and retrieving data from that database and we've looked at some SQL queries and binding and you can see some great examples of those right here in products controller dot j s.
+0:32
+The SQL we did here is actually pretty complex so you should be proud of yourself for that.
+0:37
+Now you're done with this section, why not head over to Scrimba's Discord server and tell the world what you've achieved.
+0:43
+Our community is a great way to network with other developers and chat to other students.
+0:48
+If you click on this screenshot right here, it's going to take you to our Discord server and then you can head to the Today I Did channel and that is a great place to boast about your achievements.
+1:00
+Then it's time to put your feet up and relax but remember to build something and consolidate your knowledge of Express JS before moving on.

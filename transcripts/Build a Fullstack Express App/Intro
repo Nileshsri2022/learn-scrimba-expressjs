@@ -1,0 +1,50 @@
+
+Transcript
+0:00
+Welcome to this section where we are gonna build a full stack app using Express JS.
+0:05
+Are you old enough to remember when record shops were like this?
+0:09
+Well, nowadays, of course, most people stream their music, but there is still love and nostalgia for the old ways.
+0:16
+We can't bring back physical record shops, but we can do the next best thing.
+0:19
+And that's why in this project, we are going to be building Spiral Sounds, which is a shop for classic vinyl.
+0:26
+This is the layout.
+0:28
+By default, the users are shown a range of records that we've got available, but they also have the option to use this drop down to select by genre.
+0:36
+Right here, I'm only looking at indie music.
+0:39
+And then up here, we've got a search box, and users can use that to find a partial match on the genre, title, or artist.
+0:47
+So the functionality we need to build is like this.
+0:50
+We need to serve all of the assets.
+0:53
+We need to display all products from a database, and we need to display a selection of products based on user requirements.
+1:00
+So let's check what we'll be studying.
+1:02
+We're gonna be looking at middleware, a really, really important topic in Express JS.
+1:08
+We'll be serving static files using middleware, creating a database, seeding a database, which means adding data to the database, retrieving that data, and of course, we'll need to write some SQL queries and look at binding.
+1:21
+There's more to discover along the way and of course, of challenges.
+1:25
+Now the database that we're going to use is called SQLite, and I want to tell you why I chose SQLite for this project.
+1:33
+Basically, it's really easy to use.
+1:35
+There's zero setup involved and we don't need a third party server.
+1:39
+It's going to run right here in the browser.
+1:41
+It's lightweight and fast.
+1:43
+It works cross platform and it uses standard SQL syntax.
+1:47
+Okay.
+1:48
+That's enough chitchat.

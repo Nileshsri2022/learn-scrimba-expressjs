@@ -1,0 +1,28 @@
+
+Transcript
+0:00
+Congratulations on getting to the end of this section on authentication.
+0:04
+There was quite a lot going on, so let's recap what we did.
+0:07
+We used authentication to sign up new users, log users in, log users out, and show user specific data as users added items to their cart.
+0:18
+And to do all of that, we studied Express dot session middleware, validation, hashing and Bcrypt, and protecting routes.
+0:27
+And of course, we had a whole lot of SQL and database interaction practice along the way.
+0:32
+Now when you come to the end of a project, it's always a good idea to tackle some stretch goals, and there's plenty that you could do with this project.
+0:40
+You could start off by looking at the front end.
+0:43
+There's a ton of improvements that could be made to the layout, to the UX, and also just to the front end JavaScript and the way that that handles the functionality.
+0:50
+If you're in more of a back end mood, why not add a payment gateway?
+0:54
+Lots of services have got a sandbox environment that you can try for free.
+0:59
+Most importantly of all though, go ahead and build your own project with Express from scratch.
+1:04
+That is how you will consolidate the knowledge you got from this course.
+1:08
+All that's left to say is thank you for studying with me and remember to take time to relax before moving forward.

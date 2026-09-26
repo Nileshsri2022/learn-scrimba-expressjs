@@ -1,0 +1,39 @@
+Transcript
+0:00
+Okay.
+0:00
+Here comes a ten second challenge.
+0:02
+I want you to use express dot static to serve all of the files in this public directory.
+0:07
+When you do this correctly, you should see the site with the header, the footer, and in the middle, there won't be any product cards.
+0:14
+There will be this drop down, which at the moment will not work.
+0:18
+So that is what we're aiming for.
+0:19
+Get to work on this challenge.
+0:23
+Right.
+0:24
+If you remembered that one line from the previous scrim, then this was the world's easiest challenge.
+0:29
+Let's take app dot use.
+0:31
+We'll pass in express dot static, and we'll pass that the public directory.
+0:37
+When we hit save and open up the mini browser, we see everything that we expected to see.
+0:42
+So we've successfully served all of the front end files including images, CSS, and HTML.
+0:49
+Okay.
+0:49
+That was a nice short challenge.
+0:51
+The next thing that we need to do is work on some roots and you already know how to do that.
+0:55
+So we're gonna go straight into a challenge, but that challenge is a little bit more convoluted.
+0:59
+So I want to give it a scrim of its own.
+1:02
+When you're ready, let's move on.

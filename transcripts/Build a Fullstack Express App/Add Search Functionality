@@ -1,0 +1,98 @@
+
+Transcript
+0:00
+Okay.
+0:00
+We've got one more bit of functionality to add, so let's go straight into a challenge.
+0:05
+When the user inputs text into the search box, which we can see right here in the mini browser, that text will be passed to the server as a query string.
+0:14
+And I've given you an example of the query string down here.
+0:18
+When that happens, we should serve products where the search text finds a match with the title, artist, or genre.
+0:24
+We're accepting partial matching queries, so the letters LO would match with block and slow and allow.
+0:31
+This is perhaps the trickiest challenge and it is one that will require you to dig deep into your SQL knowledge.
+0:38
+You might also need to do a bit of research but I have been very generous in the hint file in recognition of the fact that this is an express course more than a SQL course.
+0:48
+So I'll leave you to figure this one out, and we'll have a look together in just a moment.
+0:55
+Okay.
+0:55
+I really hope you took all of the time you needed to get that challenge done.
+0:58
+Let's have a look together.
+1:00
+So we're gonna add an else if, and you didn't have to use an else if.
+1:05
+You could have just used another if, but I think an else if is a little bit neater.
+1:09
+And now we're gonna check for search.
+1:12
+But before we can do that, we need to destructure it right here from rec dot query.
+1:17
+Okay.
+1:17
+So now if a search has come in, what are we going to do?
+1:21
+Well, we need to update our query and push something to params.
+1:25
+So let's just borrow all of that logic.
+1:28
+And while we're here, let's just space things out a little bit.
+1:31
+Now in our SQL, we need to do some matching.
+1:34
+So let's say where title like and then we'll have a placeholder or artist like and a placeholder or genre like and a placeholder.
+1:46
+Now let's take what came in on the query string which we've got stored in search and we're gonna set up a new const and I'm just gonna call it search pattern and we're gonna build this using some percentage signs.
+1:59
+So we'll have a percentage sign at the beginning and at the end.
+2:03
+In the middle we'll use the dollar sign and the curly braces so we're opening up a string literal and we'll have our search in there.
+2:10
+Why do we need to do that?
+2:11
+Well these percentage signs specify that this is a partial matching query and we did specify here that the letters LO would match block or slow or allow and that is what this is enabling us to do.
+2:25
+It doesn't need to match the whole word or the whole record.
+2:28
+Now lastly we need to push something to params.
+2:31
+Well we have got three placeholders here so we need to push search pattern three times and I realize that looks super clunky but it is the way to do it.
+2:41
+Let's remove the challenge text.
+2:43
+We're already passing in query and params right here where we're making this call to the database and we're serving what we get back.
+2:51
+So let's hit save.
+2:52
+We'll open up the mini browser.
+2:54
+Let's just check that everything which should be working so far is still working.
+2:58
+So we're displaying all of our products which is fine.
+3:01
+Let's just check this drop down.
+3:03
+That's working.
+3:04
+We're just displaying Indy records.
+3:06
+Okay.
+3:07
+Let's go back to show all and we'll scroll up to the top and in this search box I'm gonna put echo and as soon as I put e c h we're narrowing it down we've got echoes in transit right here and faded echoes.
+3:19
+Let's do one more let's go with r u that gets us rust and if we put AM we will get everything with the genre ambience because that's got an AM in it.
+3:30
+And also Dreams of Glass has got an AM.
+3:33
+Okay.
+3:33
+I think we can safely say this is working.
+3:36
+That is pretty cool.
+3:37
+Let's take a scrim to recap what we've done.

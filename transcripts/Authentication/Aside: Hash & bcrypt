@@ -1,0 +1,139 @@
+Transcript
+0:00
+When we logged our users table, we could see the user we had just signed up, and their password was stored as a plain text string.
+0:06
+And if that rang alarm bells with you, then quite right.
+0:09
+That is about the worst thing you can do in the world of data security.
+0:13
+Because if your database is breached, all passwords are immediately exposed.
+0:18
+And often, people reuse passwords so hackers might get access to their email, their banking apps, their social media, ecommerce sites, etcetera.
+0:27
+So a single data breach can lead to a whole chain of compromises.
+0:31
+And by the way, it's not just hardcore hackers you need to protect against.
+0:35
+It's also members of staff.
+0:37
+Anyone with database access can see plain text passwords, and that is a big breach of trust.
+0:42
+And it's also a breach of the law depending on which jurisdiction you're in and a breach of every best practice.
+0:49
+Okay.
+0:49
+So we won't be storing our passwords as plain text strings.
+0:52
+What we're going to do is hash our passwords and we're going to use the industry standard Bcrypt algorithm to do it.
+1:00
+But what actually is hashing?
+1:02
+Well, hashing is the process of transforming data into a fixed length, irreversible string of characters that uniquely represents the original input.
+1:10
+Now we're not going to get bogged down into the details of that.
+1:13
+I'm not going to pretend I fully understand the maths involved.
+1:16
+It is rather complex stuff, way above my pay grade.
+1:20
+But for developers, it's enough to know that we hash a password into a fixed length string which cannot be decoded.
+1:26
+I e it cannot be reversed.
+1:28
+You cannot get the password from the hash.
+1:30
+So if you imagine that your password is orange juice sixty six, that might hash to something which looks like this.
+1:37
+And in the past, we would have stored that hash in our database, but hashing is not enough on its own.
+1:43
+Why not?
+1:44
+Well, because data breaches do happen and criminals can get their hands on hashed passwords.
+1:49
+And although they cannot reverse the hash to get the original, they can use something called a rainbow table.
+1:56
+And a rainbow table should be something pretty cool, which looks like this and has foxes and gnomes.
+2:01
+But actually, it's something much more sinister.
+2:04
+A rainbow table is a massive database of hashed strings created by hackers.
+2:10
+Because although a hash is irreversible, if you hash the same password using the same algorithm, you'll get the same hash.
+2:17
+So by hashing millions of password possibilities, hackers can create a database which allows them to reverse engineer a hashed password.
+2:26
+Here's a quick example to show you what I mean.
+2:29
+I've stolen this hash x y zed one two three four zed.
+2:32
+Obviously, not a real hash.
+2:34
+It would be much longer.
+2:35
+And this is a small section of a rainbow table.
+2:38
+So when people create their passwords often they use things like names, pet names, places, dates.
+2:43
+What I've got here is actually obviously from film.
+2:46
+We've got Skywalker and then some plausible years of birth nineteen ninety one, ninety two, etcetera.
+2:52
+So the hackers have created this massive table.
+2:55
+This is the hash we're looking for and if we run down the table, well, we find it right here at the bottom and that shows us that the password that created this hash was Skywalker ninety six.
+3:06
+So that's why storing the hash in the database on its own is not enough.
+3:11
+But good news, there is a way of defending against rainbow tables and that is called salting.
+3:17
+And the bcrypt package we're going to use does it for us.
+3:21
+But we should understand what sorting is.
+3:24
+So a sort is something like a UID.
+3:27
+It's a random string of characters.
+3:29
+Bcrypt will then combine the sort and the password and it will run the hash algorithm on it and that means that what we get at the end is a super unique string with only trillions to one chance of there being a match.
+3:42
+And what we get at the end of the process looks like this.
+3:46
+So from the password orange juice sixty six, we've got the algorithm which is being used and I've shown you that in blue.
+3:52
+The cost factor and we're gonna talk more about cost factor a little bit later.
+3:56
+We've got the salt right here.
+3:58
+So this in green is the unique string we've added to the hash password and then we've got the hash itself right here.
+4:06
+That makes the rainbow table basically useless because now even for the same password no two hashes are the same.
+4:12
+Is it one hundred percent secure?
+4:15
+No.
+4:15
+Technically not.
+4:16
+This sort is accessible so you could take that sort and try to encrypt passwords with a rainbow table style approach.
+4:23
+But now you have to do that individually for each password.
+4:27
+That is computationally incredibly expensive.
+4:31
+Imagine you're working your way through thousands of compromised passwords.
+4:35
+You've got to do that individually for each one.
+4:38
+If we add in some rate limiting, it could actually take years to get a password.
+4:42
+So this is a pretty secure way of doing it.
+4:46
+Now, of course, on top of that in the real world, you've got two factor authentication.
+4:51
+So that adds another layer of security and there's more besides.
+4:54
+But even this on its own is now pretty secure.
+4:58
+Okay.
+4:58
+In the next Grimm, we're gonna take a practical walkthrough of how this is going to work in our app so you really understand what's going on before you face a challenge.

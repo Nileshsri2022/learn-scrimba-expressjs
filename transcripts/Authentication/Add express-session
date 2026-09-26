@@ -1,0 +1,156 @@
+
+Transcript
+0:00
+Let's get sessions implemented in our app.
+0:03
+And firstly, we need to install Express Session.
+0:06
+That's installed.
+0:07
+Let's import it, and we're just going to import session from Express session.
+0:13
+Express session is middleware, so we are gonna add it to our middleware stack and we're going to put it right near the top just under the JSON middleware.
+0:21
+So we'll say app dot use and we'll pass in session.
+0:25
+And session takes in an object and that object really has quite a lot of information and I'm going to talk you through it.
+0:32
+Firstly, it needs a secret and this is a string or potentially an array of strings which is used to sign and verify the session ID cookie to prevent tampering.
+0:43
+And it's important because if somebody tries to forge or modify the session ID, the server will reject it because the signature won't match.
+0:50
+For best practice, we will use a long random string, but we should never hard code it in the code base.
+0:56
+We should use an environment variable.
+0:58
+So I'm just going to come up here and say process dot env and because we're just in development here, I am gonna add a backup option.
+1:07
+But of course, in production, you would delete that.
+1:10
+Okay.
+1:10
+So back in the session object, we can set secret to secret and we could use the shorthand there, but I think it's clearer just to leave it as it is.
+1:19
+The next property is resave and I'm going to set that to false and what that does is it prevents the session from being saved back to the store on every request even if it hasn't changed And this is good because it just saves resources.
+1:32
+If the session hasn't changed, there's no need to rewrite it to the store.
+1:37
+Now while we're developing, we are using memory storage.
+1:40
+That's not such a big issue because every time we refresh, the store is going to be emptied.
+1:44
+But in a production app where you've got proper session storage, this would be more important.
+1:50
+Next, we have save uninitialized.
+1:53
+And that I will also set to false.
+1:55
+This just prevents empty sessions from being stored.
+1:58
+So without this, every new visitor would get a session even if they don't log in or interact.
+2:03
+And again, that would clutter the session store.
+2:05
+Next up, we have a cookie and that holds an object and the object's gonna have three properties.
+2:11
+We'll start with HTTP only and we'll set that to true.
+2:16
+That makes the cookie inaccessible to JavaScript so you won't be able to view it with document dot cookie in the browser and that protects against cross site scripting attacks.
+2:25
+Next, we'll set secure to false.
+2:28
+And secure, if it was set to true, would tell the browser to only send the cookie over HTTPS.
+2:34
+We're using false in development because localhost usually uses plain HTTP, not the more secure HTTPS.
+2:43
+In production, we would set that to true assuming the app is served over HTTPS.
+2:48
+Lastly, we're going to set same site to lax and this setting controls how cookies are sent in cross site requests.
+2:56
+So lax allows cookies to be sent on same site navigation, so normal browsing and top level get requests, but it does block in most cross site post requests.
+3:06
+So again, this is another security feature.
+3:09
+Now don't worry at all if all of this in here looks a bit strange, if you don't really understand it.
+3:15
+You can do some reading up and research in your own time, but this is a fairly standard dev setup for Express session.
+3:21
+Okay.
+3:22
+To make use of the session we're setting up, we have to bind it to our logged in user.
+3:27
+And at this point, we want to go back over to auth controller dot j s and let's just scroll down to where we are adding the user to the database.
+3:36
+Now you might recall when we inserted the user, I stored the result to a const and we're actually going to use that result right now.
+3:44
+So let's just log it.
+3:45
+I'll hit save.
+3:46
+Now we're gonna open up the terminal and again we are going to add a new user.
+3:51
+Oh and I'm just noticing we're getting an error here so we've done something wrong in server dot j s and lax should of course be a string.
+3:59
+Let's just save that and it looks like that is working properly.
+4:03
+Okay.
+4:03
+Yes.
+4:04
+So back to auth controller dot j s We are just going to log out the result when we sign up a new user.
+4:10
+Okay.
+4:11
+Let's see what happens.
+4:12
+We've successfully added the user as we would expect and then down here where we've logged out the result we've got something interesting and that is last ID of four.
+4:23
+Last ID is a special property provided by SQLite three and some other SQL libraries after performing an insert operation.
+4:32
+So when you run an insert query, for example, to register a new user, the database automatically assigns a unique ID to the new record because we're using an auto incrementing primary key and that gives each individual user an ID.
+4:47
+And if we just quickly open a terminal and we run node log table dot j s and again we have got the dodgy formatting but we can see we've got this ID column right here and the one I've just added Billy West has got the ID of four.
+5:03
+Now this is auto incrementing and it doesn't take account for deletions so I did actually delete the first person that we added that had the ID of one because we had that plain text password.
+5:14
+I added another just when I was practicing before recording this scrim which had the ID of number three.
+5:20
+I deleted them before recording so Billy West has the ID of four and that ID is available to us via last ID and that's important because we're going to use that ID to bind our logged in user to the session and although that sounds complicated it's really not and I've given it to you right here as a challenge.
+5:40
+I want you to store the last ID from the database insertion above to the user ID property on the session object on the request.
+5:48
+This will bind our logged in user to the session and you know of course how to access the request.
+5:55
+We're bringing it in right here with rec.
+5:57
+So although that is quite a verbose challenge, just read it carefully.
+6:01
+I'm sure you're gonna understand it.
+6:02
+You need to write one line of code and you can put it right here.
+6:06
+Now when you've done this challenge, you're not going to see anything special.
+6:09
+We've got a little bit more work to do before we can show in the browser that we've got a logged in user.
+6:14
+So just go ahead, get this sorted and then we'll be ready to move on.
+6:22
+Okay so hopefully you managed to follow this instruction.
+6:25
+All we need to do is take rec, access the session object, take the user ID and set that equals to the last ID we got from the result.
+6:36
+So that is result dot last ID and confusingly that one has got uppercase I and d.
+6:43
+Okay.
+6:43
+Let's just try signing up a new user to make sure it's working.
+6:47
+As I said, we're not going to see anything but I just want to check we haven't broken anything and that looks like it's working.
+6:53
+Let's just quickly run log table dot j s again and yeah, it's all absolutely fine.
+6:59
+So next, we need to work on making it so a logged in user can actually see some evidence that they're logged in so we can start showing them information which is specific to them such as their username and what they've got in their basket.
+7:12
+But before we do that, I want to talk about this line of code right here because it needs a little bit more explanation.
+7:18
+So let's look at that next.

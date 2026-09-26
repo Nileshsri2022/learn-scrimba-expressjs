@@ -1,0 +1,106 @@
+
+Transcript
+0:00
+In this screen, we're going to start looking at how users can make purchases when they are logged in.
+0:05
+So it's going to work like this.
+0:07
+A logged in user can see all of the products available to them.
+0:11
+They decide they want to purchase selling dogma, they click add to cart.
+0:15
+And when they do that, the cart icon appears up here with the number of items in the cart next to it.
+0:21
+We've got one item in our cart.
+0:23
+Let's say they want to add midnight parallels.
+0:26
+They click add to cart.
+0:27
+Now we've got two items in the cart.
+0:30
+To go to the cart, they just click on the cart icon and they get taken to a page which looks like this.
+0:36
+Perhaps they decide they don't want selling dogma after all.
+0:39
+So they click this basket and they're left with just one item midnight parallels.
+0:44
+They click checkout and it says your order has been sent for processing.
+0:48
+And in this project, we don't have a payment gateway.
+0:51
+The buy now button is just going to clear the order.
+0:54
+So we have got quite a lot of tasks to do, and it starts off with creating a table cart items in our database.
+1:02
+Then we need to set up routes for the various endpoints we're going to be using.
+1:06
+We're going to have slash API slash cart that will get all items for a user slash cart slash add that will be to post a newly purchased item.
+1:15
+Then we've got slash cart slash all.
+1:18
+That is going to delete all of a user's cart items, and we use that at the very end to clear all of the user's orders when they've clicked checkout on the cart page.
+1:27
+We'll have slash cart and then a specific item ID, and that will delete a specific item.
+1:33
+And finally, we have got slash cart slash cart count and that will get the number of items a user has in their cart and that will be displayed next to the cart icon in the header.
+1:42
+Of course, we'll need to write some logic to handle those routes.
+1:45
+So in CartController dot JS, we're going to create five functions.
+1:49
+They are going to be get all, add to cart, delete all, delete item, and get count.
+1:55
+I think those names are pretty self explanatory.
+1:57
+So quite a bit to do and plenty of challenges for you to get your teeth into, but we're going to start off working together by creating the table.
+2:05
+And in create table dot j s, I already have the boilerplate, so we just need some SQL in here.
+2:12
+So we start off with create table and the table name is cart items.
+2:17
+And the first column will be ID and that will be an integer, primary key and it will auto increment.
+2:26
+Next, we need a user ID and that will be an integer not null.
+2:32
+We'll have a product ID and that will also be an integer not null.
+2:38
+Quantity comes next and that will be an integer not null and it will default to one.
+2:45
+Next we're going to have two foreign keys.
+2:48
+A foreign key is a value in one table that links to a matching value in another table helping keep data connected and consistent.
+2:55
+So we'll have foreign key in brackets.
+2:58
+We're going to take user ID and that will reference the users table and the ID column.
+3:06
+So this will ensure that the user ID we use here matches an existing user in the users table.
+3:12
+Next we need a foreign key and we'll take product ID and that references the products table and again we want to correspond to a valid product in the products table.
+3:25
+Okay.
+3:25
+One way to see if this works, let's try and run it.
+3:29
+We'll open up a terminal and it's node create table dot j s.
+3:34
+It says table created.
+3:35
+I've already got a log table function right here and I've put in cart items.
+3:40
+Let's just run this script to verify that it exists and we get our index.
+3:45
+So we've successfully created our cart items table.
+3:48
+Okay.
+3:48
+That's a good start.
+3:49
+Plenty more to do.
+3:50
+In the next few scrims, we're gonna have a series of challenges to finish this cart off.
+3:54
+You are gonna do most of the work.
+3:56
+When you're ready, let's go.

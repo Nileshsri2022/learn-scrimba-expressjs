@@ -1,0 +1,68 @@
+
+Transcript
+0:00
+Now we've authenticated a user, we need a way of logging them in and that means giving them a session.
+0:06
+And we're going to be using the express session package to handle server side session management.
+0:12
+It is quite involved, so let's take a look at how it works.
+0:16
+Firstly a bit of background.
+0:18
+So HTTP is stateless meaning each request from a client to a server is independent and contains no knowledge of previous interactions.
+0:28
+The express session package provides a way to store user specific data such as login state between HTTP requests.
+0:37
+So that is basically what we're doing here.
+0:40
+Let's take a look at the login flow.
+0:43
+So the user fills out a login form and sends their username and password to the server via a post request.
+0:50
+The server will then authenticate the user and if the credentials are valid the login is allowed to proceed.
+0:56
+Next a session is created or updated so assuming the incoming request doesn't already have a valid session then Express Session creates a new session object and assigns it a unique session ID.
+1:09
+This all happens under the hood.
+1:11
+The server can also add some user specific data to the session object that might well be the user ID, perhaps the user role, perhaps the name.
+1:20
+This is known as serializing the user to the session and we will be doing this manually in the coming scrims.
+1:26
+Next the session ID is sent back to the client as a cookie.
+1:30
+The client stores the session ID cookie and sends it with every subsequent request to the server.
+1:36
+On future requests Express Session reads the session ID from the cookie.
+1:41
+It retrieves its own copy of the session data and assuming everything is valid it attaches a session object to the request.
+1:50
+Now the user is logged in and the server can check the session object to determine if the user is authenticated and access their associated ID.
+1:58
+So typically when a user is authenticated on the request object, we'll have a session with a user ID.
+2:05
+Now of course sessions don't last forever.
+2:08
+The session ends when the ID expires, a time out, or is destroyed, deliberate logout.
+2:14
+And we'll talk a bit more about those in the coming scrims.
+2:18
+Now before we finish, I want to say a quick word about persistence.
+2:22
+By default, session data is stored in memory, is fine for development.
+2:26
+For production, you would normally use a session store.
+2:30
+So a specific database like Redis or MongoDB to persist sessions across restarts or scale across multiple servers.
+2:39
+So what you're gonna find with the way we're developing here in Scrimba is that the sessions we create will be in memory only.
+2:45
+So if you refresh your browser, that session will be lost.
+2:49
+As I say, absolutely fine for development, but in production, you would need to change that.
+2:53
+Okay.
+2:54
+Quite a lot going on here.
+2:55
+So in the next scrim, let's get hands on with some code, and you're gonna see exactly how this works in practice.

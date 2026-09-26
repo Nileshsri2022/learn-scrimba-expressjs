@@ -1,0 +1,190 @@
+
+Transcript
+0:00
+In this scrim, we're going to deal with the situation where a logged in user clicks on the add to cart button.
+0:05
+Now by the end of this scrim, we're still not going to see any evidence of that in the front end.
+0:10
+The cart icon is not going to appear in the header.
+0:13
+But what we will be able to see is that we've added the user's chosen products to the cart items table that we set up in the previous scrim.
+0:22
+So just going back to that scrim, this is the endpoint we'll be working with slash API slash cart slash add.
+0:29
+It's a post method and it's for a newly purchased item.
+0:33
+And if we go to the list of functions we're going to see in cart controller dot j s, it's this one add to cart that we're going to be working on today.
+0:41
+So let's take a look at server dot j s because I have written some code already.
+0:45
+We've got the new route down here slash API slash cart.
+0:49
+Everything's being passed to cart router.
+0:52
+If we go to routes and cart dot j s, cart router is an instance of course of express dot router and on the add endpoint with post, we are passing add to cart which is coming from cart controller dot j s which is in the controllers folder.
+1:08
+Here, lo and behold, we find a challenge for you and I'm not giving you much away with this challenge because I want you to figure it out as much as possible and you will have to do a bit of detective work.
+1:19
+You can check out all of the routes and dive into the front end code as much as you need to but all of the code you're going to write is gonna happen right here in this function.
+1:28
+Now I'm not a monster, so I have given you some help.
+1:32
+There is a pretty detailed walkthrough in hint dot m d and I've also given you the SQL which we used to create the cart items table.
+1:40
+That's going to be useful to remind you of the column names.
+1:43
+Now a couple of things to note.
+1:45
+When you do this, you are likely to see some errors in the front end console.
+1:49
+They will appear right here as a little red icon.
+1:53
+Now don't worry about those.
+1:55
+They're just appearing because we haven't wired up all of the cart functionality and that's going to be happening over the next few scrims.
+2:01
+So you can just ignore them for now.
+2:03
+For testing purposes, you can still log in with our test account and then you can use log table dot j s to verify that you've been successful.
+2:12
+So you'll know you've been successful when you see activity in that cart items table when you view it using log table dot j s.
+2:20
+Now there is quite a lot of work to be done here, quite a lot of thinking to be done as well.
+2:24
+The future successful devs are gonna get stuck into this.
+2:28
+They're gonna take as much time as they need and they're gonna solve the challenge.
+2:31
+It's totally up to you.
+2:32
+I can't make you, but I strongly recommend you do everything necessary to solve this challenge and you don't just skip ahead to my solution even though it is a bit of a tricky one.
+2:43
+Do use hint dot m d.
+2:45
+It's got lots of really good information in there so when you get stuck, you can check that out.
+2:50
+Okay.
+2:51
+Get to work on this challenge.
+2:55
+Okay.
+2:55
+I really hope you persevered and you got this challenge sorted.
+2:59
+We are gonna start off by getting the product ID of the product the user wants to buy.
+3:04
+So let's say const product ID and of course we're dealing with a post request so we can get the body from rec dot body and hopefully you found the product ID was available to you on that object.
+3:17
+Now we need this product ID to be a number so I am going to use parseInt to make sure we get a number.
+3:23
+So parseInt will just make sure the product ID is passed as a number.
+3:28
+If it's not a number for any reason, we've got a problem and we need to end the response.
+3:33
+So I'm gonna say if isNaN and we'll pass in product ID.
+3:37
+We are gonna return res dot status.
+3:40
+We'll set that to four hundred.
+3:42
+Here's some JSON.
+3:44
+Let's say error.
+3:45
+Invalid product ID.
+3:47
+Okay.
+3:47
+Now we need to know what user it is we're dealing with.
+3:50
+So let's say const user ID and we can get the user of course from rec dot session and user ID.
+3:58
+Now things get a little bit tricky.
+4:00
+We need to know if the user has already got this item added to their cart items.
+4:05
+If they do, all we need to do is adjust the quantity.
+4:08
+If they don't, we need to create a whole new record.
+4:11
+To find out, I'm gonna say const existing and let's connect to the database.
+4:17
+And our SQL will be select everything from cart items where the user ID and I'm using user underscore ID here because that is the column name for the cart items table where we store the user ID.
+4:32
+So we want to know where that equals question mark and product ID and again product underscore ID is the column name in the cart items table and now we need some bindings.
+4:45
+So we want to know when the user ID in the cart items table matches the user ID we've got right here and likewise for the product ID we want to know if it matches the product ID.
+4:57
+So if the user has already got an example of this product in cart items, existing will be a truthy value.
+5:04
+So let's use some conditional logic and here we want to update the quantity.
+5:09
+So we'll say update cart items and we want to set quantity equals to quantity plus one where ID is equals to question mark.
+5:20
+And again this bit is a bit tricky.
+5:23
+What does ID here refer to?
+5:26
+Well, what we want to update is the record that we've got stored in existing and we can get the ID of existing with existing dot ID.
+5:36
+So what this ID right here is is the ID of the existing record and so we're basically saying find this existing record and up the quantity by one.
+5:46
+Now what if there is no existing record?
+5:48
+Well that means it's the first time the user is adding this product to the cart.
+5:52
+Let's take else and now we can create a new record.
+5:56
+So it's insert into cart items and the columns are user underscore ID, product underscore ID, and quantity.
+6:07
+We need some values.
+6:09
+So user ID will be question mark, product ID question mark, and quantity will be one because when a user clicks on the add to cart button, we're just increasing by one.
+6:19
+We've not given them any way to add, for example, ten items to their cart at once.
+6:23
+Okay.
+6:24
+We need some bindings here and again we've got the user underscore ID and product underscore ID and that will be user ID and product ID.
+6:32
+And if the code gets this far we have been successful so let's send a response and the JSON we need is right here.
+6:40
+Let's hit save.
+6:41
+We're just gonna open up the terminal and see if we've got any errors.
+6:45
+It's looking pretty good.
+6:46
+So let's open up the mini browser.
+6:49
+I'm going to log in as test.
+6:51
+We've successfully logged in.
+6:53
+Let's add selling dogma to the cart and now let's open up the terminal and we'll say node log table dot j s and there we are.
+7:03
+We have got product ID one, user ID of nine.
+7:07
+So that is the correct user ID for our test account.
+7:10
+You're welcome to verify that by logging the users table.
+7:14
+And we've also got the quantity of one.
+7:16
+Let's say we want to purchase selling dogma twice and again we'll run log table and now we've got a quantity of two.
+7:23
+Still user ID of nine.
+7:24
+Let's just add a few more randomly.
+7:26
+We'll have midnight parallels and paper skies.
+7:31
+So all for the correct user ID, we've got three different products.
+7:35
+Two of the first one and just one of the other two.
+7:38
+So everything is working exactly as expected.
+7:41
+That's a good job.
+7:42
+We have got quite a lot more to do here so when you're ready move on.

@@ -1,0 +1,111 @@
+Transcript
+0:00
+Okay.
+0:00
+I've deleted all of the code from the previous scrim.
+0:03
+I've set up this new function require auth.
+0:05
+It is in the middleware folder, and here is your challenge.
+0:10
+I want you to create middleware that checks if the session has a user ID attached to it.
+0:15
+If it doesn't, log to the console that access has been blocked and end the response with a four zero one and this JSON right here.
+0:23
+If the session does have a user ID, pass control on to the next middleware.
+0:27
+And then you need to place the middleware to protect our car routes.
+0:31
+And I've just put a reminder here, you'll need to write your code both right here inside this function body and wherever you choose to place the middleware.
+0:38
+When you've completed the challenge, what we can see now if we open up the mini browser which is that we're not logged in, but we can see a bunch of cart items that should be replaced by this.
+0:50
+It should just say your basket total of naught dollars, please log in.
+0:54
+Now after the challenge we will make an adjustment to the front end so it behaves a bit more rationally than this but we'll come on to that later.
+1:00
+For now, this is what you're looking out for.
+1:03
+Okay.
+1:03
+Go ahead and get to work on this challenge.
+1:09
+Okay.
+1:10
+Hopefully, you got this working.
+1:11
+There's nothing particularly scary in here that you haven't seen before.
+1:14
+It is basically just middleware, so let's take in the request and the response and also the next function in the middleware stack.
+1:23
+Now let's have some conditional logic.
+1:25
+So we want to check if rec dot session dot user ID does not exist.
+1:32
+If that's the case, we want to log to the console that access has been blocked and end the response with a four zero one and pass this JSON with an error message.
+1:45
+If rec dot session has a user ID then let's just pass control on to the next function and that is all we need to do here.
+1:52
+Finally we need to place the middleware to protect our cart routes Well, we've got cart controller right here.
+1:58
+That is not where we want to do it.
+2:00
+Let's just close that one and open up cart.
+2:02
+Js in roots and we're going to import that middleware
+2:08
+and then let's use it to protect all of our cart routes.
+2:12
+So I'm gonna add it in right here and in fact on all of these.
+2:18
+Okay.
+2:18
+Let's save that and we're gonna open up the mini browser and there we are we're not able to access any user data and if we just minimize the mini browser just a little bit we can see that that page should be getting everything from that user.
+2:35
+So it's trying to access this route but now it can't require auth should be sending a message down to the terminal access to protected routes blocked and ending the response with a four zero one.
+2:47
+So that's working and now our site is much more secure.
+2:51
+Let's just do a couple of things to tidy up.
+2:53
+So back in the cart controller dot j s, we need to take away the bug we deliberately introduced and that was this one right here.
+3:03
+We can delete this code now.
+3:05
+We don't need it.
+3:06
+We have proved the point.
+3:07
+And if we go to the front end and we go to kart services dot js, down on line fifty eight, right here, I'm actually going to uncomment this line and this is going to do something more rational.
+3:20
+It is going to just redirect a user who's not logged in that tries to access cart.
+3:25
+Html back to the home page.
+3:27
+I'm going to leave this logic there as well.
+3:30
+That's just a fail safe.
+3:31
+If for some reason this redirection fails, then this code can still run and at least it's providing some kind of service to the user linking them to the login page for example.
+3:41
+Okay.
+3:41
+Let's save that and we're just gonna test that.
+3:44
+So we've got welcome guest.
+3:46
+We're on the home page.
+3:47
+Let's go to cart dot HTML and we just get redirected back to the home page.
+3:53
+But if we log in, that is fine.
+3:56
+We can go to the cart page.
+3:57
+No problem.
+3:58
+Okay.
+3:59
+That is it for this section on authentication in Express.
+4:03
+We are gonna wrap things up in the next scrim.
